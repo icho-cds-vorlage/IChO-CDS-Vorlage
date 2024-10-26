@@ -94,7 +94,7 @@
   \usepackage{pgffor} % Iteration fuer umbrechbaren Antwortkasten
   \usepackage{expl3} %OC Kasten
   \usepackage{xparse}
-  \usepackage{xstring} % MC fix
+  \usepackage{stringstrings} % MC fix
 
 % Chemistry
 \usepackage{chemscheme} %scheme analog figure
@@ -245,13 +245,13 @@
 \newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
                 #1 & #2 & #3 & #4 & #5\\\hline
-                \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadratkorr}{\quadrat}\\\hline
-                \end{tabular}}\endgroup\punkteausgabe}
+                \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}\\\hline
+                \end{tabular}}\punkteausgabe}
 \newcommand{\MCrf}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
-                & #1 & #3 & #5 & #7 & #9 \\\hline
-                richtig & \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadratkorr}{\quadrat}\\\hline
-                falsch & \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadrat}{\quadratkorr}\\\hline
+                & #1 & #2 & #3 & #4 & #5 \\\hline
+                richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}\\\hline
+                falsch & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr}\\\hline
                 \end{tabular}}\endgroup\punkteausgabe}
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
