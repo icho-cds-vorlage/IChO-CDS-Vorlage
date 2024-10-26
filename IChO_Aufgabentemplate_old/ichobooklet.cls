@@ -94,6 +94,7 @@
   \usepackage{pgffor} % Iteration fuer umbrechbaren Antwortkasten
   \usepackage{expl3} %OC Kasten
   \usepackage{xparse}
+  \usepackage{xstring} % MC fix
 
 % Chemistry
 \usepackage{chemscheme} %scheme analog figure
@@ -236,16 +237,21 @@
 \newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=red, thick] (0,0) -- (0.25,0.25); \draw[color=red, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 \newcommand{\letzteantwort}[1]{\begingroup\renewcommand{\zusatzargument}{#1}} %leider durch Begrenzung der Argumente von newcommand vor jeder MC-Aufgabe Richtigkeit der 1. Antwort separat einzugeben --> 1 ist richtig, alles andere falsch
-\newcommand{\MC}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
+% \newcommand{\MC}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
+%                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
+%                 #1 & #3 & #5 & #7 & #9 \\\hline
+%                 \renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#4}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#6}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#8}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} &  \ifdefstring{\zusatzargument}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} \\\hline
+%                 \end{tabular}}\endgroup\punkteausgabe}
+\newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
-                #1 & #3 & #5 & #7 & #9 \\\hline
-                \renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#4}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#6}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#8}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} &  \ifdefstring{\zusatzargument}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} \\\hline
+                #1 & #2 & #3 & #4 & #5\\\hline
+                \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadratkorr}{\quadrat}\\\hline
                 \end{tabular}}\endgroup\punkteausgabe}
 \newcommand{\MCrf}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
                 & #1 & #3 & #5 & #7 & #9 \\\hline
-                richtig & \renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#4}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#6}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#8}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} &  \ifdefstring{\zusatzargument}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} \\\hline
-                falsch & \renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{1}{\quadrat}{\quadratkorr} & \renewcommand{\vergleichshilfe}{#4}\ifdefstring{\vergleichshilfe}{1}{\quadrat}{\quadratkorr} & \renewcommand{\vergleichshilfe}{#6}\ifdefstring{\vergleichshilfe}{1}{\quadrat}{\quadratkorr} & \renewcommand{\vergleichshilfe}{#8}\ifdefstring{\vergleichshilfe}{1}{\quadrat}{\quadratkorr} &  \ifdefstring{\zusatzargument}{1}{\quadrat}{\quadratkorr} \\\hline
+                richtig & \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadratkorr}{\quadrat} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadratkorr}{\quadrat}\\\hline
+                falsch & \ifthenelse{\equal{\StrChar{#6}{0}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{1}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{2}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{3}}{x}}{\quadrat}{\quadratkorr} & \ifthenelse{\equal{\StrChar{#6}{4}}{x}}{\quadrat}{\quadratkorr}\\\hline
                 \end{tabular}}\endgroup\punkteausgabe}
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
