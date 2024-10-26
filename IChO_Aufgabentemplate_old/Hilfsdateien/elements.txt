@@ -114,5 +114,5 @@
 114     Fl      Flerovium       289
 115     Mc      Moscovium       288
 116     Lv      Livermorium     293
-117     Ts      Tenness         294
+117     Ts      Tennessine      294
 118     Og      Oganesson       294
