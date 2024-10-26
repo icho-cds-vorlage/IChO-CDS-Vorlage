@@ -809,6 +809,15 @@
   \newcommand{\changefont}[3]{
     \fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
 
+  \newcommand{\millipapier}[3]{
+    \begin{center}
+	\begin{tikzpicture}[scale=#1]
+  	% Draw the grid (millimeter paper)
+  	\draw[step=1mm, lightgray, very thin] (0, 0) grid (#2, #3); % 1mm steps
+  	\draw[step=5mm, darkgray, thin] (0, 0) grid (#2, #3);    % 5mm steps (darker)
+	\end{tikzpicture}
+    \end{center}}
+
 %   \newcommand{\ipho}[2]{\href{http://ipho.org/problems-and-solutions.html}{Internationale PhysikOlympiade} #1, Aufgabe #2}
 %   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}   
 % %  \DeclareDocumentCommand{\iphode}{m m g}{%
