@@ -170,7 +170,12 @@
 
 %  "simple" commands for task writing
 % =========================================
-\usepackage[\solution,rd\round,ex\exam,c\code]{optional}
+\ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland]{optional}
+\else
+  \usepackage[\solution,rd\round,ex\exam,c\code]{optional}
+\fi
+
 
 % Operator
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
@@ -328,7 +333,7 @@
   \newdimen\spaceleft % for remaining height of page.
 
 % for use on plain paper
-\DeclareOption{plainpaper}{%
+\DeclareOption{plainpaper_IChO}{%
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
@@ -351,6 +356,28 @@
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
 }
 
+\DeclareOption{plainpaper_Cds}{%
+  \setlength{\textwidth}{168mm}%
+  \setlength{\textheight}{238mm}%
+  \setlength{\oddsidemargin}{-3mm}%
+  \setlength{\evensidemargin}{-3mm}%
+  \setlength{\topmargin}{-17mm}%
+  \setlength{\headheight}{48pt}%
+  \setlength{\headsep}{12pt}%
+  \setlength{\footheight}{40pt}%
+  \addtokomafont{headsepline}{\color{cdscolor}}
+  \KOMAoptions{headsepline=1pt:\textwidth}
+  \ihead[]{\parbox{0.25\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
+  \chead[]{\large \vspace*{4pt} \parbox{0.5\textwidth}{%
+    \centering
+    \opt{rd1}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}
+    \opt{rd2}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}
+    \opt{rd3}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}
+    \opt{rd4}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}
+  } \vspace*{2.5mm}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.25\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
+  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+}
 % % for use on IPhO-paper
 % \DeclareOption{iphopaper}{%
 %   \setlength{\textwidth}{168mm}%
@@ -378,7 +405,8 @@
 
 \ProcessOptions\relax
 
-\newcommand{\plainpaperoption}{plainpaper}
+\newcommand{\plainpaperoption}{plainpaper_Cds}
+
 
 % \ifx\paperoption\plainpaperoption
 %   % for solutions
@@ -413,6 +441,7 @@
   \definecolor{ichodark}{RGB}{0, 110, 168}
   \definecolor{ichobright}{RGB}{0, 183, 255}
   % \definecolor{taskblue}{RGB}{0,64,130}
+  \definecolor{cdscolor}{RGB}{157, 45, 114}
 
 %  Labelling in lists
 % ====================
