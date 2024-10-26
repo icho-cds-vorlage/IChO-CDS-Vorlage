@@ -1,0 +1,114 @@
+\documentclass[12pt,ngerman]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[scaled]{uarial}
+\usepackage{helvet}
+%\usepackage{ngerman}
+\usepackage[ngerman]{babel}
+\usepackage{paralist}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{leftmargin=*}
+\usepackage{amsmath,amssymb}
+\usepackage[final]{graphicx}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{picinpar}
+%\usepackage[decimalsymbol=comma,digitsep=none,exponent-product=\cdot]{siunitx}
+\usepackage{icomma}
+\usepackage[left=7cm,right=0.5cm,vmargin={3.2cm,2cm},headheight=100pt]{geometry}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage[version=3]{mhchem}
+\usepackage{chemformula}
+\usepackage{chemfig}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{xcolor}
+%\usepackage{tabulary} %remove for others
+\usepackage{array}
+\usepackage{caption}
+\usepackage{framed}
+\usepackage{wrapfig} % für Aufgabus
+
+\definecolor{purple}{HTML}{9D2D72}
+
+\sectionfont{\color{purple}\itshape}
+
+\renewcommand*{\familydefault}{\sfdefault}
+
+\setlength{\columnsep}{30pt}
+
+\setlist[enumerate,1]{font=\itshape}
+
+\makeatletter %For thicker and thinner lines in tables
+\def\hlinewd#1{%
+  \noalign{\ifnum0=`}\fi\hrule \@height #1 \futurelet
+   \reserved@a\@xhline}
+\makeatother
+
+\newcommand{\hlb}{\hlinewd{1.5pt}}
+
+\usepackage{float}
+\usepackage[nomessages]{fp}
+\usepackage{bm}
+
+%Multiple-Choice-Design
+
+\usepackage{eso-pic}
+
+\makeatletter
+\newcommand\BackgroundPicture[2]{%
+  \setlength{\unitlength}{1pt}%
+  \put(10,\strip@pt\paperheight){%
+    \parbox[t][\paperheight]{\paperwidth}{%
+      \vfill
+      \includegraphics[height=#1,angle=#2, trim={0 0 32cm 0}, clip]{Ergebnisse/background1.png}
+      \vfill
+    }
+  }
+} %
+\makeatother
+
+\fancyhf{}
+\fancyhead[L]{\Large \textbf{\glqq{}Chemie -- die stimmt!\grqq{} {\number\year}\\Bundesfinale - Ergebnisse}}
+\fancyhead[R]{\includegraphics[height=2cm]{Format_Material/Logo.png}}
+%\fancyfoot[L]{\thepage\ von \pageref{LastPage}}
+\pagestyle{fancy}
+
+\begin{document}
+\AddToShipoutPicture{\BackgroundPicture{\paperheight}{0}} %18 =Grösse, 45=Drehwinkel
+\noindent \vspace{0.5cm} {\Large \itshape \color{purple} Roman Behrends}\\
+hat beim Bundesfinale von {\itshape \color{purple} Chemie-die-stimmt!} im Wettbewerbsjahr\\ 2019/2020 folgende Resultate erzielt \vspace*{0.5cm}\\
+
+{\Large \itshape \color{purple} Theorie}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{2.5}
+    \begin{tabular}{|p{0.3\textwidth}| p{0.3\textwidth} |p{0.3\textwidth}|}\hline
+        Aufgabe & Erreichte Prozentzahl & Prozentzahl ($\varnothing$) \\\hline
+        Multiple Choice & &\\\hline
+        GurkenRunde & & \\\hline
+        Schnitzelparadies & & \\\hline
+        Grillen  & & \\\hline
+        Test & & \\\hlb
+        Gesamt & & \\\hline
+    \end{tabular}
+\end{table}
+{\Large \itshape \color{purple} Praxis}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{2.5}
+    \begin{tabular}{|p{0.3\textwidth}| p{0.3\textwidth} | p{0.3\textwidth}|}\hline
+        Aufgabe & Erreichte Prozentzahl & Prozentzahl ($\varnothing$) \\\hline
+        AC 1 &  &\\\hline
+        AC 2 & & \\\hlb
+        Gesamt & &\\\hline
+    \end{tabular}
+\end{table}
+
+Roman hat den 1. Platz belegt.
+
+\end{document}

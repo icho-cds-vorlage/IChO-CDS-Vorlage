@@ -1,0 +1,176 @@
+\fancyhf{}
+\fancyhead[L]{\framebox[2.5cm]{\Large\bfseries 24\class -\hfill}\vfill}
+\fancyhead[C]{\Large \textbf{\glqq{}Chemie -- die stimmt!\grqq{} {\number\year}/{\number\nextyear}\\
+\ifnum \value{DisplaySolution}=1
+    Musterlösungen
+\else
+    Aufgabenblatt
+\fi
+\\4. Runde -- Klasse \class}}
+\fancyhead[R]{\includegraphics[height=2cm]{Format_Material/CDS_Logo_Map_verbessert.eps}}
+\fancyfoot[L]{\thepage\ von \pageref*{LastPage}}
+\pagestyle{fancy}
+
+\setlength{\parindent}{0pt}
+\addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
+
+\newcommand{\answer}[1]{
+	\setalph
+	\stepcounter{ex}
+    {\noindent \theex}
+	\nopagebreak
+	\begin{framed}
+		\vspace*{#1}
+	\end{framed}
+}
+
+\newcommand{\answern}[1]{
+	\begin{framed}
+		\vspace*{#1}
+	\end{framed}
+}
+
+\usepackage{calc}
+\newlength{\someheight}
+\newlength{\boxheight}
+\newlength{\remainingheight}
+
+\newcommand{\solution}[2]{
+    \settototalheight{\someheight}{\vbox{#1}}
+    \setlength{\boxheight}{#2}
+    \ifnum \value{DisplaySolution}=1
+        \begin{framed}
+            \textcolor{red}{#1}
+            \ifdim\boxheight>\someheight
+                \setlength{\remainingheight}{\boxheight-\someheight}
+                \vspace*{\remainingheight}
+            \else
+                \textcolor{red}{!!!DU KEK!!!}
+            \fi
+        \end{framed}
+    \else
+        \begin{framed}
+            \vspace*{#2}
+        \end{framed}
+    \fi
+}
+
+\newcommand{\solutiontext}[2]{
+    \ifnum \value{DisplaySolution}=1
+        \textcolor{red}{#1}
+    \else
+        #2
+    \fi
+}
+
+\newcommand{\enumaufgabe}[1]{
+\begin{enumerate}[a), resume]
+\itshape
+\item {#1}
+\end{enumerate}
+}
+
+\newcommand{\enumersteaufgabe}[1]{
+\begin{enumerate}[a)]
+\itshape
+\item {#1}
+\end{enumerate}
+}
+
+\newcommand{\operator}[1]{\underline{\textbf{#1}}}
+
+\newcommand{\enumMC}[1]{
+\begin{enumerate}[1., resume]
+\itshape
+\item {#1}
+\end{enumerate}
+}
+
+\ifthenelse{\value{DisplaySolution}=1}{%
+  \definecolor{answercolor}{rgb}{1,0,0}%red
+}{%
+  \definecolor{answercolor}{rgb}{0,0,0}%black
+}
+
+\newcommand{\solutionwrapper}[1]{
+    \settototalheight{\someheight}{\vbox{#1}}
+    \ifnum \value{DisplaySolution}=1
+        #1
+    \else
+        \vspace*{\someheight}
+    \fi
+}
+
+% Define a custom tcolorbox environment for answer boxes
+\tcbuselibrary{breakable}
+\newtcolorbox{answerbox}[1][]{%
+  enhanced,
+  breakable,
+  colframe=black,
+  colback=white,
+  coltext=answercolor,
+  width=\textwidth,
+  before skip=10pt,
+  after skip=10pt,
+  #1
+}
+
+\usepackage{expl3,xparse}
+\ExplSyntaxOn
+\box_new:N \l_mypkg_box
+\int_new:N \l_mypkg_cleanup_int
+\DeclareDocumentCommand{\hideit}{O{1}+m}
+  {
+    \tex_setbox:D \l_mypkg_box \tex_vbox:D
+      {
+        #2\par
+        \dim_zero:N \tex_baselineskip:D
+        \dim_zero:N \tex_lineskip:D
+        \dim_zero:N \tex_lineskiplimit:D
+        \int_set:Nn \l_mypkg_cleanup_int {#1}
+        \mypkg_dismantle_loop:
+      }
+    \tex_unvbox:D \l_mypkg_box
+  }
+\cs_new_protected:Npn \mypkg_dismantle_loop:
+  {
+    \prg_replicate:nn { \l_mypkg_cleanup_int }
+      {
+        \skip_if_eq:nnT { \tex_lastskip:D } { \c_zero_skip } { \tex_unskip:D }
+        \dim_compare:nT { \tex_lastkern:D = \c_zero_dim } { \tex_unkern:D }
+        \int_compare:nT { \tex_lastpenalty:D = \c_zero } { \tex_unpenalty:D }
+      }
+    \skip_if_eq:nnTF { \tex_lastskip:D } { \c_zero_skip }
+      {
+        \dim_compare:nTF { \tex_lastkern:D = \c_zero_dim }
+          {
+            \int_compare:nTF { \tex_lastpenalty:D = \c_zero }
+              {
+                \box_set_to_last:N \l_mypkg_box
+                \box_if_empty:NF \l_mypkg_box
+                  { \mypkg_dismantle_box: }
+              }
+              { \mypkg_dismantle_penalty: }
+          }
+          { \mypkg_dismantle_kern: }
+      }
+      { \mypkg_dismantle_skip: }
+  }
+\cs_new_protected:Npn \mypkg_dismantle_skip:
+  { \mypkg_dismantle_aux:nN { \tex_vskip:D \skip_use:N \tex_lastskip:D } \tex_unskip:D }
+\cs_new_protected:Npn \mypkg_dismantle_kern:
+  { \mypkg_dismantle_aux:nN { \tex_kern:D \dim_use:N \tex_lastkern:D } \tex_unkern:D }
+\cs_new_protected:Npn \mypkg_dismantle_penalty:
+  { \mypkg_dismantle_aux:nN { \tex_penalty:D \int_use:N \tex_lastpenalty:D } \tex_unpenalty:D }
+\cs_new_protected:Npn \mypkg_dismantle_box:
+  { \mypkg_dismantle_aux:nN { \tex_vbox:D to \dim_eval:n { \box_ht:N \l_mypkg_box + \box_dp:N \l_mypkg_box } { } } \scan_stop: }
+\cs_new_protected:Npn \mypkg_dismantle_aux:nN #1#2
+  {
+    \use:x
+      {
+        #2
+        \mypkg_dismantle_loop:
+        #1 \scan_stop:
+      }
+  }
+\ExplSyntaxOff

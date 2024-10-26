@@ -1,0 +1,43 @@
+\documentclass[10pt,ngerman]{scrartcl}
+\def\class{10}
+
+%Variable for displaying solutions, if solution equals 1, they are displayed
+\newcounter{DisplaySolution}
+\setcounter{DisplaySolution}{1}  %Brauche keine Lösungsansicht mehr 
+\newcount\year
+\year=2023
+\newcount\nextyear
+\nextyear=\number\year
+\advance\nextyear by 1
+
+\input{Format_Material/preamble_Aufgaben}
+\input{Format_Material/header_Aufgaben}
+
+\graphicspath{{./Abbildungen/}}
+
+\sisetup{detect-none = true}
+
+\begin{document}
+	\parindent0pt
+        \input{Format_Material/formeln}
+	\newpage
+        \subfile{2024/Aufgaben/Silicium} 
+        %Gewichtung: 16%
+        \newpage
+        \subfile{2024/Aufgaben/Kohlensäure} 
+        %Gewichtung: 13%
+        \newpage
+        \subfile{2024/Aufgaben/Kinetisch_Gas} 
+        %Gewichtung: 19%
+        \newpage
+        \subfile{2024/Aufgaben/Umkehrosmose} 
+        %Gewichtung: 14%
+        \newpage
+        \subfile{2024/Aufgaben/Hydrate} 
+        %Gewichtung: 19%
+        \newpage
+        \subfile{2024/Aufgaben/Organik} 
+        %Gewichtung: 19%
+
+        %Vorschlag für die Gewichtung
+\end{document}

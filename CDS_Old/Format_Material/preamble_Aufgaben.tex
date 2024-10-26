@@ -1,0 +1,131 @@
+\usepackage[ngerman]{babel}
+\usepackage{paralist}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{leftmargin=*}
+\usepackage{amsmath,amssymb,wasysym}
+\usepackage[final]{graphicx}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{picinpar}
+\usepackage{siunitx}
+\sisetup{
+    mode=text,
+    reset-text-family=false,
+    reset-text-series=false,
+    reset-text-shape=true,
+    reset-math-version=false,
+    propagate-math-font=true,
+    text-family-to-math=true,
+    text-series-to-math=true,
+    output-decimal-marker = {,}, 
+    group-separator = {}, 
+    exponent-product = \cdot, 
+    per-mode = fraction, 
+    inter-unit-product = \cdot
+}
+\DeclareSIUnit\bar{bar}
+\DeclareSIUnit\atm{atm}
+\DeclareSIUnit\torr{torr}
+
+\usepackage{icomma}
+\usepackage[left=2.5cm,right=2.5cm,vmargin={3.2cm,2cm},headheight=100pt]{geometry}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage[version=3]{mhchem}
+\usepackage{chemformula}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{ifthen}
+
+\usepackage{subfiles}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\usepackage{caption}
+\usepackage{framed}
+\usepackage{wrapfig}
+
+\usepackage{multirow}
+
+\definecolor{purple}{HTML}{9D2D72}
+\sectionfont{\color{purple}\itshape}
+\renewcommand*{\familydefault}{\sfdefault}
+\setlength{\columnsep}{30pt}
+\setlist[enumerate,1]{font=\itshape}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,angles,quotes,calc,shapes.geometric,babel}
+\tikzset{
+    >=stealth',
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+
+\usepackage{float}
+\usepackage[nomessages]{fp}
+\usepackage{bm}
+
+\newcommand{\choiceold}[5]{
+        \par
+        \renewcommand{\arraystretch}{1.1}
+        {\setlength{\tabcolsep}{2pt}
+        \begin{tabular}{*{5}{@{}|>{\hspace{2pt}}p{0.19\textwidth}<{\hspace{2pt}}}|}\hline \itshape
+        (a)~#1 & (b)~#2 & (c)~#3 & (d)~#4  & (e)~#5\\\hline
+        \end{tabular}}
+}
+
+\newcommand{\choice}[5]{        
+        \par
+        \renewcommand{\arraystretch}{1.1}
+        {\setlength{\tabcolsep}{2pt}
+        \begin{tabular}{|p{0.179\textwidth} p{0.001\textwidth}|p{0.179\textwidth} p{0.001\textwidth}|p{0.179\textwidth} p{0.001\textwidth}|p{0.179\textwidth} p{0.001\textwidth}|p{0.179\textwidth} p{0.001\textwidth}|}\hline 
+        (a)~#1 & & (b)~#2 & & (c)~#3 & & (d)~#4 & & (e)~#5 &\\\hline
+        \end{tabular}}
+}
+
+\usepackage{marginnote}
+
+\usepackage[most]{tcolorbox}
+\usepackage{lipsum}
+
+\makeatletter
+\begingroup
+\toks0=\expandafter{\@settodim{#1}{#2}{#3}}
+\edef\x{\endgroup
+  \long\def\noexpand\@settodim##1##2##3{\the\toks0 }}\x
+\makeatother
+
+\newcommand{\emptybox}{{\Large \Square}}
+\newcommand{\checkedbox}{{\Large \XBox}}
+
+\newcounter{start}
+\addtocounter{start}{2100}
+\addtocounter{start}{\class}
+
+\newcommand{\g}{\gram}
+\newcommand{\ml}{\milli\liter}
+\renewcommand{\c}{\celsius}
+\newcommand{\gmol}{\gram\per\mol}
+\newcommand{\gcm}{\gram\per\cubic\centi\meter}
+\newcommand{\kpa}{\kilo\pascal}
+\renewcommand{\l}{\liter}
