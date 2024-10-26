@@ -824,12 +824,15 @@
 	\end{tikzpicture}
     \end{center}}
 
-  \newcommand{\gaptext}[2][3]{% #1 ist optional, #2 ist der Text
-  \settowidth{\textlength}{#2}% Textbreite messen
-   \setlength{\textlength}{#1\textlength}% Länge mit Faktor #1 multiplizieren
-   \underline{\hspace{\textlength}}% Unterstrichene Lücke ausgeben
-   }
-   
+    \newcommand{\gaptext}[2]{%Ohne diesen Kommentar extra Leerzeiche
+    \settowidth{\textlength}{#1}%Legt Länge der Eingabe als \textlength fest
+    \setlength{\textlength}{3\textlength}%Mal 3, da Schüler mehr Platz braucht
+    \opt{1,2}{\underline{\textcolor{red}{#1}}}%Für Lösung
+    \ifthenelse{\equal{#2}{}}%
+            {\opt{0}{\underline{\hspace{\textlength}}}}%automatische Länge
+            {\opt{0}{\underline{\hspace{#2}}}}%Angegebene Länge
+    }
+
 %   \newcommand{\ipho}[2]{\href{http://ipho.org/problems-and-solutions.html}{Internationale PhysikOlympiade} #1, Aufgabe #2}
 %   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}
 % %  \DeclareDocumentCommand{\iphode}{m m g}{%
