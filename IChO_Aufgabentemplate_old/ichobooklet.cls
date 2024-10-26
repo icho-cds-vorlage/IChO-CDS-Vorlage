@@ -1,21 +1,21 @@
 %% LaTeX2e class for ichobooklet
 %% originally taken from iphobooklet by stpet 20170106
 %% xmiao 20231202
-%% 
+%%
 
 %  identifications
 % =====================
   \NeedsTeXFormat{LaTeX2e}[1995/12/01]           % use LaTeX2e
   \ProvidesClass{ichobooklet}[2023/12/02 xmiao]
   \LoadClass[fontsize=11pt,a4paper,toc=flat]{scrartcl} % Class KOMA-article
-                                                 % add option fleqn for 
+                                                 % add option fleqn for
                                                  % formulas with left indent
 
 %  used packages
 % ===============
   \usepackage[ngerman]{babel}
-  \usepackage[T1]{fontenc}  
-  %\usepackage{cmbright}         % use Computer Modern (SF) Font generally 
+  \usepackage[T1]{fontenc}
+  %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
                                 % (also for math mode)
   \usepackage{mathpazo}
   \usepackage{textcomp}
@@ -25,7 +25,7 @@
   \usepackage{amssymb,amsmath,amsthm,amscd,bbm,autobreak} % AMS packages
   \usepackage{esvect,bigints}
   \usepackage{mathtools}        % provides \Aboxed{} environment for boxed aligned formulas
-  \usepackage{apacite}          % Bibtex citing in APA style  
+  \usepackage{apacite}          % Bibtex citing in APA style
   \usepackage[font=it,labelsep=colon, figurename=Abb.]{caption}
   \usepackage{graphicx}
   \usepackage{placeins}
@@ -34,29 +34,29 @@
   \usepackage{picinpar,wrapfig}
   \usepackage{epstopdf}
   \usepackage{xcolor}
- % \usepackage{framed}  
+ % \usepackage{framed}
   \usepackage{mdframed}
   \usepackage{array}
   \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
-  \newcolumntype{L}[1]{>{\arraybackslash}m{#1}} 
+  \newcolumntype{L}[1]{>{\arraybackslash}m{#1}}
   \usepackage{longtable}
   \usepackage{multirow}
   \usepackage{makecell}
-  \usepackage{tabularx}                % for tables with fixed width   
+  \usepackage{tabularx}                % for tables with fixed width
   \usepackage{colortbl}
   \usepackage{enumerate}
   \usepackage[shortlabels]{enumitem}
   \usepackage{wallpaper}
   \usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
-  \usepackage{ifthen}                  % ifthenelse used for markings    
-  \usepackage{xspace}                  % for blank space at end of macros 
+  \usepackage{ifthen}                  % ifthenelse used for markings
+  \usepackage{xspace}                  % for blank space at end of macros
   \usepackage{icomma,siunitx}
     \sisetup{
       locale = DE,
-      output-decimal-marker = {,}, 
-      group-separator = {}, 
-      exponent-product = \cdot, 
-      per-mode = reciprocal, 
+      output-decimal-marker = {,},
+      group-separator = {},
+      exponent-product = \cdot,
+      per-mode = reciprocal,
       inter-unit-product = \ensuremath{{}\cdot{}},
       separate-uncertainty,
       detect-all,
@@ -78,7 +78,7 @@
 %    \usetikzlibrary{decorations.pathmorphing}
 %    \usetikzlibrary{decorations.shapes}
 %    \usetikzlibrary{decorations.markings}
-    
+
 
   \usepackage{pgfplots}
     \pgfplotsset{compat=1.5}
@@ -87,7 +87,7 @@
 %      \tikzexternalize[prefix=tikz_pictures/]  % activate externalization with specific output folder
     % in case of problems with externalize only use definition of \tikzsetnextfilename below and uncomment three lines above
     \newcommand{\tikzsetnextfilename}[1]{} % to avoid difficulties with alternative use of tikzexternalize
-  
+
   \usepackage[most]{tcolorbox} % formulas, breakable antwortkasten
   \usepackage[nomessages]{fp} % point calculation
   \usepackage{calc} %length calculations
@@ -125,7 +125,7 @@
     arrow offset = 2.0em,
     bond style = {smb, line width=0.21mm},
 }
-\usepackage{modiagram} 
+\usepackage{modiagram}
 \usepackage{endiagram}
 
   % miscellaneous
@@ -139,10 +139,10 @@
 %  global variables
 % =========================================
 %renewcommand definiert nur innerhalb der aktuellen Gruppe um; f\"ur globale Umdefinition grenewcommand
-\makeatletter 
+\makeatletter
 \def\gnewcommand{\g@star@or@long\gnew@command}
 \def\grenewcommand{\g@star@or@long\grenew@command}
-\def\g@star@or@long#1{% 
+\def\g@star@or@long#1{%
   \@ifstar{\let\l@ngrel@x\global#1}{\def\l@ngrel@x{\long\global}#1}}
 \def\gnew@command#1{\@testopt{\@gnewcommand#1}0}
 \def\@gnewcommand#1[#2]{%
@@ -186,7 +186,7 @@
 \newcommand{\calculateLinesToFill}[2]{%Leerzeilen, bis Kasten die gewuenschte Groesse erreicht (1. Argument: Groesse, 2. Argument: Inhalt)
     \settototalheight{\contentheight}{\parbox{\linewidth}{#2}} % Measure height of the content; doppeltes Aufrufen des Textes verdoppelt gez\"ahlte Punktzahl
     \FPdiv{\teilaufgabenpunkte}{\teilaufgabenpunkte}{2}\xdef\teilaufgabenpunkte{\teilaufgabenpunkte} %Punktzahl korrigieren und wieder global machen
-    \setlength{\targetheight}{#1}   
+    \setlength{\targetheight}{#1}
     \setlength{\remainingheight}{\targetheight - \contentheight} % Calculate remaining height
     \FPdiv{\lines}{\csname rem@pt\expandafter\endcsname\the\dimexpr\remainingheight}{\csname rem@pt\expandafter\endcsname\the\dimexpr\baselineskip} % Calculate number of lines needed; dazu zuerst Einheit entfernen
     \FPtruncate{\completelines}{\lines} %number of complete lines
@@ -215,7 +215,7 @@
     \xdef\teilaufgabenpunkte{\teilaufgabenpunkte}% Definition global machen
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen.
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
-\newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}} 
+\newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 
@@ -228,7 +228,7 @@
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\renewcommand{\ocscale}{0.9}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 \newcommand{\aufgabenende}{\opt{2}{\FPeval{nachkommacheck}{10 * aufgabenpunkte}\FPifint\aufgabenpunkte \FPeval\aufgabenpunkte{round(aufgabenpunkte:0)} \else \FPeval\aufgabenpunkte{round(aufgabenpunkte:1)} \fi\FPifint\nachkommacheck\else\todo{Auch bei der Gesamtpunktzahl nur eine Dezimalstelle}\fi%
-\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\FPprint\aufgabenpunkte}\fi}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\restartlist{enumerate}\newpage} 
+\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\FPprint\aufgabenpunkte}\fi}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\restartlist{enumerate}\newpage}
 %\FPset gilt nur innerhalb der group, deshalb wird zu Beginn zurueckgesetzt
 
 %Multiple-Choice-Design
@@ -285,7 +285,7 @@
 \def\chopline#1;#2 \\{
   \def\suscode{#1}
   \def\susbl{#2}
- } 
+ }
 \newif\ifmore \moretrue
 
 %\newcommand{\serienbriefstart}{\newread\quelle
@@ -306,7 +306,7 @@
 %  Laengenformatierungen / Header / Footer
 % =========================================
   \usepackage{setspace}
-% \setlength{\linespread}{1.2}   % Seperation betweeen lines 
+% \setlength{\linespread}{1.2}   % Seperation betweeen lines
   \setlength{\parindent}{0pt}   % Absaetze nicht einruecken
   \setlength{\parskip}{1.5ex plus0.5ex minus0.5ex}   % Absatzabstand
   \makeatletter  % have normal \parskip also in minipage environment
@@ -315,15 +315,15 @@
   \RedeclareSectionCommands[beforeskip=0em,afterskip=\parskip]
     {section} % spacing before and after heading
   \RedeclareSectionCommands[beforeskip=0em,afterskip=0.01em]
-    {subsection,subsubsection} % spacing before and after heading    
-  \pagestyle{scrheadings}        
+    {subsection,subsubsection} % spacing before and after heading
+  \pagestyle{scrheadings}
   \clearpairofpagestyles
-  
+
   \newdimen\spaceleft % for remaining height of page.
 
 % for use on plain paper
 \DeclareOption{plainpaper}{%
-  \setlength{\textwidth}{168mm}% 
+  \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
   \setlength{\evensidemargin}{-3mm}%
@@ -335,7 +335,7 @@
   \KOMAoptions{headsepline=1pt:\textwidth}
   \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
   \chead[]{\large \parbox{0.33\textwidth}{%
-    \centering 
+    \centering
     \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
     \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
     \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
@@ -347,27 +347,27 @@
 
 % % for use on IPhO-paper
 % \DeclareOption{iphopaper}{%
-%   \setlength{\textwidth}{168mm}% 
+%   \setlength{\textwidth}{168mm}%
 %   \setlength{\textheight}{202mm}%
 %   \setlength{\oddsidemargin}{-5mm}%
 %   \setlength{\evensidemargin}{-5mm}%
 %   \setlength{\topmargin}{8mm}%
 %   \setlength{\headheight}{38pt}%
 %   \setlength{\headsep}{24pt}%
-%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%     
+%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%
 % }
 
 % % for use on IPhO-paper with background image
 % \DeclareOption{iphopaperbckgrd}{%
-%   \setlength{\textwidth}{168mm}% 
+%   \setlength{\textwidth}{168mm}%
 %   \setlength{\textheight}{202mm}%
 %   \setlength{\oddsidemargin}{-5mm}%
 %   \setlength{\evensidemargin}{-5mm}%
 %   \setlength{\topmargin}{8mm}%
 %   \setlength{\headheight}{38pt}%
 %   \setlength{\headsep}{24pt}%
-%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%  
-%   \CenterWallPaper{1}{IPhO_Briefpapier_2011.pdf}%  
+%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%
+%   \CenterWallPaper{1}{IPhO_Briefpapier_2011.pdf}%
 % }
 
 \ProcessOptions\relax
@@ -381,28 +381,28 @@
 %   \else
 %   % for tasks
 %     \chead{\qquad\ifdefined\runde \runde{} - \fi\klausur{} \comm{- \todayshort}}
-%   \fi  
-% \else 
-%   \rohead{\ifdefined\runde 
-%             \begin{minipage}[c]{12cm} 
+%   \fi
+% \else
+%   \rohead{\ifdefined\runde
+%             \begin{minipage}[c]{12cm}
 %             \begin{flushright}
 %                {\usefont{T1}{cmss}{bx}{it} \runde{}\\
 %                              \rundeinst{}, \klausurdate{}}
 %             \end{flushright}
-%             \end{minipage} 
+%             \end{minipage}
 %             \hspace{.2cm}
 %             \rundeinstlogo{}
 %             \vspace{6pt}
-%           \fi  
-%          }            
+%           \fi
+%          }
 %   \lohead{\comm{{\usefont{T1}{cmss}{bx}{it}Stand: \todayshort}}}
-% \fi   
+% \fi
 
 
 %  Colors
 % ===================
   \definecolor{dgray}{rgb}{0.8,0.8,0.8}    % dark grey
-  \definecolor{mgray}{rgb}{0.85,0.85,0.85} % medium grey  
+  \definecolor{mgray}{rgb}{0.85,0.85,0.85} % medium grey
   \definecolor{lgray}{rgb}{0.9,0.9,0.9}    % light grey
   \definecolor{ichodark}{RGB}{0, 110, 168}
   \definecolor{ichobright}{RGB}{0, 183, 255}
@@ -411,18 +411,18 @@
 %  Labelling in lists
 % ====================
   \renewcommand{\labelenumi}{\alph{enumi})}
-  \renewcommand{\labelenumii}{\roman{enumii}.} 
-  \renewcommand{\labelitemi}{$\bullet$}  
+  \renewcommand{\labelenumii}{\roman{enumii}.}
+  \renewcommand{\labelitemi}{$\bullet$}
   \renewcommand{\figurename}{Abb.}
 
 %  Gliederungsformate
 % ====================
   %\numberwithin{equation}{section}
 
-  \addtokomafont{section}{\color{ichodark}\large\fontseries{b}} 
-  \addtokomafont{subsection}{\color{ichodark}\normalsize\fontseries{b}} 
+  \addtokomafont{section}{\color{ichodark}\large\fontseries{b}}
+  \addtokomafont{subsection}{\color{ichodark}\normalsize\fontseries{b}}
   \setcapindent{0em} % no indentation in captions
-    
+
   \newcommand{\tasksection}[2][]{
     \renewcommand{\thesection}{Aufgabe \arabic{section}} %
     \section[#2]{#2 \hfill #1} %
@@ -432,22 +432,22 @@
     \renewcommand{\thesection}{Aufgabe #2} %
     \section[#3]{- #3 \hfill #1} %
     \renewcommand{\thesection}{\arabic{section}}}
-        
+
   \newenvironment{enumsec} % enumeration with section number included
     % added \addtolength{\leftmargin}{4pt} to account for higher counter numbers 20170119
     {\begin{list}%
     {\thesection.\alph{enumi})}%
     {\usecounter{enumi}\addtolength{\leftmargin}{6pt}\addtolength{\labelwidth}{26pt}\setlength{\topsep}{0pt}}}
-    {\end{list}}      
-    
-  \ifdefined\solutions    
+    {\end{list}}
+
+  \ifdefined\solutions
     \newcommand{\solnewpage}{\newpage}
     \newcommand{\tasknewpage}{\newpage}
   \else
     \newcommand{\solnewpage}{} % prevents too many newpages when printed without solutions
     \newcommand{\tasknewpage}{\newpage $\,$ \newpage} % produce empty page in between tasks
-  \fi  
-  
+  \fi
+
   \newcommand{\newpageorspace}{
   \ifdefined\solutions
    \newpage
@@ -455,14 +455,14 @@
    \vspace*{0.5cm}
    \fi
    }
-  
+
   \newcounter{version} % Zur Versionsnachverfolgung
-  \newcounter{hca}     % hilfscounter fuer Verweise auf andere label 
+  \newcounter{hca}     % hilfscounter fuer Verweise auf andere label
                        % setzen mit \setcounter{hca}{X} % obsolete
   \newcounter{hcb}     % hilfscounter fuer Verweise auf andere label
   \newcounter{hcc}     % hilfscounter fuer Verweise auf andere label
   \newcommand{\hclabela}{\alph{hca})}
-  \newcommand{\hclabelb}{\alph{hcb})}  
+  \newcommand{\hclabelb}{\alph{hcb})}
   \newcommand{\hclabelc}{\alph{hcc})}
 
 %Boxen fuer Formelsammlung
@@ -477,10 +477,10 @@
   outer arc=0pt,
   fonttitle=\bfseries
 }
-      
+
 % Boxed Example environment
 %================================
-% choice between 
+% choice between
 % framed package (problem with color changes in box)
 % mdframed (no rounded corners without losing pictures) ***used here***
 % tcolorbox (problem with color changes within box)
@@ -667,8 +667,8 @@
                    {\ifthenelse{\equal{\ochilf}{20}}{\textbf{\ocnumtwenty}\\\opt{1,2}{\ocsoltwenty}\opt{0}{\occontwenty}\grenewcommand{\ochilf}{21}}
                     {}}}}}}}}}}}}}}}}}}}}
 %ochilf muss global gezaehlt werden, daher via grenewcommand
-}         
-  
+}
+
 %OC-Kasten: Rechteck mit Textbreite, dann Erkennung fester Spaltenverteilung (1. Argument) für vertikale Unterteilungsstriche und passende minipage-Umgebungen in den Teilkaestchen; Zeilenhoehe als 2. Argument
 \newcommand{\ockasten}[2]{
 \draw (0, -\ochsp) rectangle (\linewidth-0.4pt, -\ochsp-#2);
@@ -676,22 +676,22 @@
 \ifthenelse{\equal{#1}{1}}{\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{\linewidth}\ocinhalt\end{minipage}};}
 
  {\ifthenelse{\equal{#1}{11}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
- 
+
   {\ifthenelse{\equal{#1}{12}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};}
-  
+
    {\ifthenelse{\equal{#1}{21}}{\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
-   
+
     {\ifthenelse{\equal{#1}{111}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
-    
+
      {\ifthenelse{\equal{#1}{211}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
-     
+
       {\ifthenelse{\equal{#1}{121}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
-      
+
        {\ifthenelse{\equal{#1}{112}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
-       
+
         {\ifthenelse{\equal{#1}{1111}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
          {}}}}}}}}}
-\FPeval{\ochsp}{\ochsp+#2}     
+\FPeval{\ochsp}{\ochsp+#2}
 }
 
 
@@ -761,11 +761,11 @@
 }
 
 % xparse interface
-\NewDocumentCommand{\kastenarray}{ m m O{0cm} m m }{ 
+\NewDocumentCommand{\kastenarray}{ m m O{0cm} m m }{
   \kastenarray_zip:nnnnn {#1} {#2} {#3} {#4} {#5}
 }
 \ExplSyntaxOff
-  
+
 % other commands
 %================================
   \newcommand{\marcs}[1]{\mbox{(#1~Pkt.)}}
@@ -780,7 +780,7 @@
          {\ifthenelse{\equal{#1}{4}}{\CIRCLE\CIRCLE\Circle}        % 4-5 Pkt.
            {\ifthenelse{\equal{#1}{5}}{\CIRCLE\CIRCLE\LEFTcircle}  % 5-6 Pkt.
              {\ifthenelse{\equal{#1}{6}}{\CIRCLE\CIRCLE\CIRCLE}    % 6-7 Pkt.
-               {\ifthenelse{\equal{#1}{7}}{\CIRCLE\CIRCLE\CIRCLE*} % > 7 Pkt.             
+               {\ifthenelse{\equal{#1}{7}}{\CIRCLE\CIRCLE\CIRCLE*} % > 7 Pkt.
                {}}}}}}}}                                           % other
 
   \newcommand{\picright}[3]{\begin{minipage}[t]
@@ -791,21 +791,21 @@
      \hfill\begin{minipage}[t]{\textwidth-1em-#1}#2\end{minipage}}
 
   \newcommand{\listpicright}[3]{\begin{minipage}[t]
-	  {\textwidth-\leftmargin-1em-#1}#2\end{minipage}\hfill 
+	  {\textwidth-\leftmargin-1em-#1}#2\end{minipage}\hfill
 		% to put pictures aside text in list
     \begin{minipage}[t]{#1}#3\end{minipage}}
 
   \newcommand{\leadingzero}[1]{\ifnum #1<10 0\the#1\else\the#1\fi}
-  \newcommand{\todayshort}{\leadingzero{\day}.\leadingzero{\month}.\the\year}    
+  \newcommand{\todayshort}{\leadingzero{\day}.\leadingzero{\month}.\the\year}
   \newcommand{\comm}[1]{\textcolor{red}{#1}}
-  \newcommand{\corr}[1]{\textcolor{red}{#1}}  
-  \newcommand{\hide}[1]{}  
+  \newcommand{\corr}[1]{\textcolor{red}{#1}}
+  \newcommand{\hide}[1]{}
 
   \newcommand{\authorcom}[1]{\todo[color=green!40,author=Autor, inline]{#1}}
   \newcommand{\corone}[1]{\todo[color=blue!40,author=Erstkorrektur, inline]{#1}}
   \newcommand{\cortwo}[1]{\todo[color=orange!40,author=Zweitkorrektur, inline]{#1}}
   \newcommand{\corend}[1]{\todo[color=magenta!40,author=Endkorrektur, inline]{#1}}
-  
+
   \newcommand{\changefont}[3]{
     \fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
 
@@ -818,13 +818,19 @@
 	\end{tikzpicture}
     \end{center}}
 
+  \newcommand{\gaptext}[2][3]{% #1 ist optional, #2 ist der Text
+  \settowidth{\textlength}{#2}% Textbreite messen
+   \setlength{\textlength}{#1\textlength}% Länge mit Faktor #1 multiplizieren
+   \underline{\hspace{\textlength}}% Unterstrichene Lücke ausgeben
+   }
+   
 %   \newcommand{\ipho}[2]{\href{http://ipho.org/problems-and-solutions.html}{Internationale PhysikOlympiade} #1, Aufgabe #2}
-%   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}   
+%   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}
 % %  \DeclareDocumentCommand{\iphode}{m m g}{%
 % %        Auswahlwettbewerb zur IPhO #1, #2.~Runde\IfNoValueF {#3} {, Aufgabe #3}}
 %   \DeclareDocumentCommand{\iphode}{m m g}{%
 %         Auswahlwettbewerb zur IPhO #1, #2.~Runde\IfNoValueF {#3} {}}
-    
+
 %% ***************************
 %% **** ENDE Klassendatei ****
 %% ***************************
