@@ -172,7 +172,7 @@
 \usepackage[\solution,rd\round,ex\exam,c\code]{optional}
 
 % Operator
-\newcommand{\op}[1]{\uline{\textbf{#1}}}
+\newcommand{\operator}[1]{\uline{\textbf{#1}}}
 
 % Antwortkasten
 \newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\opt{2}{\marginpar{%

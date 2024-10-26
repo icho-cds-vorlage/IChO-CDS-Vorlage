@@ -1,6 +1,7 @@
 %Nur noch diese Version wird weiter aktualisiert, nicht mehr die Kopien bei Rd3
 %Dieses Dokument ist so geschrieben, dass es in der kompilierten Fassung lesbar ist. 
 \documentclass[./main.tex]{subfiles}
+\usepackage{hyperref}
 \graphicspath{{\subfix{./Abbildungen/}}}
 \begin{document}
 \newpage
@@ -46,7 +47,7 @@ Diese Bedienungsanleitung soll Standards festlegen, die bei der Arbeit mit dem T
     \item Aufgabenstellung mit \textit{\textbackslash teilaufgabe\{\}\{\}}, wobei das 1. Argument die Aufgabenstellung und das 2. Element der Hinweis ist (falls es keinen Hinweis gibt, leer lassen)
     \item Innerhalb der Aufgabenstellung einer Teilaufgabe m\"ussen \textit{\textbackslash ch} und \textit{\textbackslash SI} in die Mathe\-/Umgebung gesetzt werden (diese bricht die Kursivschrift der Aufgabenstellung)
     \item Vor und nach der Teilaufgabe wird der Zeilenabstand i.d.R. NICHT durch Leerzeilen im Quelltext vergr\"o\ss{}ert
-    \item Operatoren mit \textit{\textbackslash op\{\}} kenntlich machen. 
+    \item Operatoren mit \textit{\textbackslash operator\{\}} kenntlich machen. 
     \item Standard-Antwortk\"asten mit \textit{\textbackslash kasten\{\}\{\}\{\}}, wobei das erste Argument die H\"ohe, das 2. die Musterl\"osung und das 3. ein evtl. in der Klausur vorhandener Kasteninhalt ist. 
     \item Punkte und Bewertungshinweise werden mit \textit{\textbackslash punkte\{\}} und \textit{\textbackslash kommentar\{\}} in der Musterl\"osung geschrieben. Vor der Punktausgabe das Leerzeichen wird automatisch erzeugt (kein Leerzeichen schreiben wegen Version 1). Bei Kommentaren au\ss{}erhalb von Antwortk\"asten darauf achten, dass diese das Layout nicht verschieben.
     \item Normale Antwortk\"asten werden nicht am Seitenende umgebrochen. Soll dies bei langen K\"asten geschehen, steht \textit{\textbackslash umbruchkasten\{\}\{\}\{\}\{\}\{\}\{\}} bereit. Die ersten 3 Argumente sind analog \textit{\textbackslash kasten}, die weiteren drei sollten erstmal auf \textit{0pt} gesetzt werden. Diese dienen dazu, die Kastenl\"ange in den drei Klausurvarianten durch zus\"atzliche Verl\"angerung angleichen zu k\"onnen, falls n\"otig (4. Argument f\"ur Variante 0, 5. f\"ur 1, 6. f\"ur 2). Die automatische L\"angenanpassung macht Fehler im Millimeterbereich, solange am Seitenumbruch Text steht. Wenn durch andere Objekte der Kasten auf der Vorseite nicht bis zum Seitenrand mit Inhalt gef\"ullt werden kann, treten gr\"o\ss{}ere Fehler auf, die beim finalen Layouten korrigiert werden sollten, falls sich dadurch Inhalte verschieben. Es treten Fehlermelddungen \textit{unexpected alignement} auf, die anscheinend ignorierbar sind, jedoch ist dem Autor die Ursache bisher nicht klar. 
@@ -100,6 +101,11 @@ Markieren & Bestimmte Merkmale eindeutig graphisch hervorheben
 Ordnen / Zuordnen & Begriffe, Gegenst\"ande etc. aufgrund bestimmter Merkmale systematisch einteilen \\\hline
 Skizzieren & Sachverhalte, Objekte, Strukturen oder Ergebnisse auf das Wesentliche reduzieren und in \"ubersichtlicher Weise darstellen \\\hline
 Zeichnen & Eine exakte Darstellung gegebener Daten, Graphen oder Strukturen anfertigen \\\hline
+\end{tabular}
+\newpage
+{\Large \textbf{Command Register}}\par
+\begin{tabular}
+    
 \end{tabular}
 
 Es k\"onnen im Einzelfall auch andere Operatoren verwendet werden, sofern diese eine eindeutige Handlungsanweisung darstellen (z.B. Unterstreiche). 
