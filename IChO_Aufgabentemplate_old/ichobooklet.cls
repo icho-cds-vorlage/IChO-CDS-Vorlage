@@ -328,7 +328,7 @@
   \newdimen\spaceleft % for remaining height of page.
 
 % for use on plain paper
-\DeclareOption{plainpaper_IChO}{%
+\DeclareOption{plainpaper}{%
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
@@ -348,30 +348,6 @@
     \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
   }}%
   \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}\opt{rd1,rd2}{\\Bundesland: \opt{c0}{\hrulefill}\opt{c1}{\susbl}}}\opt{rd2}{}}}%
-  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-}
-
-% for use on plain paper Cds
-\DeclareOption{plainpaper_Cds}{%
-  \setlength{\textwidth}{168mm}% 
-  \setlength{\textheight}{238mm}%
-  \setlength{\oddsidemargin}{-3mm}%
-  \setlength{\evensidemargin}{-3mm}%
-  \setlength{\topmargin}{-17mm}%
-  \setlength{\headheight}{48pt}%
-  \setlength{\headsep}{12pt}%
-  \setlength{\footheight}{40pt}%
-  \addtokomafont{headsepline}{\color{cdscolor}}
-  \KOMAoptions{headsepline=1pt:\textwidth}
-  \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
-  \chead[]{\large \parbox{0.33\textwidth}{%
-    \centering 
-    \opt{rd1}{\textbf{\glqq{}Chemie - die stimmt!\grqq{} 1. Runde \cyear}}
-    \opt{rd2}{\textbf{\glqq{}Chemie - die stimmt!\grqq{} 2. Runde \cyear}}
-    \opt{rd3}{\textbf{\glqq{}Chemie - die stimmt!\grqq{} 3. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
-    \opt{rd4}{\textbf{\glqq{}Chemie - die stimmt!\grqq{} 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
-  }}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd2,rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
 }
 
@@ -402,8 +378,7 @@
 
 \ProcessOptions\relax
 
-\newcommand{\plainpaperoption}{plainpaper_IChO}
-\newcommand{\plainpaperoption}{plainpaper_Cds}
+\newcommand{\plainpaperoption}{plainpaper}
 
 % \ifx\paperoption\plainpaperoption
 %   % for solutions
@@ -438,7 +413,6 @@
   \definecolor{ichodark}{RGB}{0, 110, 168}
   \definecolor{ichobright}{RGB}{0, 183, 255}
   % \definecolor{taskblue}{RGB}{0,64,130}
-  \definecolor{cdscolor}{RGB}{9D, 2D, 72}
 
 %  Labelling in lists
 % ====================
