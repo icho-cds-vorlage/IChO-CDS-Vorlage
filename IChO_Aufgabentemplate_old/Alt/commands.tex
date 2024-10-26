@@ -1,0 +1,66 @@
+% Global variables
+\FPset\teilaufgabenpunkte{0} %setzt Variable teilaufgabenpunkte=0 --> Berechnung Punkte innerhalb Teilaufgabe
+\FPset\aufgabenpunkte{0} %Z\"ahler Punktzahl einer Aufgabe
+\newcommand{\tasktitle}{holder} % Platzhalter
+\newcommand{\taskpoints}{xx} % Platzhalter
+\newcommand{\taskweight}{yy}
+\newcommand{\vergleichshilfe}{Platzhalter}
+\newcommand{\zusatzargument}{0}
+
+% Operator
+\newcommand{\op}[1]{\uline{\textbf{#1}}}
+
+% Antwortkasten
+\newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\opt{2}{\marginpar{%
+\FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
+\xdef\aufgabenpunkte{\aufgabenpunkte}%
+\FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+%letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
+\newcommand{\punkte}[1]{%
+    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}}\FPeval{teilaufgabenpunkte}{teilaufgabenpunkte+#1}%
+    \xdef\teilaufgabenpunkte{\teilaufgabenpunkte}% Definition global machen
+} % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen.
+\newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}} 
+
+%Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in MC integriert)
+\newcommand{\punkteausgabe}{\opt{2}{\marginpar{%
+\FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
+\xdef\aufgabenpunkte{\aufgabenpunkte}%
+\FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip}
+
+%Beginn und Ende
+\newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenende}{\opt{2}{\FPeval{nachkommacheck}{10 * aufgabenpunkte}\FPifint\aufgabenpunkte \FPeval\aufgabenpunkte{round(aufgabenpunkte:0)} \else \FPeval\aufgabenpunkte{round(aufgabenpunkte:1)} \fi\FPifint\nachkommacheck\else\todo{Auch bei der Gesamtpunktzahl nur eine Dezimalstelle}\fi%
+\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\FPprint\aufgabenpunkte}\fi}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\restartlist{enumerate}\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\FloatBarrier ~\newpage} %\FPset gilt nur innerhalb der group, deshalb muss Zur\"ucksetzen danach erfolgen
+
+%Multiple-Choice-Design
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
+\newcolumntype{T}[1]{>{\centering\arraybackslash}t{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
+\newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
+\newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=red, thick] (0,0) -- (0.25,0.25); \draw[color=red, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
+\newcommand{\ersteantwort}[1]{\begingroup\renewcommand{\zusatzargument}{#1}} %leider durch Begrenzung der Argumente von newcommand vor jeder MC-Aufgabe Richtigkeit der 1. Antwort separat einzugeben --> 1 ist richtig, alles andere falsch
+\newcommand{\MC}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
+                \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
+                #1 & #2 & #4 & #6 & #8 \\\hline
+                \ifdefstring{\zusatzargument}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#3}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#5}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#7}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#9}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} \\\hline
+                \end{tabular}}\endgroup\punkteausgabe}
+
+% Redifine \section to fullfill IChO-style
+\makeatletter
+\let\latex@@thesection\thesection
+\newcommand{\padwithzero}{%
+  0%
+}%
+\renewcommand{\thesection}{Aufgabe \round\,--\,\ifnum\c@section<10\relax\padwithzero\fi\latex@@thesection}
+\newcount\dummycntr
+\makeatother
+
+%Others
+\newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
+\newcommand{\strich}{{\small{}$^\prime$}}
+\newcommand{\dd}[3][]{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}} %vereinfachtes schreiben von Ableitungen
+
+\newcommand{\pH}{\ensuremath{\mathrm{pH}}}
+\newcommand{\pOH}{\ensuremath{\mathrm{pOH}}}
+\newcommand{\pKS}{\ensuremath{\mathrm{p}K\sb{\mathrm{S}}}}

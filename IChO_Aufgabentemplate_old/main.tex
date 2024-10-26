@@ -1,0 +1,48 @@
+\newcommand{\solution}{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
+
+%Ab hier Finger weg, hier sollte bis zum finalen Satz nichts angefasst werden muessen!
+
+\newcommand{\cyear}{2025}
+\newcommand{\round}{2} % 1, 2, 3, 4
+\newcommand{\exam}{2} % 1, 2; Nur fuer 3. & 4. Runde
+\newcommand{\fullname}{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (f\"uer Deckblatt)
+\newcommand{\code}{0} %0: Linie; 1: aus Datei importieren
+
+\newcommand{\paperoption}{plainpaper}
+\documentclass[\paperoption]{ichobooklet}
+\begin{document}%\serienbriefstart %Auslagerung von \loop funktioniert nicht, die auskommentierten Befehle sind Quelltextleichen
+\newread\quelle
+ \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
+ \loop
+ \read\quelle to \zeile
+  \ifeof\quelle
+   \global\morefalse
+  \else
+   \expandafter\chopline\zeile\\
+
+\setcounter{page}{1}\setcounter{section}{0}
+\subfile{./Hilfsdateien/deckblatt}
+\subfile{./Hilfsdateien/formelsammlung}
+\subfile{./Hilfsdateien/periodensystem}
+\subfile{./Hilfsdateien/NMR}
+
+%%%%%%%%%%%%%%%%%%
+% 1. Aufgabe
+\subfile{2025-3-11}
+
+% 2. Aufgabe
+\subfile{2025-3-12}
+
+% 3. Aufgabe
+\subfile{2025-3-13}
+
+% 4. Aufgabe
+\subfile{2025-3-14}
+
+\subfile{To-do}
+
+%\serienbriefende
+  \fi
+ \ifmore\repeat
+ \closein\quelle
+\end{document}
