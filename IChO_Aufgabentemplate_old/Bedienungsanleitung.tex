@@ -104,65 +104,75 @@ Zeichnen & Eine exakte Darstellung gegebener Daten, Graphen oder Strukturen anfe
 \end{tabular}
 \newpage
 {\Large \textbf{Command Register}}\par
-\begin{tabular}
-    \hyperlink{a}{\textbackslash{}\grqq{}a}\\
-    \hyperlink{o}{\textbackslash{}\grqq{}o}\\
-    \hyperlink{u}{\textbackslash{}\grqq{}u}\\
-    \hyperlink{Kommentar}{\textbackslash{}Kommentar}\\
-    \hyperlink{MC}{\textbackslash{}MC}\\
-    \hyperlink{MCrf}{\textbackslash{}MCrf}\\
-    \hyperlink{MCv}{\textbackslash{}MCv}\\
-    \hyperlink{MCvAnfang}{\textbackslash{}MCvAnfang}\\
-    \hyperlink{MCvEnde}{\textbackslash{}MCvEnde}\\
-    \hyperlink{MCvUmbruch}{\textbackslash{}MCvUmbruch}\\
-    \hyperlink{MCvrfUmbruch}{\textbackslash{}MCvrfUmbruch}\\
-    \hyperlink{SI}{\textbackslash{}SI}\\
-    \hyperlink{textbackslash}{\textbackslash{}\textbackslash{}}\\
-    \hyperlink{aufgabenanfang}{\textbackslash{}aufgabenanfang}\\
-    \hyperlink{aufgabenende}{\textbackslash{}aufgabenende}\\
-    \hyperlink{authorcom}{\textbackslash{}authorcom}\\
-    \hyperlink{beginenumerate}{\textbackslash{}begin{enumerate}}\\
-    \hyperlink{bottomrule}{\textbackslash{}bottomrule}\\
-    \hyperlink{ch}{\textbackslash{}ch}\\
-    \hyperlink{code}{\textbackslash{}code}\\
-    \hyperlink{corend}{\textbackslash{}corend}\\
-    \hyperlink{corone}{\textbackslash{}corone}\\
-    \hyperlink{cortwo}{\textbackslash{}cortwo}\\
-    \hyperlink{dd}{\textbackslash{}dd}\\
-    \hyperlink{includegraphics}{\textbackslash{}includegraphics}\\
-    \hyperlink{intertext}{\textbackslash{}intertext}\\
-    \hyperlink{kasten}{\textbackslash{}kasten}\\
-    \hyperlink{linebreak}{\textbackslash{}linebreak}\\
-    \hyperlink{linewidth}{\textbackslash{}linewidth}\\
-    \hyperlink{lstandardstate}{\textbackslash{}lstandardstate}\\
-    \hyperlink{mathrm}{\textbackslash{}mathrm}\\
-    \hyperlink{midrule}{\textbackslash{}midrule}\\
-    \hyperlink{ocZahl}{\textbackslash{}oc[Zahl]}\\
-    \hyperlink{ocanfang}{\textbackslash{}ocanfang}\\
-    \hyperlink{ochilf}{\textbackslash{}ochilf}\\
-    \hyperlink{ockasten}{\textbackslash{}ockasten}\\
-    \hyperlink{ocscale}{\textbackslash{}ocscale}\\
-    \hyperlink{ocumbruch}{\textbackslash{}ocumbruch}\\
-    \hyperlink{operator}{\textbackslash{}operator}\\
-    \hyperlink{pH}{\textbackslash{}pH}\\
-    \hyperlink{pKs}{\textbackslash{}pKs}\\
-    \hyperlink{pKb}{\textbackslash{}pKb}\\
-    \hyperlink{pKw}{\textbackslash{}pKw}\\
-    \hyperlink{pOH}{\textbackslash{}pOH}\\
-    \hyperlink{par}{\textbackslash{}par}\\
-    \hyperlink{punkte}{\textbackslash{}punkte}\\
-    \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}\\
-    \hyperlink{quadrat}{\textbackslash{}quadrat}\\
-    \hyperlink{quadratkor}{\textbackslash{}quadratkor}\\
-    \hyperlink{quadratkorr}{\textbackslash{}quadratkorr}\\
-    \hyperlink{sol}{\textbackslash{}sol}\\
-    \hyperlink{solution}{\textbackslash{}solution}\\
-    \hyperlink{ss}{\textbackslash{}ss}\\
-    \hyperlink{strich}{\textbackslash{}strich}\\
-    \hyperlink{textsc}{\textbackslash{}textsc}\\
-    \hyperlink{toprule}{\textbackslash{}toprule}\\
-    \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}\\
-\end{tabular}
+Im Folgenden findet sich eine Übersicht über alle Commands, welche das \LaTeX -Template zur Verfügung stellt, sowie eine kurze Erklärung, was diese machen. Um die lange Erklärung zu sehen, kann auf den Command geklickt werden und man gelangt zur entsprechenden Stelle in der Bedienungsanleitung.\\
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+Command&kurze Erklärung\hfill\\\hline
+    \hyperlink{textbackslash}{\textbackslash{}\textbackslash{}}&Zeilenumbruch\\\hline
+    \hyperlink{aufgabenanfang}{\textbackslash{}aufgabenanfang}&Definiert den Beginn einer Aufgabe\\\hline
+    \hyperlink{aufgabenende}{\textbackslash{}aufgabenende}&Definiert das Ende einer Aufgabe\\\hline
+    \hyperlink{authorcom}{\textbackslash{}authorcom}&Kommentare des Aufgabenautors während des Erstellungsprozesses\\\hline
+    \hyperlink{beginenumerate}{\textbackslash{}begin\{enumerate\}}&Beginnt eine Aufzählung\\\hline
+    \hyperlink{bottomrule}{\textbackslash{}bottomrule}&Erzeugt letzte Linie der Tabelle\\\hline
+    \hyperlink{ch}{\textbackslash{}ch}&Umgebung für Summenformeln und Reaktionsgleichungen\\\hline
+    \hyperlink{code}{\textbackslash{}code}&Wert \glqq 0\grqq{} für Linie zum Eintragen des Schülercodes; Wert \glqq 1\grqq{} zum Einlesen von Schülercodes\\\hline
+    \hyperlink{corend}{\textbackslash{}corend}&Kommentare für die Endkorrektur\\\hline
+    \hyperlink{corone}{\textbackslash{}corone}&Kommentare des Erstkorrektors\\\hline
+    \hyperlink{cortwo}{\textbackslash{}cortwo}&Kommentare des Zweitkorrektors\\\hline
+    \hyperlink{dd}{\textbackslash{}dd}&Erzeugen einer Ableitungsfunktion\\\hline
+    \hyperlink{includegraphics}{\textbackslash{}includegraphics}&Einbinden von Grafiken\\\hline
+    \hyperlink{intertext}{\textbackslash{}intertext}&Einfügen von Text zwischen Formelzeichen in \textit{align}-Umgebung\\\hline
+    \hyperlink{kasten}{\textbackslash{}kasten}&Erzeugen eines Antwortkastens\\\hline
+    \hyperlink{Kommentar}{\textbackslash{}Kommentar}&Erzeugen eines Kommentars für die interne Musterlösung\\\hline
+    \hyperlink{linebreak}{\textbackslash{}linebreak}&Erzeugen eines Zeilenumbruchs, unter Beibehaltung des Blocksatzes\\\hline
+    \hyperlink{linewidth}{\textbackslash{}linewidth}&Gibt die Textbreite zurück\\\hline
+    \hyperlink{lstandardstate}{\textbackslash{}lstandardstate}&Standardzustand in Mathe-Umgebung\\\hline
+    \hyperlink{mathrm}{\textbackslash{}mathrm}&Erzeugt normalen text in Mathe-Umgebung\\\hline
+     \hyperlink{MC}{\textbackslash{}MC}&Erzeugt eine Multiple-Choice-Frage im Querformat\\\hline
+    \hyperlink{MCrf}{\textbackslash{}MCrf}&Erzeugt eine Multiple-Choice-Frage im Querformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCv}{\textbackslash{}MCv}&Erzeugt eine Multiple-Choice-Frage im Hochformat\\\hline
+    \hyperlink{MCvAnfang}{\textbackslash{}MCvAnfang}&Beginnt eine Multiple-Choice-Tabelle im Hochformat\\\hline
+    \hyperlink{MCvEnde}{\textbackslash{}MCvEnde}&Beendet eine Multiple-Choice\\\hline
+    \hyperlink{MCvrf}{\textbackslash{}MCvrf}&Erzeugt eine Multiple-Choice-Frage im Hochformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvrfAnfang}{\textbackslash{}MCvrfAnfang}&Beginnt eine Multiple-Choice-Tabelle im Hochformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvrfEnde}{\textbackslash{}MCvrfEnde}&Beendet eine Multiple-Choice im Hochformat mit Möglichkeit richtig/falsch\\\hline
+     \hyperlink{MCvrfUmbruch}{\textbackslash{}MCvrfUmbruch}&Erzeugt einen Umbruch in einer Multiple-Choice-Tabelle im Hochformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvUmbruch}{\textbackslash{}MCvUmbruch}&Erzeugt einen Umbruch in einer Multiple-Choice-Tabelle im Hochformat\\\hline
+    \hyperlink{midrule}{\textbackslash{}midrule}&Erzeugt eine Linie in einer Tabelle\\\hline
+    \hyperlink{ocZahl}{\textbackslash{}oc[Zahl]}&Definiert Verbindungsnummer und Musterlösung für einen OC-Kasten\\\hline
+    \hyperlink{ocanfang}{\textbackslash{}ocanfang}&Beginnt einen OC-Kasten\\\hline
+    \hyperlink{ochilf}{\textbackslash{}ochilf}&Definieren eines neuen Startwerts für die OC-Kästen\\\hline
+    \hyperlink{ockasten}{\textbackslash{}ockasten}&Erzeugt einen OC-Kasten\\\hline
+    \hyperlink{ocscale}{\textbackslash{}ocscale}&Skaliert alle OC-Verbindungen\\\hline
+\end{tabularx}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Command&kurze Erklärung\hfill\\\hline
+    \hyperlink{ocumbruch}{\textbackslash{}ocumbruch}&Seitenumbruch innerhalb eines OC-Kastens\\\hline
+    \hyperlink{operator}{\textbackslash{}operator}&Hebt den Operator hervor\\\hline
+    \hyperlink{pH}{\textbackslash{}pH}&Erzeugt \pH \ in korrekter Formatierung\\\hline
+    \hyperlink{pKs}{\textbackslash{}pKs}&Erzeugt \pKs \ in korrekter Formatierung\\\hline
+    \hyperlink{pKb}{\textbackslash{}pKb}&Erzeugt \pKb \ in korrekter Formatierung\\\hline
+    \hyperlink{pKw}{\textbackslash{}pKw}&Erzeugt \pKw \ in korrekter Formatierung\\\hline
+    \hyperlink{pOH}{\textbackslash{}pOH}&Erzeugt \pOH \ in korrekter Formatierung\\\hline
+    \hyperlink{par}{\textbackslash{}par}&Erzeugung einer Leerzeile\\\hline
+    \hyperlink{punkte}{\textbackslash{}punkte}&Ausgabe von Punkten für die Musterlösung\\\hline
+    \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}&Ausgabe von Punkten für Teilaufgaben ohne Kasten\\\hline
+    \hyperlink{quadrat}{\textbackslash{}quadrat}&Erzeugt ein leeres Kästchen\\\hline
+    \hyperlink{quadratkor}{\textbackslash{}quadratkor}&Erzeugt ein angekreuztes Kästchen\\\hline
+    \hyperlink{quadratkorr}{\textbackslash{}quadratkorr}&Erzeugt ein Kästchen, das für Schüler leer ist und für Korrektoren angekreuzt ist\\\hline
+    \hyperlink{SI}{\textbackslash{}SI}&Setzen von Einheiten\\\hline
+    \hyperlink{sol}{\textbackslash{}sol}&Erzeugt Lösung in selbstgeschriebenen Antwortkästchen\\\hline
+    \hyperlink{solution}{\textbackslash{}solution}&Einstellen der Version, welche kompiliert werden soll\\\hline
+    \hyperlink{ss}{\textbackslash{}ss}&Erzeugt \ss \ in korrekter Formatierung\\\hline
+    \hyperlink{strich}{\textbackslash{}strich}&Erzeugt einen Strich in einer Strukturformel\\\hline
+    \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapitälchen\\\hline
+    \hyperlink{toprule}{\textbackslash{}toprule}&Zeichnet die oberste Linie einer Tabelle\\\hline
+    \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}&Erzeugt einen Kasten mit Umbruch\\\hline
+    \hyperlink{a}{\textbackslash{}\grqq{}a}&Erzeugt ein \"a in korrekter Formatierung\\\hline
+    \hyperlink{o}{\textbackslash{}\grqq{}o}&Erzeugt ein \"a in korrekter Formatierung\\\hline
+    \hyperlink{u}{\textbackslash{}\grqq{}u}&Erzeugt ein \"a in korrekter Formatierung\\\hline
+\end{tabularx}
 
 Es k\"onnen im Einzelfall auch andere Operatoren verwendet werden, sofern diese eine eindeutige Handlungsanweisung darstellen (z.B. Unterstreiche). 
 \end{document}
