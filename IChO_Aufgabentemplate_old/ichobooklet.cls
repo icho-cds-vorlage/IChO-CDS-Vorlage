@@ -34,6 +34,9 @@
   \usepackage{picinpar,wrapfig}
   \usepackage{epstopdf}
   \usepackage{xcolor}
+
+  \usepackage{xintexpr}
+
  % \usepackage{framed}
   \usepackage{mdframed}
   \usepackage{array}
@@ -156,6 +159,7 @@
 \makeatother
 
 \FPset\teilaufgabenpunkte{0} %setzt Variable teilaufgabenpunkte=0 --> Berechnung Punkte innerhalb Teilaufgabe
+\newcounter{doppteilaufpunkt}
 \FPset\aufgabenpunkte{0} %Z\"ahler Punktzahl einer Aufgabe
 \newcommand{\tasktitle}{holder} % Platzhalter
 \newcommand{\taskpoints}{xx} % Platzhalter
@@ -182,6 +186,8 @@
 
 % Antwortkasten
 \newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\opt{2}{\marginpar{%
+\FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 2}
+\setcounter{doppteilaufpunkt}{0}
 \FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
 \xdef\aufgabenpunkte{\aufgabenpunkte}%
 \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
@@ -190,8 +196,7 @@
 %umbrechbarer Antwortkasten
 \newcommand{\FPtruncate}[2]{\FPeval\truncatehelpone{round(#2:0)}\FPsub{\truncatehelptwo}{#2}{0.5}\FPeval\truncatehelpthree{round(truncatehelptwo:0)}\ifthenelse{\equal{\truncatehelpone}{\truncatehelpthree}}{\FPeval{#1}{\truncatehelpone}}{\FPeval{#1}{\truncatehelpthree}}} %Funktion fuer Abschneiden von Nachkommastellen (1. Argument: Zielvariable; 2. Argument: Ausgangswert oder Variable)
 \newcommand{\calculateLinesToFill}[2]{%Leerzeilen, bis Kasten die gewuenschte Groesse erreicht (1. Argument: Groesse, 2. Argument: Inhalt)
-    \settototalheight{\contentheight}{\parbox{\linewidth}{#2}} % Measure height of the content; doppeltes Aufrufen des Textes verdoppelt gez\"ahlte Punktzahl
-    \FPdiv{\teilaufgabenpunkte}{\teilaufgabenpunkte}{2}\xdef\teilaufgabenpunkte{\teilaufgabenpunkte} %Punktzahl korrigieren und wieder global machen
+    \settototalheight{\contentheight}{\parbox{\linewidth}{#2}} % Measure height of the content; doppeltes Aufrufen des Textes verdoppelt gez\"ahlte Punktzahl %Punktzahl korrigieren und wieder global machen
     \setlength{\targetheight}{#1}
     \setlength{\remainingheight}{\targetheight - \contentheight} % Calculate remaining height
     \FPdiv{\lines}{\csname rem@pt\expandafter\endcsname\the\dimexpr\remainingheight}{\csname rem@pt\expandafter\endcsname\the\dimexpr\baselineskip} % Calculate number of lines needed; dazu zuerst Einheit entfernen
@@ -210,6 +215,8 @@
   \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
  \end{tcolorbox}
  \opt{2}{\marginpar{%
+  \FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 2}
+  \setcounter{doppteilaufpunkt}{0}
   \FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
   \xdef\aufgabenpunkte{\aufgabenpunkte}%
   \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip
@@ -217,8 +224,7 @@
 
 %Teilaufgaben und deren Punkteberechnung
 \newcommand{\punkte}[1]{%
-    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}}\FPeval{teilaufgabenpunkte}{teilaufgabenpunkte+#1}%
-    \xdef\teilaufgabenpunkte{\teilaufgabenpunkte}% Definition global machen
+    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{doppteilaufpunkt}{\xintNum{\the\numexpr 2 * #1 \relax} \relax}
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen.
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
@@ -241,12 +247,6 @@
 \newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
 \newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=red, thick] (0,0) -- (0.25,0.25); \draw[color=red, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
-\newcommand{\letzteantwort}[1]{\begingroup\renewcommand{\zusatzargument}{#1}} %leider durch Begrenzung der Argumente von newcommand vor jeder MC-Aufgabe Richtigkeit der 1. Antwort separat einzugeben --> 1 ist richtig, alles andere falsch
-% \newcommand{\MC}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
-%                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
-%                 #1 & #3 & #5 & #7 & #9 \\\hline
-%                 \renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#4}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#6}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} & \renewcommand{\vergleichshilfe}{#8}\ifdefstring{\vergleichshilfe}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} &  \ifdefstring{\zusatzargument}{1}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}{\quadrat} \\\hline
-%                 \end{tabular}}\endgroup\punkteausgabe}
 \newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
                 #1 & #2 & #3 & #4 & #5\\\hline
@@ -367,13 +367,14 @@
   \setlength{\footheight}{40pt}%
   \addtokomafont{headsepline}{\color{cdscolor}}
   \KOMAoptions{headsepline=1pt:\textwidth}
+  \renewcommand*{\familydefault}{\sfdefault}
   \ihead[]{\parbox{0.25\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
   \chead[]{\large \vspace*{4pt} \parbox{0.5\textwidth}{%
     \centering
-    \opt{rd1}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}
-    \opt{rd2}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}
-    \opt{rd3}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}
-    \opt{rd4}{\textbf{\bfseries\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}
+    \opt{rd1}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}}
+    \opt{rd2}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}
+    \opt{rd3}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
+    \opt{rd4}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
   } \vspace*{2.5mm}}%
   \ohead[]{\setstretch{1.5} \normalsize \parbox{0.25\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
