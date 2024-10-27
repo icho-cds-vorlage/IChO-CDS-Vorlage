@@ -92,12 +92,12 @@
   \renewcommand{\arraystretch}{1.8}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
     \pH/\pOH-Wert & & $\pH = -\log_{10}{(a_{\ch{H^+}})}$ \newline $\text{pOH} = -\log_{10}{(a_{\ch{OH^-}})}$ \\
-    \multirow{2}{*}{\makecell[c]{S\"aurest\"arke\\ \ch{HA + H2O <=> A- + H3O+} }}&& $\displaystyle K_S = \frac{a_{\ch{A-}} \cdot a_{\ch{H+}}}{a_{\ch{HA}}}$ \newline $\displaystyle \pKs = -\log_{10}(K_{\ch{S}})$\\
+    \multirow{2}{*}{\makecell[c]{S\"aurest\"arke\\ \ch{HA + H2O <=> A- + H3O+} }}&& $\displaystyle K_\mathrm{S} = \frac{a_{\ch{A-}} \cdot a_{\ch{H+}}}{a_{\ch{HA}}}$ \newline $\displaystyle \pKs = -\log_{10}(K_{\ch{S}})$\\
     \multirow{2}{*}{\makecell[c]{Basenst\"arke\\ \ch{B + H2O <=> BH+ + OH-} }}&& $\displaystyle K_{\ch{B}} = \frac{a_{\ch{BH+}} \cdot a_{\ch{OH-}}}{a_{\ch{B}}}$ \newline $\pKb = -\log_{10}(K_{\ch{B}})$\\
     Ionenprodukt des Wassers & & $K_{\ch{W}} =a_{\ch{H+}} \cdot a_{\ch{OH-}} =  10^{-14}$ \newline $\pH + \pOH = 14$ \newline $K_\textrm{S} \cdot K_\textrm{B} = K_\textrm{W}$ \\
     pH-N\"aherungsformeln:\\
     - Starke S\"auren/Basen & & $\pH \approx -\log_{10}{(a_{\ch{HA},0})}$ \newline $\pOH \approx -\log_{10}{(a_{\ch{B},0})}$ \\
-    - Schwache S\"auren/Basen & & $\pH \approx \frac{1}{2} \cdot (\pKa - \log_{10}{(a_{\ch{HA},0})})$ \newline $\pOH \approx \frac{1}{2} \cdot (\pKa - \log_{10}{(a_{\ch{B},0})})$ \\
+    - Schwache S\"auren/Basen & & $\pH \approx \frac{1}{2} \cdot (\pKs - \log_{10}{(a_{\ch{HA},0})})$ \newline $\pOH \approx \frac{1}{2} \cdot (\pKb - \log_{10}{(a_{\ch{B},0})})$ \\
     \textsc{Henderson-Hasselbalch}-Gleichung & & $\displaystyle \pH = \pKs + \log_{10}\frac{a_{\ch{A-}}}{a_{\ch{HA}}}$    \\
     \end{tabular}
   \end{center}
@@ -119,7 +119,7 @@
   \begin{center}
   \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
-    Freie Enthalpie & & $\Delta G^\circ = \Delta H^\circ - T \cdot \Delta S^\circ$  \newline $\Delta G = -\Delta E \cdot z \cdot F $\newline $\Delta G = \Delta G^\circ + R \cdot T \cdot \ln{Q}$ \\
+    Freie Enthalpie & & $\Delta G = \Delta H - T \cdot \Delta S$  \newline $\Delta G = -\Delta E \cdot z \cdot F $\newline $\Delta G = \Delta G^\circ + R \cdot T \cdot \ln{Q}$ \\
     Reaktionsenthalpie & & $\Delta_{\mathrm{r}}H^{\circ} = \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Edukte}}$\\
     Reaktionsentropie & & $\Delta_{\mathrm{r}}S^{\circ} = \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Edukte}}$ \\
     \textsc{Gibbs}'sche Phasenregel & & $f = K - P + 2$ \\
