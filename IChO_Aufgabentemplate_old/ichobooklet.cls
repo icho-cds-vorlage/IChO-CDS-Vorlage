@@ -731,7 +731,7 @@
 }
 
 
-%experimentell
+% experimental
 \ExplSyntaxOn
 
 % package level definitions
@@ -753,29 +753,29 @@
   \tl_clear:N \l_frame_tl
   \int_set:Nn \l_len_int { \clist_count:N \l__kastenarray_left_tl }
   \int_step_inline:nnnn 1 1 {\l_len_int - 1}
-  {%
-    \clist_pop:NN \l__kastenarray_left_tl \l_tmpl_tl
-    \clist_pop:NN \l__kastenarray_right_tl \l_tmpr_tl
-    \tl_set:NV \l_frame_tl {\begin{minipage}[t][#2][t]{#1}}
-    \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering\l_tmpr_tl}
-    \tl_put_right:NV \l_frame_tl {\end{minipage}}
-    \tl_put_right:NV \l_row_tl {\begin{tcolorbox}}
-    \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
-    \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
-    %\tl_put_right:Nx \l_row_tl { \frame{ \exp_not:V \l_frame_tl} }
-    \tl_put_right:NV \l_row_tl {\hspace*{#3}}
-    \tl_put_right:Nn \l_row_tl {&}
-  }
+    {%
+      \clist_pop:NN \l__kastenarray_left_tl \l_tmpl_tl
+      \clist_pop:NN \l__kastenarray_right_tl \l_tmpr_tl
+      \tl_set:NV \l_frame_tl {\begin{minipage}[t][#2][t]{#1}}
+          \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering\opt{1,2}{\l_tmpr_tl}}
+          \tl_put_right:NV \l_frame_tl {\end{minipage}}
+      \tl_put_right:NV \l_row_tl {\begin{tcolorbox}}
+          \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
+          \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
+      %\tl_put_right:Nx \l_row_tl { \frame{ \exp_not:V \l_frame_tl} }
+      \tl_put_right:NV \l_row_tl {\hspace*{#3}}
+      \tl_put_right:Nn \l_row_tl {&}
+    }
   \clist_pop:NN \l__kastenarray_left_tl \l_tmpl_tl
   \clist_pop:NN \l__kastenarray_right_tl \l_tmpr_tl
   \tl_set:NV \l_frame_tl {\begin{minipage}[t][#2][t]{#1}}
-  \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering\l_tmpr_tl}
-  \tl_put_right:NV \l_frame_tl {\end{minipage}}
+      \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering\opt{1,2}{\l_tmpr_tl}}
+      \tl_put_right:NV \l_frame_tl {\end{minipage}}
   \tl_put_right:NV \l_row_tl {\begin{tcolorbox}}
-  \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
-  \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
+      \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
+      \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
   %\tl_put_right:Nx \l_row_tl { \frame{ \exp_not:V \l_frame_tl} }
-  \tl_put_right:Nn \l_row_tl {\\}
+  %\tl_put_right:Nn \l_row_tl {\\}
   \begin{center}
     \tcbset{
       width=#1 + 6.3pt,
@@ -790,6 +790,9 @@
       top=0pt,
       bottom=0pt,
     }
+    \setlength{\tabcolsep}{0pt}
+    \setlength{\textfloatsep}{0pt}
+    \setlength{\parskip}{0pt}
     \begin{tabular}{*{\l_len_int}{c}}
       \l_row_tl
     \end{tabular}
@@ -797,8 +800,13 @@
 }
 
 % xparse interface
-\NewDocumentCommand{\kastenarray}{ m m O{0cm} m m }{
-  \kastenarray_zip:nnnnn {#1} {#2} {#3} {#4} {#5}
+\NewDocumentCommand{\kastenarray}{ m m O{0cm} O{t} m m }{
+  \kastenarray_zip:nnnnn {#1} {#2} {#3} {#5} {#6}
+  \IfValueTF{#4}{%
+    \tl_if_eq:nnTF {#4} {t} {
+      \vspace*{-2.16\baselineskip}
+    }{}
+  }{}
 }
 \ExplSyntaxOff
 
