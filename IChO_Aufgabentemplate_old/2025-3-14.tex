@@ -62,20 +62,40 @@
 \end{center}
 
 
-% TODO:
-% include \opt{}
-\kastenarray{6cm}{4cm}[0.5cm]{Q,W}{\includegraphics[width=5.5cm]{Komplex.eps},\includegraphics[width=5.5cm]{Ligand.eps}}
+% Der Befeil 
+% \kastenarray{Breite}{Hoehe}[Abstand][tight]{label1,label2,...}{Inhalt1,Inhalt2,...}
+% erstellt gelabelte Kaesten in einer Reihe und ist fuer die Abfrage von mehreren Strukturen gedacht.
+% Dieser akzeptiert 6 Argumente, wovon 2 optional sind.
+% Breite: Die Breite jedes Kastens
+% Hoehe: Die Hoehe jedes Kastens
+% Abstand: Optional. Der Abstand zwischen den Kästen. Default ist 0cm.
+% tight: Optional. Wenn tight=t, dann wird der verticale Abstand nach den Kaesten auf entfernt. 
+%        Die Option tight=t sollte genutzt werden, wenn danach wieder eine Reihe an Kästen folgt. 
+%        Sollte nach dem Befehl Text folgen, dann sollte tight=f oder die Option weggelassen werden.
+%         Default ist tight=f.
+% label1,label2,...: Die Labels der Kästen, getrennt durch Kommata.
+% Inhalt1,Inhalt2,...: Der Inhalt der Kästen, getrennt durch Kommata. 
+%                      Diese Inhalte werden nur bei der Musterlösung angezeigt.
+% Nach jedem Kastenarray sollte eine leer Zeile folgen, da es sonst zu Kompileirungsfehlern kommt.
 
-\kastenarray{2.5cm}{3cm}[0.3cm]{G,J,I,W}{1234,6425,672,6489}
+% Kastenarray mit 2 Kästen, 6 cm breit, 4 cm hoch, Abstand 0 cm (default) und tight=f (default),
+% da danach noch ein Kastenarray folgt.
+\kastenarray{6cm}{4cm}{Q,W}{\includegraphics[width=5.5cm]{Komplex.eps},\includegraphics[width=5.5cm]{Ligand.eps}}
+
+% Kastenarray mit 4 Kästen, 2.5 cm breit, 3 cm hoch, Abstand 0.2 cm und tight=f,
+% da danach noch ein Kastenarray folgt.
+\kastenarray{2.5cm}{3cm}[0.2cm][t]{G,J,I,W}{1234,6425,672,6489}
+
+% Kastenarray mit 3 Kästen, 3 cm breit, 4 cm hoch, Abstand 0cm und tight leer gelassen,
+% da danach Text folgt.
+\kastenarray{3cm}{4cm}[0cm][]{C,D,S}{0123,4567,890a}
 
 Hier ein Text. 
 
-\kastenarray{7cm}{7cm}[-0.44cm]{1,2}{Molekuel1,Molekuel2}
+% Noch zwei Kastenarrays.
+\kastenarray{7cm}{7cm}{1,2}{Molekuel1,Molekuel2}
 
-\textcolor{orange}{Zwei K\"asten direkt untereinander scheinen nicht zu funktionieren. Und auch die Musterl\"osung ist noch nicht integriert.}
-
-\kastenarray{7cm}{7cm}[-0.44cm]{3,4}{Molekuel3,Molekuel4}
-
+\kastenarray{7cm}{7cm}[0cm][]{3,4}{Molekuel3,Molekuel4}
 
 Hier ein Text. 
 
