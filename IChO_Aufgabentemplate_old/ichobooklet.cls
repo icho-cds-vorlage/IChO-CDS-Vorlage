@@ -238,7 +238,7 @@
 \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip}
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\renewcommand{\ocscale}{0.9}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 \newcommand{\aufgabenende}{\opt{2}{\FPeval{nachkommacheck}{10 * aufgabenpunkte}\FPifint\aufgabenpunkte \FPeval\aufgabenpunkte{round(aufgabenpunkte:0)} \else \FPeval\aufgabenpunkte{round(aufgabenpunkte:1)} \fi\FPifint\nachkommacheck\else\todo{Auch bei der Gesamtpunktzahl nur eine Dezimalstelle}\fi%
 \FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\FPprint\aufgabenpunkte}\fi}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\restartlist{enumerate}\newpage}
 %\FPset gilt nur innerhalb der group, deshalb wird zu Beginn zurueckgesetzt
@@ -291,6 +291,7 @@
 \newcommand{\pKs}{\ensuremath{\mathrm{p}K_{\mathrm{S}}}}
 \renewcommand{\pKb}{\ensuremath{\mathrm{p}K_{\mathrm{B}}}}
 \newcommand{\pKw}{\ensuremath{\mathrm{p}K_{\mathrm{W}}}}
+\newcommand{\pKl}{\ensuremath{\mathrm{p}K_{\mathrm{L}}}}
 
 %Serienbrief
 \def\chopline#1;#2 \\{
@@ -528,7 +529,7 @@
 % OC Boxen
 %================================
 %stabiler Ansatz
-%Speichervariablen (Num: Nummer der Verbindung; Sol: Loesung; Con: Inhalt in Schuelerversion), zugehoerige Eingabevariable und Zaehler
+%Speichervariablen (Num: Nummer der Verbindung; Sol: Loesung; Con: Inhalt in Schuelerversion) und drei Zaehler leer definieren fuer spaetere Umdefinition
 \newcommand{\ocnumone}{}
 \newcommand{\ocnumtwo}{}
 \newcommand{\ocnumthree}{}
@@ -589,97 +590,106 @@
 \newcommand{\occoneighteen}{}
 \newcommand{\occonnineteen}{}
 \newcommand{\occontwenty}{}
-\newcommand{\ocone}[3]{\renewcommand{\ocnumone}{#1}\renewcommand{\ocsolone}{#2}\renewcommand{\occonone}{#3}}
-\newcommand{\octwo}[3]{\renewcommand{\ocnumtwo}{#1}\renewcommand{\ocsoltwo}{#2}\renewcommand{\occontwo}{#3}}
-\newcommand{\octhree}[3]{\renewcommand{\ocnumthree}{#1}\renewcommand{\ocsolthree}{#2}\renewcommand{\occonthree}{#3}}
-\newcommand{\ocfour}[3]{\renewcommand{\ocnumfour}{#1}\renewcommand{\ocsolfour}{#2}\renewcommand{\occonfour}{#3}}
-\newcommand{\ocfive}[3]{\renewcommand{\ocnumfive}{#1}\renewcommand{\ocsolfive}{#2}\renewcommand{\occonfive}{#3}}
-\newcommand{\ocsix}[3]{\renewcommand{\ocnumsix}{#1}\renewcommand{\ocsolsix}{#2}\renewcommand{\occonsix}{#3}}
-\newcommand{\ocseven}[3]{\renewcommand{\ocnumseven}{#1}\renewcommand{\ocsolseven}{#2}\renewcommand{\occonseven}{#3}}
-\newcommand{\oceight}[3]{\renewcommand{\ocnumeight}{#1}\renewcommand{\ocsoleight}{#2}\renewcommand{\occoneight}{#3}}
-\newcommand{\ocnine}[3]{\renewcommand{\ocnumnine}{#1}\renewcommand{\ocsolnine}{#2}\renewcommand{\occonnine}{#3}}
-\newcommand{\octen}[3]{\renewcommand{\ocnumten}{#1}\renewcommand{\ocsolten}{#2}\renewcommand{\occonten}{#3}}
-\newcommand{\oceleven}[3]{\renewcommand{\ocnumeleven}{#1}\renewcommand{\ocsoleleven}{#2}\renewcommand{\occoneleven}{#3}}
-\newcommand{\octwelve}[3]{\renewcommand{\ocnumtwelve}{#1}\renewcommand{\ocsoltwelve}{#2}\renewcommand{\occontwelve}{#3}}
-\newcommand{\octhirteen}[3]{\renewcommand{\ocnumthirteen}{#1}\renewcommand{\ocsolthirteen}{#2}\renewcommand{\occonthirteen}{#3}}
-\newcommand{\ocfourteen}[3]{\renewcommand{\ocnumfourteen}{#1}\renewcommand{\ocsolfourteen}{#2}\renewcommand{\occonfourteen}{#3}}
-\newcommand{\ocfifteen}[3]{\renewcommand{\ocnumfifteen}{#1}\renewcommand{\ocsolfifteen}{#2}\renewcommand{\occonfifteen}{#3}}
-\newcommand{\ocsixteen}[3]{\renewcommand{\ocnumsixteen}{#1}\renewcommand{\ocsolsixteen}{#2}\renewcommand{\occonsixteen}{#3}}
-\newcommand{\ocseventeen}[3]{\renewcommand{\ocnumseventeen}{#1}\renewcommand{\ocsolseventeen}{#2}\renewcommand{\occonseventeen}{#3}}
-\newcommand{\oceighteen}[3]{\renewcommand{\ocnumeighteen}{#1}\renewcommand{\ocsoleighteen}{#2}\renewcommand{\occoneighteen}{#3}}
-\newcommand{\ocnineteen}[3]{\renewcommand{\ocnumnineteen}{#1}\renewcommand{\ocsolnineteen}{#2}\renewcommand{\occonnineteen}{#3}}
-\newcommand{\octwenty}[3]{\renewcommand{\ocnumtwenty}{#1}\renewcommand{\ocsoltwenty}{#2}\renewcommand{\occontwenty}{#3}}
+\newcommand{\oceingabehilf}{1} %zaehlt eingegebene Teilkasteninhalte
 \newcommand{\ochilf}{1} %z\"ahlt Teilk\"asten
 \FPset\ochsp{0} %merkt sich die bisherige H\"ohe des Gesamtkastens
 
-%OC-Umgebung mit Variableninitialisierung
+%OC-Umgebung mit Zuruecksetzung aller Variablen
 \newcommand{\ocanfang}{\begin{tikzpicture}\FPset\ochsp{0}}
 \newcommand{\ocumbruch}{\end{tikzpicture}\newpage\begin{tikzpicture}}
 \newcommand{\ocende}{\end{tikzpicture}\punkteausgabe
-\renewcommand{\ochilf}{1}
-\renewcommand{\ocnumone}{}
-\renewcommand{\ocnumtwo}{}
-\renewcommand{\ocnumthree}{}
-\renewcommand{\ocnumfour}{}
-\renewcommand{\ocnumfive}{}
-\renewcommand{\ocnumsix}{}
-\renewcommand{\ocnumseven}{}
-\renewcommand{\ocnumeight}{}
-\renewcommand{\ocnumnine}{}
-\renewcommand{\ocnumten}{}
-\renewcommand{\ocnumeleven}{}
-\renewcommand{\ocnumtwelve}{}
-\renewcommand{\ocnumthirteen}{}
-\renewcommand{\ocnumfourteen}{}
-\renewcommand{\ocnumfifteen}{}
-\renewcommand{\ocnumsixteen}{}
-\renewcommand{\ocnumseventeen}{}
-\renewcommand{\ocnumeighteen}{}
-\renewcommand{\ocnumnineteen}{}
-\renewcommand{\ocnumtwenty}{}
-\renewcommand{\ocsolone}{}
-\renewcommand{\ocsoltwo}{}
-\renewcommand{\ocsolthree}{}
-\renewcommand{\ocsolfour}{}
-\renewcommand{\ocsolfive}{}
-\renewcommand{\ocsolsix}{}
-\renewcommand{\ocsolseven}{}
-\renewcommand{\ocsoleight}{}
-\renewcommand{\ocsolnine}{}
-\renewcommand{\ocsolten}{}
-\renewcommand{\ocsoleleven}{}
-\renewcommand{\ocsoltwelve}{}
-\renewcommand{\ocsolthirteen}{}
-\renewcommand{\ocsolfourteen}{}
-\renewcommand{\ocsolfifteen}{}
-\renewcommand{\ocsolsixteen}{}
-\renewcommand{\ocsolseventeen}{}
-\renewcommand{\ocsoleighteen}{}
-\renewcommand{\ocsolnineteen}{}
-\renewcommand{\ocsoltwenty}{}
-\renewcommand{\occonone}{}
-\renewcommand{\occontwo}{}
-\renewcommand{\occonthree}{}
-\renewcommand{\occonfour}{}
-\renewcommand{\occonfive}{}
-\renewcommand{\occonsix}{}
-\renewcommand{\occonseven}{}
-\renewcommand{\occoneight}{}
-\renewcommand{\occonnine}{}
-\renewcommand{\occonten}{}
-\renewcommand{\occoneleven}{}
-\renewcommand{\occontwelve}{}
-\renewcommand{\occonthirteen}{}
-\renewcommand{\occonfourteen}{}
-\renewcommand{\occonfifteen}{}
-\renewcommand{\occonsixteen}{}
-\renewcommand{\occonseventeen}{}
-\renewcommand{\occoneighteen}{}
-\renewcommand{\occonnineteen}{}
-\renewcommand{\occontwenty}{}
+\grenewcommand{\ochilf}{1} %globale Zuruecksetzung, falls OC-Kasten in einer weiteren Umgebung drin
+\grenewcommand{\oceingabehilf}{1}
+\grenewcommand{\ocnumone}{}
+\grenewcommand{\ocnumtwo}{}
+\grenewcommand{\ocnumthree}{}
+\grenewcommand{\ocnumfour}{}
+\grenewcommand{\ocnumfive}{}
+\grenewcommand{\ocnumsix}{}
+\grenewcommand{\ocnumseven}{}
+\grenewcommand{\ocnumeight}{}
+\grenewcommand{\ocnumnine}{}
+\grenewcommand{\ocnumten}{}
+\grenewcommand{\ocnumeleven}{}
+\grenewcommand{\ocnumtwelve}{}
+\grenewcommand{\ocnumthirteen}{}
+\grenewcommand{\ocnumfourteen}{}
+\grenewcommand{\ocnumfifteen}{}
+\grenewcommand{\ocnumsixteen}{}
+\grenewcommand{\ocnumseventeen}{}
+\grenewcommand{\ocnumeighteen}{}
+\grenewcommand{\ocnumnineteen}{}
+\grenewcommand{\ocnumtwenty}{}
+\grenewcommand{\ocsolone}{}
+\grenewcommand{\ocsoltwo}{}
+\grenewcommand{\ocsolthree}{}
+\grenewcommand{\ocsolfour}{}
+\grenewcommand{\ocsolfive}{}
+\grenewcommand{\ocsolsix}{}
+\grenewcommand{\ocsolseven}{}
+\grenewcommand{\ocsoleight}{}
+\grenewcommand{\ocsolnine}{}
+\grenewcommand{\ocsolten}{}
+\grenewcommand{\ocsoleleven}{}
+\grenewcommand{\ocsoltwelve}{}
+\grenewcommand{\ocsolthirteen}{}
+\grenewcommand{\ocsolfourteen}{}
+\grenewcommand{\ocsolfifteen}{}
+\grenewcommand{\ocsolsixteen}{}
+\grenewcommand{\ocsolseventeen}{}
+\grenewcommand{\ocsoleighteen}{}
+\grenewcommand{\ocsolnineteen}{}
+\grenewcommand{\ocsoltwenty}{}
+\grenewcommand{\occonone}{}
+\grenewcommand{\occontwo}{}
+\grenewcommand{\occonthree}{}
+\grenewcommand{\occonfour}{}
+\grenewcommand{\occonfive}{}
+\grenewcommand{\occonsix}{}
+\grenewcommand{\occonseven}{}
+\grenewcommand{\occoneight}{}
+\grenewcommand{\occonnine}{}
+\grenewcommand{\occonten}{}
+\grenewcommand{\occoneleven}{}
+\grenewcommand{\occontwelve}{}
+\grenewcommand{\occonthirteen}{}
+\grenewcommand{\occonfourteen}{}
+\grenewcommand{\occonfifteen}{}
+\grenewcommand{\occonsixteen}{}
+\grenewcommand{\occonseventeen}{}
+\grenewcommand{\occoneighteen}{}
+\grenewcommand{\occonnineteen}{}
+\grenewcommand{\occontwenty}{}
 }
 
-%Inhalt entsprechend der hochgez\"ahlten Teilk\"astchen drucken
+%Eingabe der Werte/Inhalte fuer oben initialisierte und von \ocinhalt aufgerufene Variablen, wobei \oceingabehilf hochzaehlt und Werte dem nächsten freien Variablensatz zuweist: 
+\newcommand{\oc}[3]{
+\ifthenelse{\equal{\oceingabehilf}{1}}{\renewcommand{\ocnumone}{#1}\renewcommand{\ocsolone}{#2}\renewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
+ {\ifthenelse{\equal{\oceingabehilf}{2}}{\renewcommand{\ocnumtwo}{#1}\renewcommand{\ocsoltwo}{#2}\renewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
+  {\ifthenelse{\equal{\oceingabehilf}{3}}{\renewcommand{\ocnumthree}{#1}\renewcommand{\ocsolthree}{#2}\renewcommand{\occonthree}{#3}\grenewcommand{\oceingabehilf}{4}}
+   {\ifthenelse{\equal{\oceingabehilf}{4}}{\renewcommand{\ocnumfour}{#1}\renewcommand{\ocsolfour}{#2}\renewcommand{\occonfour}{#3}\grenewcommand{\oceingabehilf}{5}}
+    {\ifthenelse{\equal{\oceingabehilf}{5}}{\renewcommand{\ocnumfive}{#1}\renewcommand{\ocsolfive}{#2}\renewcommand{\occonfive}{#3}\grenewcommand{\oceingabehilf}{6}}
+     {\ifthenelse{\equal{\oceingabehilf}{6}}{\renewcommand{\ocnumsix}{#1}\renewcommand{\ocsolsix}{#2}\renewcommand{\occonsix}{#3}\grenewcommand{\oceingabehilf}{7}}
+      {\ifthenelse{\equal{\oceingabehilf}{7}}{\renewcommand{\ocnumseven}{#1}\renewcommand{\ocsolseven}{#2}\renewcommand{\occonseven}{#3}\grenewcommand{\oceingabehilf}{8}}
+       {\ifthenelse{\equal{\oceingabehilf}{8}}{\renewcommand{\ocnumeight}{#1}\renewcommand{\ocsoleight}{#2}\renewcommand{\occoneight}{#3}\grenewcommand{\oceingabehilf}{9}}
+        {\ifthenelse{\equal{\oceingabehilf}{9}}{\renewcommand{\ocnumnine}{#1}\renewcommand{\ocsolnine}{#2}\renewcommand{\occonnine}{#3}\grenewcommand{\oceingabehilf}{10}}
+         {\ifthenelse{\equal{\oceingabehilf}{10}}{\renewcommand{\ocnumten}{#1}\renewcommand{\ocsolten}{#2}\renewcommand{\occonten}{#3}\grenewcommand{\oceingabehilf}{11}}
+          {\ifthenelse{\equal{\oceingabehilf}{11}}{\renewcommand{\ocnumeleven}{#1}\renewcommand{\ocsoleleven}{#2}\renewcommand{\occoneleven}{#3}\grenewcommand{\oceingabehilf}{12}}
+           {\ifthenelse{\equal{\oceingabehilf}{12}}{\renewcommand{\ocnumtwelve}{#1}\renewcommand{\ocsoltwelve}{#2}\renewcommand{\occontwelve}{#3}\grenewcommand{\oceingabehilf}{13}}
+            {\ifthenelse{\equal{\oceingabehilf}{13}}{\renewcommand{\ocnumthirteen}{#1}\renewcommand{\ocsolthirteen}{#2}\renewcommand{\occonthirteen}{#3}\grenewcommand{\oceingabehilf}{14}}
+             {\ifthenelse{\equal{\oceingabehilf}{14}}{\renewcommand{\ocnumfourteen}{#1}\renewcommand{\ocsolfourteen}{#2}\renewcommand{\occonfourteen}{#3}\grenewcommand{\oceingabehilf}{15}}
+              {\ifthenelse{\equal{\oceingabehilf}{15}}{\renewcommand{\ocnumfifteen}{#1}\renewcommand{\ocsolfifteen}{#2}\renewcommand{\occonfifteen}{#3}\grenewcommand{\oceingabehilf}{16}}
+               {\ifthenelse{\equal{\oceingabehilf}{16}}{\renewcommand{\ocnumsixteen}{#1}\renewcommand{\ocsolsixteen}{#2}\renewcommand{\occonsixteen}{#3}\grenewcommand{\oceingabehilf}{17}}
+                {\ifthenelse{\equal{\oceingabehilf}{17}}{\renewcommand{\ocnumseventeen}{#1}\renewcommand{\ocsolseventeen}{#2}\renewcommand{\occonseventeen}{#3}\grenewcommand{\oceingabehilf}{18}}
+                 {\ifthenelse{\equal{\oceingabehilf}{18}}{\renewcommand{\ocnumeighteen}{#1}\renewcommand{\ocsoleighteen}{#2}\renewcommand{\occoneighteen}{#3}\grenewcommand{\oceingabehilf}{19}}
+                  {\ifthenelse{\equal{\oceingabehilf}{19}}{\renewcommand{\ocnumnineteen}{#1}\renewcommand{\ocsolnineteen}{#2}\renewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
+                   {\ifthenelse{\equal{\oceingabehilf}{20}}{\renewcommand{\ocnumtwenty}{#1}\renewcommand{\ocsoltwenty}{#2}\renewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
+                    {}}}}}}}}}}}}}}}}}}}}
+}
+
+
+
+%Hilfsbefehl fuer \ockasten, gibt entsprechend der von \ochilf gezaehlten Teilkaesten den Inhalt des Variablensatzes fuer diesen Teilkasten zurueck
 \newcommand{\ocinhalt}{
 \ifthenelse{\equal{\ochilf}{1}}{\textbf{\ocnumone}\\\opt{1,2}{\ocsolone}\opt{0}{\occonone}\grenewcommand{\ochilf}{2}}
  {\ifthenelse{\equal{\ochilf}{2}}{\textbf{\ocnumtwo}\\\opt{1,2}{\ocsoltwo}\opt{0}{\occontwo}\grenewcommand{\ochilf}{3}}
@@ -705,7 +715,7 @@
 %ochilf muss global gezaehlt werden, daher via grenewcommand
 }
 
-%OC-Kasten: Rechteck mit Textbreite, dann Erkennung fester Spaltenverteilung (1. Argument) für vertikale Unterteilungsstriche und passende minipage-Umgebungen in den Teilkaestchen; Zeilenhoehe als 2. Argument
+%OC-Kasten: Rechteck mit Textbreite, dann Erkennung fester Spaltenverteilung (1. Argument) für vertikale Unterteilungsstriche und passende minipage-Umgebungen in den Teilkaestchen; Zeilenhoehe als 2. Argument; jeder Teilkasten ruft Inhalt aus \ocinhalt ab, bleibt ohne vorherige Inhaltsangabe leer
 \newcommand{\ockasten}[2]{
 \draw (0, -\ochsp) rectangle (\linewidth-0.4pt, -\ochsp-#2);
 
@@ -729,7 +739,6 @@
          {}}}}}}}}}
 \FPeval{\ochsp}{\ochsp+#2}
 }
-
 
 % experimental
 \ExplSyntaxOn
