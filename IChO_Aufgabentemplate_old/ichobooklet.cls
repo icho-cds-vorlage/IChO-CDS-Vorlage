@@ -185,13 +185,9 @@
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
 
 % Antwortkasten
-\newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\opt{2}{\marginpar{%
-\FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 2}
-\setcounter{doppteilaufpunkt}{0}
-\FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
-\xdef\aufgabenpunkte{\aufgabenpunkte}%
-\FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+\newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\punkteausgabe} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
+\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}\punkteausgabe} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 
 %umbrechbarer Antwortkasten
 \newcommand{\FPtruncate}[2]{\FPeval\truncatehelpone{round(#2:0)}\FPsub{\truncatehelptwo}{#2}{0.5}\FPeval\truncatehelpthree{round(truncatehelptwo:0)}\ifthenelse{\equal{\truncatehelpone}{\truncatehelpthree}}{\FPeval{#1}{\truncatehelpone}}{\FPeval{#1}{\truncatehelpthree}}} %Funktion fuer Abschneiden von Nachkommastellen (1. Argument: Zielvariable; 2. Argument: Ausgangswert oder Variable)
@@ -214,28 +210,26 @@
  \marginpar{\vspace*{1mm}\ch{n>}}\vspace*{-1mm}\begin{tcolorbox}[colback=white, colframe=black, sharp corners, boxrule=0.4pt, breakable, top=0.5pt, left=0.5pt, right=0.5pt, bottom=0.5pt, use color stack] %ohne color stack ist erster Absatz nach Umbruch schwarz, unabhaengig von textcolor
   \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
  \end{tcolorbox}
- \opt{2}{\marginpar{%
-  \FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 2}
-  \setcounter{doppteilaufpunkt}{0}
-  \FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
-  \xdef\aufgabenpunkte{\aufgabenpunkte}%
-  \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip
+ \punkteausgabe
 }
 
 %Teilaufgaben und deren Punkteberechnung
 \newcommand{\punkte}[1]{%
-    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{doppteilaufpunkt}{\xintNum{\the\numexpr 2 * #1 \relax} \relax}
-} % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen.
+    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{doppteilaufpunkt}{\xintNum{\the\numexpr 20 * #1 \relax} \relax}
+} % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 
-%Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in MC integriert)
-\newcommand{\punkteausgabe}{\opt{2}{\marginpar{%
-\FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
-\xdef\aufgabenpunkte{\aufgabenpunkte}%
-\FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip}
+%Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
+\newcommand{\punkteausgabe}{ \opt{2}{\marginpar{%
+  \FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 20} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+  \setcounter{doppteilaufpunkt}{0}
+  \FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
+  \xdef\aufgabenpunkte{\aufgabenpunkte}%
+  \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip
+}
 
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
