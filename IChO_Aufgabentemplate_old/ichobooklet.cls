@@ -185,7 +185,7 @@
 % Antwortkasten
 \newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\punkteausgabe} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
-\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}\punkteausgabe} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}\punkteausgabe}} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 
 %umbrechbarer Antwortkasten
 \newcommand{\FPtruncate}[2]{\FPeval\truncatehelpone{round(#2:0)}\FPsub{\truncatehelptwo}{#2}{0.5}\FPeval\truncatehelpthree{round(truncatehelptwo:0)}\ifthenelse{\equal{\truncatehelpone}{\truncatehelpthree}}{\FPeval{#1}{\truncatehelpone}}{\FPeval{#1}{\truncatehelpthree}}} %Funktion fuer Abschneiden von Nachkommastellen (1. Argument: Zielvariable; 2. Argument: Ausgangswert oder Variable)
@@ -220,7 +220,7 @@
   \fi
 }
 \newcommand{\punkte}[1]{%
-    \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{multeilaufpunkt}{\xintNum{\the\numexpr 20 * #1 \relax} \relax}
+    \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
@@ -229,15 +229,16 @@
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{ 
-\opt{2}{\marginpar{\textcolor{red}{\xintNum{\the\numexpr #1 / 20 \relax} \relax}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+\opt{2}{\marginpar{\textcolor{red}{\xintPFloat{\themulteilaufpunkt/20}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
 \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
 \setcounter{multeilaufpunkt}{0}
 \par \bigskip
 }
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
-\newcommand{\aufgabenende}{\opt{2}{\FPeval\aufgabenpunkte{\themulteilaufpunkt / 20}\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\theaufgabenpunkte}}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
+\newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
