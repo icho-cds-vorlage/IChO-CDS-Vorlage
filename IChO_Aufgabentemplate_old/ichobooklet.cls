@@ -35,8 +35,6 @@
   \usepackage{epstopdf}
   \usepackage{xcolor}
 
-  \usepackage{xintexpr}
-
  % \usepackage{framed}
   \usepackage{mdframed}
   \usepackage{array}
@@ -92,7 +90,8 @@
     \newcommand{\tikzsetnextfilename}[1]{} % to avoid difficulties with alternative use of tikzexternalize
 
   \usepackage[most]{tcolorbox} % formulas, breakable antwortkasten
-  \usepackage[nomessages]{fp} % point calculation
+  \usepackage[nomessages]{fp} % calculations umbruchkasten
+  \usepackage{xintexpr} %point calculation
   \usepackage{calc} %length calculations
   \usepackage{pgffor} % Iteration fuer umbrechbaren Antwortkasten
   \usepackage{expl3} %OC Kasten
@@ -158,9 +157,8 @@
 \patchcmd{\grenew@command}{\new@command}{\gnew@command}{}{}
 \makeatother
 
-\FPset\teilaufgabenpunkte{0} %setzt Variable teilaufgabenpunkte=0 --> Berechnung Punkte innerhalb Teilaufgabe
-\newcounter{doppteilaufpunkt}
-\FPset\aufgabenpunkte{0} %Z\"ahler Punktzahl einer Aufgabe
+\newcounter{multeilaufpunkt}
+\newcounter{mulaufgabenpunkte}
 \newcommand{\tasktitle}{holder} % Platzhalter
 \newcommand{\taskpoints}{xx} % Platzhalter
 \newcommand{\taskweight}{yy}
@@ -214,8 +212,15 @@
 }
 
 %Teilaufgaben und deren Punkteberechnung
+\newcommand{\spacecontrol}{%Fehlermeldung, wenn Leerzeichen vor Punktausgabe
+  \ifhmode
+    \ifdim\lastskip=0pt\relax
+      \else \todo{Kein Leerzeichen vor Punktangabe}
+    \fi
+  \fi
+}
 \newcommand{\punkte}[1]{%
-    \opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{doppteilaufpunkt}{\xintNum{\the\numexpr 20 * #1 \relax} \relax}
+    \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}} \addtocounter{multeilaufpunkt}{\xintNum{\the\numexpr 20 * #1 \relax} \relax}
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
@@ -223,19 +228,16 @@
 
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
-\newcommand{\punkteausgabe}{ \opt{2}{\marginpar{%
-  \FPeval\teilaufgabenpunkte{\thedoppteilaufpunkt / 20} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
-  \setcounter{doppteilaufpunkt}{0}
-  \FPeval{aufgabenpunkte}{aufgabenpunkte+teilaufgabenpunkte}%
-  \xdef\aufgabenpunkte{\aufgabenpunkte}%
-  \FPeval{nachkommacheck}{10 * teilaufgabenpunkte}\FPifint\teilaufgabenpunkte \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:0)} \else \FPeval\teilaufgabenpunkte{round(teilaufgabenpunkte:1)} \fi\textcolor{red}{ \SI{\FPprint\teilaufgabenpunkte}{}\,P.}\FPifint\nachkommacheck\else\todo{max. eine Dezimalstelle f\"ur Gesamtpunktzahl der Teilaufgabe}\fi}}\FPset\teilaufgabenpunkte{0}\par \bigskip
+\newcommand{\punkteausgabe}{ 
+\opt{2}{\marginpar{\textcolor{red}{\xintNum{\the\numexpr #1 / 20 \relax} \relax}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+\addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
+\setcounter{multeilaufpunkt}{0}
+\par \bigskip
 }
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\FPset\teilaufgabenpunkte{0}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
-\newcommand{\aufgabenende}{\opt{2}{\FPeval{nachkommacheck}{10 * aufgabenpunkte}\FPifint\aufgabenpunkte \FPeval\aufgabenpunkte{round(aufgabenpunkte:0)} \else \FPeval\aufgabenpunkte{round(aufgabenpunkte:1)} \fi\FPifint\nachkommacheck\else\todo{Auch bei der Gesamtpunktzahl nur eine Dezimalstelle}\fi%
-\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\FPprint\aufgabenpunkte}\fi}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\restartlist{enumerate}\newpage}
-%\FPset gilt nur innerhalb der group, deshalb wird zu Beginn zurueckgesetzt
+\newcommand{\aufgabenanfang}{\begingroup\FPset\aufgabenpunkte{0}\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenende}{\opt{2}{\FPeval\aufgabenpunkte{\themulteilaufpunkt / 20}\FPifeq\aufgabenpunkte\taskpoints\else\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\theaufgabenpunkte}}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
