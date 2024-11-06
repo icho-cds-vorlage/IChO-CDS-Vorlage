@@ -54,17 +54,18 @@ Diese Bedienungsanleitung soll Standards festlegen, die bei der Arbeit mit dem T
     \item Vor und nach der Teilaufgabe wird der Zeilenabstand i.d.R. NICHT durch Leerzeilen im Quelltext vergr\"o\ss{}ert
     \item Operatoren mit \textit{\textbackslash operator\{\}} kenntlich machen. 
     \item Standard-Antwortk\"asten mit \textit{\hypertarget{kasten}{\textbackslash kasten\{\}\{\}\{\}}}, wobei das erste Argument die H\"ohe, das 2. die Musterl\"osung und das 3. ein evtl. in der Klausur vorhandener Kasteninhalt ist. 
+    \item \"Aquivalent zu \textit{\textbackslash kasten}, jedoch ohne Integration der einzelnen Varianten (d.h. Varianten selbst markieren) funktioniert \textit{\hypertarget{selfkasten}{\textbackslash selfkasten\{\}\{\}}} mit dem Inhalt im 2. Argument
     \item Punkte und Bewertungshinweise werden mit \textit{\textbackslash punkte\{\}} und \hypertarget{Kommentar}{{\textit{\textbackslash kommentar\{\}}} in der Musterl\"osung geschrieben. Vor der Punktausgabe das Leerzeichen wird automatisch erzeugt (kein Leerzeichen schreiben wegen Version 1). Bei Kommentaren au\ss{}erhalb von Antwortk\"asten darauf achten, dass diese das Layout nicht verschieben.
     \item Normale Antwortk\"asten werden nicht am Seitenende umgebrochen. Soll dies bei langen K\"asten geschehen, steht \textit{\textbackslash umbruchkasten\{\}\{\}\{\}\{\}\{\}\{\}} bereit. Die ersten 3 Argumente sind analog \textit{\textbackslash kasten}, die weiteren drei sollten erstmal auf \textit{0pt} gesetzt werden. Diese dienen dazu, die Kastenl\"ange in den drei Klausurvarianten durch zus\"atzliche Verl\"angerung angleichen zu k\"onnen, falls n\"otig (4. Argument f\"ur Variante 0, 5. f\"ur 1, 6. f\"ur 2). Die automatische L\"angenanpassung macht Fehler im Millimeterbereich, solange am Seitenumbruch Text steht. Wenn durch andere Objekte der Kasten auf der Vorseite nicht bis zum Seitenrand mit Inhalt gef\"ullt werden kann, treten gr\"o\ss{}ere Fehler auf, die beim finalen Layouten korrigiert werden sollten, falls sich dadurch Inhalte verschieben. Es treten Fehlermelddungen \textit{unexpected alignement} auf, die anscheinend ignorierbar sind, jedoch ist dem Autor die Ursache bisher nicht klar. 
     \item F\"ur Teilaufgaben, die keinen Antwortkasten besitzen, werden die Punkte der Teilaufgabe durch \textit{\textbackslash punkteausgabe} ausgegeben. Bei Aufgaben ohne Teilpunkte wird der \textit{\textbackslash punkte}\-/Befehl i.d.R. am Ende der Aufgabenstellung innerhalb von \textit{\textbackslash teilaufgabe} gesetzt. 
     \item MC im Querformat: erst Korrektheit letzte Antwort (1 = richtig; leer wenn falsch) in \textit{\textbackslash letzteantwort\{\}}, dann \hypertarget{MC}{\textit{\textbackslash MC}}, wobei die Argumente 1, 2, 3 und 4 die Antwortm\"oglichkeiten sind und 6 die Korrektheit, z.B.:(ooxoo, wenn nur 3 richtig). Wenn jeweils richtig oder falsch angekreuzt werden soll gibt es analog den Befehl \hypertarget{MCrf}{\textit{\textbackslash MCrf}}
-    \item MC im Hochformat: \textit{\hypertarget{MCvAnfang}{\textbackslash MCvAnfang} \hypertarget{MCv}{\textbackslash MCv\{\}\{\}} ... \hypertarget{MCvEnde}{\textbackslash MCvEnde}} wobei f\"ur jede Zeile ein MCv-Befehl verwendet wird, dessen erstes Argument die Korrektheit (1) und das 2. Argument die Antwortoption ist. Mit \textit{\hypertarget{MCvrfAnfang}{\textbackslash MCvrfAnfang}} (anschlie\ss{}end weiter wie oben) wird die Auswahl richtig / falsch gefordert. Seitenumbrüche funktionieren mit \textit{\hypertarget{MCvUmbruch}{\textbackslash MCvUmbruch}} bzw. \textit{\hypertarget{MCvrfUmbruch}{\textbackslash MCvrfUmbruch}}. Die Punkteausgabe muss manuell gesetzt werden.
+    \item MC im Hochformat: \textit{\hypertarget{MCvAnfang}{\textbackslash MCvAnfang} \hypertarget{MCv}{\textbackslash MCv\{\}\{\}} ... \hypertarget{MCvEnde}{\textbackslash MCvEnde}} wobei f\"ur jede Zeile ein MCv-Befehl verwendet wird, dessen erstes Argument die Korrektheit (1) und das 2. Argument die Antwortoption ist. Mit \textit{\hypertarget{MCvrfAnfang}{\textbackslash MCvrfAnfang}} (anschlie\ss{}end weiter wie oben) wird die Auswahl richtig / falsch gefordert. Seitenumbr\"uche funktionieren mit \textit{\hypertarget{MCvUmbruch}{\textbackslash MCvUmbruch}} bzw. \textit{\hypertarget{MCvrfUmbruch}{\textbackslash MCvrfUmbruch}}. Die Punkteausgabe muss manuell gesetzt werden.
     \item f\"ur selbst designte MC stehen folgende Befehle zur Verf\"ugung: f\"ur Ankreuzfelder \textit{\hypertarget{quadrat}{\textbackslash quadrat}}, ein gekreuztes Antwortfeld \textit{\hypertarget{quadratkor}{\textbackslash quadratkor}} und f\"ur die L\"osung ein nur in den Varianten 1 und 2 gekreuztes Feld \textit{\hypertarget{quadratkorr}{\textbackslash quadratkorr}}. Die K\"asten k\"onnen mit \textit{tabular} ohne \textit{table}-Umgebung erstellt werden, hinter \textit{\textbackslash end\{tabular\}} sorgt \textit{\textbackslash punkteausgabe} f\"ur den notwendigen Abstand zum n\"achsten Text (auch in der 0-Version)
     \item Typische OC-K\"asten k\"onnen erhalten werden mit: \\
-    \textit{\textbackslash ocanfang \\\textbackslash ocone\{\}\{\}\{\} \\\textbackslash octwo\{\}\{\}\{\} \\...\\\textbackslash ockasten\{\}\{\}\\\textbackslash ockasten\{\}\{\}\\...\\\textbackslash ocende}\\
-    Dabei enthalten die \textit{\textbackslash oc[Zahl]}-Befehle im 1. Argument die Nummer der Verbindung, im 2. Argument die Musterl\"osung (Punkte k\"onnen wahlweise in beiden Argumenten wie gewohnt mit \textit{\textbackslash punkte} eingef\"ugt werden) und im 3. Argument einen Inhalt f\"ur die Sch\"ulervariante (abgesehen von der Verbindungszahl). Es gibt (erweiterbar!) \textit{one} bis \textit{twenty}, wobei bei jeder Teilaufgabe die Teilk\"asten von vorne gez\"ahlt werden und innerhalb der Teilaufgabe zeilenweise gez\"ahlt wird. Jede Zeile wird mit \textit{\textbackslash ockasten} erstellt, wobei das 1. Argument das Breitenverh\"altnis der Teilk\"astchen angibt (es gibt derzeit: 1, 11, 12, 21, 111, 112, 121, 211, 1111; erweiterbar!) und das 2. Argument die H\"ohe der Teilk\"asten in dieser Zeile. Sollen \textit{\textbackslash oc[Zahl]}-Befehle \"ubersprungen werden, kann vor jeder Zeile mit \textit{\textbackslash renewcommand\{\textbackslash ochilf\}\{Zahl\}} ein anderer Startwert gesetzt werden. Seitenumbr\"uche zwischen zwei Zeilen werden durch \textit{\textbackslash ocumbruch} gesetzt. \\Wichtig: Anders als bei \textit{\textbackslash kasten} wird bei \textit{\textbackslash ockasten} die H\"ohe ohne Einheit angegeben (es sind Zentimeter). 
+    \textit{\textbackslash ocanfang \\\textbackslash oc\{\}\{\}\{\} \\\textbackslash oc\{\}\{\}\{\} \\...\\\textbackslash ockasten\{\}\{\}\\\textbackslash ockasten\{\}\{\}\\...\\\textbackslash ocende}\\
+    Dabei enthalten die \textit{\textbackslash oc}-Befehle im 1. Argument die Nummer der Verbindung, im 2. Argument die Musterl\"osung (Punkte k\"onnen wahlweise in beiden Argumenten wie gewohnt mit \textit{\textbackslash punkte} eingef\"ugt werden) und im 3. Argument einen Inhalt f\"ur die Sch\"ulervariante (abgesehen von der Verbindungszahl). Es k\"onnen maximal 20 Inhalte definiert werden, die dann in selber Reihenfolge in den Teilk\"asten ausgegeben werden (bei jeder Teilaufgabe wird von vorne gez\"ahlt und innerhalb der Teilaufgabe wird zeilenweise gez\"ahlt). Jede Zeile wird mit \textit{\textbackslash ockasten} erstellt, wobei das 1. Argument das Breitenverh\"altnis der Teilk\"astchen angibt (es gibt derzeit: 1, 11, 12, 21, 111, 112, 121, 211, 1111; erweiterbar!) und das 2. Argument die H\"ohe der Teilk\"asten in dieser Zeile. Seitenumbr\"uche zwischen zwei Zeilen werden durch \textit{\textbackslash ocumbruch} gesetzt. \\Wichtig: Anders als bei \textit{\textbackslash kasten} wird bei \textit{\textbackslash ockasten} die H\"ohe ohne Einheit angegeben (es sind Zentimeter). 
     \item Standardm\"a\ss{}ig ist die Variable \hypertarget{code}{\textit{\textbackslash code}} auf \textit{0} gesetzt, dann wird Sch\"ulercode und ggf. Bundesland als Linie zum Eintragen ausgegeben. Wird der Wert auf \textit{1} gesetzt, liest das Programm die Datei Codes.csv ein und erstellt einen Seriendruck. Diese Datei muss in UTF-8 Format gespeichert sein und enth\"alt in der 1. Spalte die Sch\"ulercodes und in der 2. Spalte die Bundesl\"ander. Wenn ab Runde 3 die Bundesl\"ander nicht mehr relevant sind, muss mindestens in einem Feld der 2. Spalte ein beliebiges Zeichen eingegeben sein.
-    \item Mit dem Command \textit{\textbackslash millipapier\{\}\{\}\{\}} kann Millimeterpapier erzeugt werden. Dabei wird durch das erste Argment das gesamte Papier skaliert. Die Argumente 2 und 3 geben Breite und Höhe des Papiers an.
+    \item Mit dem Command \textit{\textbackslash millipapier\{\}\{\}\{\}} kann Millimeterpapier erzeugt werden. Dabei wird durch das erste Argment das gesamte Papier skaliert. Die Argumente 2 und 3 geben Breite und H\"ohe des Papiers an.
 \end{itemize}
 F\"ur Spezialw\"unsche wird empfohlen, den entsprechenden Abschnitt der Dokumentenklasse nachzuvollziehen und darauf aufzubauen. Auch die Dokumentationen der verwendeten Pakete halten vieles bereit, insbesondere \textit{chemmacros} er\"offnet hier nicht aufz\"ahlbare M\"oglichkeiten. \par 
 Wenn die Aufgabe sehr lang ist, bitte die Sollbruchstelle markieren. Dazu bitte einfach \textit{\textbackslash{}todo\{Bruchstelle\}} an der entsprechenden Stelle einf\"ugen, da der Kommentar in der Randspalte das Layout nicht beeinflusst. Eine eventuelle Fehlermeldung \textit{marginpar moved} kann ignoriert werden. 
@@ -107,52 +108,55 @@ Ordnen / Zuordnen & Begriffe, Gegenst\"ande etc. aufgrund bestimmter Merkmale sy
 Skizzieren & Sachverhalte, Objekte, Strukturen oder Ergebnisse auf das Wesentliche reduzieren und in \"ubersichtlicher Weise darstellen \\\hline
 Zeichnen & Eine exakte Darstellung gegebener Daten, Graphen oder Strukturen anfertigen \\\hline
 \end{tabular}
+
+Es k\"onnen im Einzelfall auch andere Operatoren verwendet werden, sofern diese eine eindeutige Handlungsanweisung darstellen (z.B. Unterstreiche). 
+
 \newpage
 {\Large \textbf{Command Register}}\par
-Im Folgenden findet sich eine Übersicht über alle Commands, welche das \LaTeX -Template zur Verfügung stellt, sowie eine kurze Erklärung, was diese machen. Um die lange Erklärung zu sehen, kann auf den Command geklickt werden und man gelangt zur entsprechenden Stelle in der Bedienungsanleitung.\\
+Im Folgenden findet sich eine \"Ubersicht \"uber alle Commands, welche das \LaTeX -Template zur Verf\"ugung stellt, sowie eine kurze Erkl\"arung, was diese machen. Um die lange Erkl\"arung zu sehen, kann auf den Command geklickt werden und man gelangt zur entsprechenden Stelle in der Bedienungsanleitung.\\
 \begin{tabularx}{\linewidth}{|l|X|}
 \hline
-Command&kurze Erklärung\hfill\\\hline
+Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{textbackslash}{\textbackslash{}\textbackslash{}}&Zeilenumbruch\\\hline
     \hyperlink{aufgabenanfang}{\textbackslash{}aufgabenanfang}&Definiert den Beginn einer Aufgabe\\\hline
     \hyperlink{aufgabenende}{\textbackslash{}aufgabenende}&Definiert das Ende einer Aufgabe\\\hline
-    \hyperlink{authorcom}{\textbackslash{}authorcom}&Kommentare des Aufgabenautors während des Erstellungsprozesses\\\hline
-    \hyperlink{beginenumerate}{\textbackslash{}begin\{enumerate\}}&Beginnt eine Aufzählung\\\hline
+    \hyperlink{authorcom}{\textbackslash{}authorcom}&Kommentare des Aufgabenautors w\"ahrend des Erstellungsprozesses\\\hline
+    \hyperlink{beginenumerate}{\textbackslash{}begin\{enumerate\}}&Beginnt eine Aufz\"ahlung\\\hline
     \hyperlink{bottomrule}{\textbackslash{}bottomrule}&Erzeugt letzte Linie der Tabelle\\\hline
-    \hyperlink{ch}{\textbackslash{}ch}&Umgebung für Summenformeln und Reaktionsgleichungen\\\hline
-    \hyperlink{code}{\textbackslash{}code}&Wert \glqq 0\grqq{} für Linie zum Eintragen des Schülercodes; Wert \glqq 1\grqq{} zum Einlesen von Schülercodes\\\hline
-    \hyperlink{corend}{\textbackslash{}corend}&Kommentare für die Endkorrektur\\\hline
+    \hyperlink{ch}{\textbackslash{}ch}&Umgebung f\"ur Summenformeln und Reaktionsgleichungen\\\hline
+    \hyperlink{code}{\textbackslash{}code}&Wert \glqq 0\grqq{} f\"ur Linie zum Eintragen des Sch\"ulercodes; Wert \glqq 1\grqq{} zum Einlesen von Sch\"ulercodes\\\hline
+    \hyperlink{corend}{\textbackslash{}corend}&Kommentare f\"ur die Endkorrektur\\\hline
     \hyperlink{corone}{\textbackslash{}corone}&Kommentare des Erstkorrektors\\\hline
     \hyperlink{cortwo}{\textbackslash{}cortwo}&Kommentare des Zweitkorrektors\\\hline
     \hyperlink{dd}{\textbackslash{}dd}&Erzeugen einer Ableitungsfunktion\\\hline
     \hyperlink{includegraphics}{\textbackslash{}includegraphics}&Einbinden von Grafiken\\\hline
-    \hyperlink{intertext}{\textbackslash{}intertext}&Einfügen von Text zwischen Formelzeichen in \textit{align}-Umgebung\\\hline
+    \hyperlink{intertext}{\textbackslash{}intertext}&Einf\"ugen von Text zwischen Formelzeichen in \textit{align}-Umgebung\\\hline
     \hyperlink{kasten}{\textbackslash{}kasten}&Erzeugen eines Antwortkastens\\\hline
-    \hyperlink{Kommentar}{\textbackslash{}Kommentar}&Erzeugen eines Kommentars für die interne Musterlösung\\\hline
+    \hyperlink{Kommentar}{\textbackslash{}Kommentar}&Erzeugen eines Kommentars f\"ur die interne Musterl\"osung\\\hline
     \hyperlink{linebreak}{\textbackslash{}linebreak}&Erzeugen eines Zeilenumbruchs, unter Beibehaltung des Blocksatzes\\\hline
-    \hyperlink{linewidth}{\textbackslash{}linewidth}&Gibt die Textbreite zurück\\\hline
+    \hyperlink{linewidth}{\textbackslash{}linewidth}&Gibt die Textbreite zur\"uck\\\hline
     \hyperlink{lstandardstate}{\textbackslash{}lstandardstate}&Standardzustand in Mathe-Umgebung\\\hline
     \hyperlink{mathrm}{\textbackslash{}mathrm}&Erzeugt normalen text in Mathe-Umgebung\\\hline
      \hyperlink{MC}{\textbackslash{}MC}&Erzeugt eine Multiple-Choice-Frage im Querformat\\\hline
-    \hyperlink{MCrf}{\textbackslash{}MCrf}&Erzeugt eine Multiple-Choice-Frage im Querformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCrf}{\textbackslash{}MCrf}&Erzeugt eine Multiple-Choice-Frage im Querformat mit M\"oglichkeit richtig/falsch\\\hline
     \hyperlink{MCv}{\textbackslash{}MCv}&Erzeugt eine Multiple-Choice-Frage im Hochformat\\\hline
     \hyperlink{MCvAnfang}{\textbackslash{}MCvAnfang}&Beginnt eine Multiple-Choice-Tabelle im Hochformat\\\hline
     \hyperlink{MCvEnde}{\textbackslash{}MCvEnde}&Beendet eine Multiple-Choice\\\hline
-    \hyperlink{MCvrf}{\textbackslash{}MCvrf}&Erzeugt eine Multiple-Choice-Frage im Hochformat mit Möglichkeit richtig/falsch\\\hline
-    \hyperlink{MCvrfAnfang}{\textbackslash{}MCvrfAnfang}&Beginnt eine Multiple-Choice-Tabelle im Hochformat mit Möglichkeit richtig/falsch\\\hline
-    \hyperlink{MCvrfEnde}{\textbackslash{}MCvrfEnde}&Beendet eine Multiple-Choice im Hochformat mit Möglichkeit richtig/falsch\\\hline
-     \hyperlink{MCvrfUmbruch}{\textbackslash{}MCvrfUmbruch}&Erzeugt einen Umbruch in einer Multiple-Choice-Tabelle im Hochformat mit Möglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvrf}{\textbackslash{}MCvrf}&Erzeugt eine Multiple-Choice-Frage im Hochformat mit M\"oglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvrfAnfang}{\textbackslash{}MCvrfAnfang}&Beginnt eine Multiple-Choice-Tabelle im Hochformat mit M\"oglichkeit richtig/falsch\\\hline
+    \hyperlink{MCvrfEnde}{\textbackslash{}MCvrfEnde}&Beendet eine Multiple-Choice im Hochformat mit M\"oglichkeit richtig/falsch\\\hline
+     \hyperlink{MCvrfUmbruch}{\textbackslash{}MCvrfUmbruch}&Erzeugt einen Umbruch in einer Multiple-Choice-Tabelle im Hochformat mit M\"oglichkeit richtig/falsch\\\hline
     \hyperlink{MCvUmbruch}{\textbackslash{}MCvUmbruch}&Erzeugt einen Umbruch in einer Multiple-Choice-Tabelle im Hochformat\\\hline
     \hyperlink{midrule}{\textbackslash{}midrule}&Erzeugt eine Linie in einer Tabelle\\\hline
-    \hyperlink{ocZahl}{\textbackslash{}oc[Zahl]}&Definiert Verbindungsnummer und Musterlösung für einen OC-Kasten\\\hline
+    \hyperlink{oc}{\textbackslash{}oc}&Definiert Verbindungsnummer und Musterl\"osung f\"ur einen OC-Kasten\\\hline
     \hyperlink{ocanfang}{\textbackslash{}ocanfang}&Beginnt einen OC-Kasten\\\hline
-    \hyperlink{ochilf}{\textbackslash{}ochilf}&Definieren eines neuen Startwerts für die OC-Kästen\\\hline
+    \hyperlink{ochilf}{\textbackslash{}ochilf}&Definieren eines neuen Startwerts f\"ur die OC-K\"asten\\\hline
     \hyperlink{ockasten}{\textbackslash{}ockasten}&Erzeugt einen OC-Kasten\\\hline
     \hyperlink{ocscale}{\textbackslash{}ocscale}&Skaliert alle OC-Verbindungen\\\hline
 \end{tabularx}
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Command&kurze Erklärung\hfill\\\hline
+Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{ocumbruch}{\textbackslash{}ocumbruch}&Seitenumbruch innerhalb eines OC-Kastens\\\hline
     \hyperlink{operator}{\textbackslash{}operator}&Hebt den Operator hervor\\\hline
     \hyperlink{pH}{\textbackslash{}pH}&Erzeugt \pH \ in korrekter Formatierung\\\hline
@@ -161,17 +165,18 @@ Command&kurze Erklärung\hfill\\\hline
     \hyperlink{pKw}{\textbackslash{}pKw}&Erzeugt \pKw \ in korrekter Formatierung\\\hline
     \hyperlink{pOH}{\textbackslash{}pOH}&Erzeugt \pOH \ in korrekter Formatierung\\\hline
     \hyperlink{par}{\textbackslash{}par}&Erzeugung einer Leerzeile\\\hline
-    \hyperlink{punkte}{\textbackslash{}punkte}&Ausgabe von Punkten für die Musterlösung\\\hline
-    \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}&Ausgabe von Punkten für Teilaufgaben ohne Kasten\\\hline
-    \hyperlink{quadrat}{\textbackslash{}quadrat}&Erzeugt ein leeres Kästchen\\\hline
-    \hyperlink{quadratkor}{\textbackslash{}quadratkor}&Erzeugt ein angekreuztes Kästchen\\\hline
-    \hyperlink{quadratkorr}{\textbackslash{}quadratkorr}&Erzeugt ein Kästchen, das für Schüler leer ist und für Korrektoren angekreuzt ist\\\hline
+    \hyperlink{punkte}{\textbackslash{}punkte}&Ausgabe von Punkten f\"ur die Musterl\"osung\\\hline
+    \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}&Ausgabe von Punkten f\"ur Teilaufgaben ohne Kasten\\\hline
+    \hyperlink{quadrat}{\textbackslash{}quadrat}&Erzeugt ein leeres K\"astchen\\\hline
+    \hyperlink{quadratkor}{\textbackslash{}quadratkor}&Erzeugt ein angekreuztes K\"astchen\\\hline
+    \hyperlink{quadratkorr}{\textbackslash{}quadratkorr}&Erzeugt ein K\"astchen, das f\"ur Sch\"uler leer ist und f\"ur Korrektoren angekreuzt ist\\\hline
+    \hyperlink{selfkasten}{\textbackslash{}selfkasten}&Erzeugung Antwortkasten mit Selbsteingabe der Varianten\\\hline
     \hyperlink{SI}{\textbackslash{}SI}&Setzen von Einheiten\\\hline
-    \hyperlink{sol}{\textbackslash{}sol}&Erzeugt Lösung in selbstgeschriebenen Antwortkästchen\\\hline
+    \hyperlink{sol}{\textbackslash{}sol}&Erzeugt L\"osung in selbstgeschriebenen Antwortk\"astchen\\\hline
     \hyperlink{solution}{\textbackslash{}solution}&Einstellen der Version, welche kompiliert werden soll\\\hline
     \hyperlink{ss}{\textbackslash{}ss}&Erzeugt \ss \ in korrekter Formatierung\\\hline
     \hyperlink{strich}{\textbackslash{}strich}&Erzeugt einen Strich in einer Strukturformel\\\hline
-    \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapitälchen\\\hline
+    \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapit\"alchen\\\hline
     \hyperlink{toprule}{\textbackslash{}toprule}&Zeichnet die oberste Linie einer Tabelle\\\hline
     \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}&Erzeugt einen Kasten mit Umbruch\\\hline
     \hyperlink{a}{\textbackslash{}\grqq{}a}&Erzeugt ein \"a in korrekter Formatierung\\\hline
@@ -179,5 +184,4 @@ Command&kurze Erklärung\hfill\\\hline
     \hyperlink{u}{\textbackslash{}\grqq{}u}&Erzeugt ein \"a in korrekter Formatierung\\\hline
 \end{tabularx}
 
-Es k\"onnen im Einzelfall auch andere Operatoren verwendet werden, sofern diese eine eindeutige Handlungsanweisung darstellen (z.B. Unterstreiche). 
 \end{document}
