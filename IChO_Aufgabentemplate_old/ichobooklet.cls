@@ -736,6 +736,7 @@
 \tl_new:N \l_tmpl_tl
 \tl_new:N \l_tmpr_tl
 \tl_new:N \l_frame_tl
+\dim_new:N \l_box_width_dim  % Declare \l_box_width_dim as a dimension variable
 
 % public package interface command
 \cs_new:Npn \kastenarray_zip:nnnnn #1 #2 #3 #4 #5 {
@@ -794,8 +795,23 @@
 }
 
 % xparse interface
-\NewDocumentCommand{\kastenarray}{ m m O{0cm} O{t} m m }{
-  \kastenarray_zip:nnnnn {#1} {#2} {#3} {#5} {#6}
+\NewDocumentCommand{\kastenarray}{ O{} m O{0cm} O{t} m m }{
+  % Determine the box width based on the first argument
+  \tl_if_empty:nTF {#1} {
+    % Calculate width dynamically if not provided
+    \seq_set_split:Nnn \l_tmpa_seq {,} {#5}  % Split labels into sequence
+    \int_set:Nn \l_tmpb_int {\seq_count:N \l_tmpa_seq}  % Count number of labels (n)
+    \fp_set:Nn \l_box_width_fp {(\dim_to_fp:n {\linewidth} - (\l_tmpb_int - 1) * \dim_to_fp:n {#3}) / \l_tmpb_int}
+    \dim_set:Nn \l_box_width_dim {\fp_to_dim:N \l_box_width_fp}
+  } {
+    % Use the provided width if given, converting it to a floating-point number
+    \dim_set:Nn \l_box_width_dim {#1}
+  }
+
+  % Pass the computed width (or provided width) to the internal function
+  \kastenarray_zip:nnnnn {\l_box_width_dim} {#2} {#3} {#5} {#6}
+
+  % Conditionally add vspace if the fourth argument is "t"
   \IfValueTF{#4}{%
     \tl_if_eq:nnTF {#4} {t} {
       \vspace*{-2.16\baselineskip}
