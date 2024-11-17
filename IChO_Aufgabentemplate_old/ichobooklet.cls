@@ -134,7 +134,6 @@
   % miscellaneous
   \usepackage{blindtext}
   \usepackage[normalem]{ulem}
-  \usepackage{todonotes}
   \usepackage[final]{pdfpages}
   \usepackage{etoolbox}
   \usepackage{subfiles}
