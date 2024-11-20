@@ -177,6 +177,9 @@
   \usepackage[\solution,rd\round,ex\exam,c\code]{optional}
 \fi
 
+\opt{1,2}{\usepackage[highlight=true]{soup} % For Crossword Puzzles % Musterlösung
+}
+\opt{0}{\usepackage{soup}}
 
 % Operator
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
@@ -360,21 +363,21 @@
   \setlength{\oddsidemargin}{-3mm}%
   \setlength{\evensidemargin}{-3mm}%
   \setlength{\topmargin}{-17mm}%
-  \setlength{\headheight}{48pt}%
+  \setlength{\headheight}{52pt}%
   \setlength{\headsep}{12pt}%
   \setlength{\footheight}{40pt}%
   \addtokomafont{headsepline}{\color{cdscolor}}
   \KOMAoptions{headsepline=1pt:\textwidth}
   \renewcommand*{\familydefault}{\sfdefault}
-  \ihead[]{\parbox{0.25\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
-  \chead[]{\large \vspace*{4pt} \parbox{0.5\textwidth}{%
+  \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
+  \chead[]{\large \vspace*{4pt} \parbox{0.6\textwidth}{%
     \centering
-    \opt{rd1}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}}
-    \opt{rd2}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}
-    \opt{rd3}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
-    \opt{rd4}{\textnormal{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
-  } \vspace*{2.5mm}}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.25\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
+    \opt{rd1}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}}}
+    \opt{rd2}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}}
+    \opt{rd3}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}}}
+    \opt{rd4}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}}
+  } \vspace*{0mm}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
 }
 % % for use on IPhO-paper
