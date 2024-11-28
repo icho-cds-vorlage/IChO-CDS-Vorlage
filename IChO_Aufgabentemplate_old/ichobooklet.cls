@@ -173,9 +173,9 @@
 %  "simple" commands for task writing
 % =========================================
 \ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
-  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb]{optional}
 \else
-  \usepackage[\solution,rd\round,ex\exam,c\code]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb]{optional}
 \fi
 
 \opt{1,2}{\usepackage[highlight=true]{soup} % For Crossword Puzzles % Musterlösung
