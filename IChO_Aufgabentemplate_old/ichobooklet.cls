@@ -102,6 +102,7 @@
 \usepackage{chemscheme} %scheme analog figure
 \usepackage{chemformula}
 \usepackage{chemmacros}
+\let\listofschemes\relax
 \usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}
 \usepackage{chemfig}
 \newcommand{\actualscale}{1.0} % give here your wished scale
