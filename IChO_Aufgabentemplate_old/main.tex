@@ -1,18 +1,19 @@
 \def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
-%Ab hier Finger weg, hier sollte bis zum finalen Satz nichts angefasst werden muessen!
+\def\bewerb{cds} %cds oder icho
 \def\klasse{10}
 \def\bundesland{Mecklenburg-Vorpommern}
 \def\cyear{2025}
 \def\round{2} % 1, 2, 3, 4
 \def\exam{2} % 1, 2; Nur fuer 3. & 4. Runde
-\def\fullname{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (f\"uer Deckblatt)
+\def\fullname{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (fuer Deckblatt)
 \def\code{1} %0: Linie; 1: aus Datei importieren
-
-\def\paperoption{plainpaper_Cds}
+\def\paperoption{\opt{cds}{plainpaper_Cds}\opt{icho}{plainpaper_IChO}}
 \documentclass[\paperoption]{ichobooklet}
+
 \usepackage{todonotes} %zum Ausblenden [disable]
-\begin{document}%\serienbriefstart %Auslagerung von \loop funktioniert nicht, die auskommentierten Befehle sind Quelltextleichen
+
+\begin{document}%serienbriefstart 
 \newread\quelle
  \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
  \loop
@@ -43,7 +44,7 @@
 
 \subfile{To-do}
 
-%\serienbriefende
+%serienbriefende
   \fi
  \ifmore\repeat
  \closein\quelle
