@@ -10,6 +10,7 @@
   \LoadClass[fontsize=11pt,a4paper,toc=flat]{scrartcl} % Class KOMA-article
                                                  % add option fleqn for
                                                  % formulas with left indent
+  \pdfminorversion=7 %um aktuelle PDFs ohne Fehler einbinden zu koennen
 
 %  used packages
 % ===============
@@ -246,14 +247,14 @@
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
-\newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=red, thick] (0,0) -- (0.25,0.25); \draw[color=red, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
+\newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=black, thick] (0,0) -- (0.25,0.25); \draw[color=black, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 \newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
                 #1 & #2 & #3 & #4 & #5\\\hline
                 \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}\\\hline
                 \end{tabular}}\punkteausgabe}
-\newcommand{\MCrf}[9]{{\setlength{\tabcolsep}{0.004\textwidth}
+\newcommand{\MCrf}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
                 \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
                 & #1 & #2 & #3 & #4 & #5 \\\hline
                 richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}\\\hline
@@ -268,8 +269,8 @@
 \newcommand{\MCvEnde}{\end{tabular}}
 \newcommand{\MCvrfEnde}{\end{tabular}}
 \newcommand{\MCv}[2]{
- \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{1}}{\quadratkorr}{\quadrat}}{}
- \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{1}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
+ \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
+ \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
  & #2 \\\hline}
 
 
@@ -301,20 +302,6 @@
  }
 \newif\ifmore \moretrue
 
-%\newcommand{\serienbriefstart}{\newread\quelle
-% \openin\quelle=Codes.csv
-% \loop
-%  \read\quelle to \zeile
-%  \ifeof\quelle
-%   \global\morefalse
-%  \else
-%   \expandafter\chopline\zeile\\
-%}
-%\newcommand{\serienbriefende}{
-%  \fi
-% \ifmore\repeat
-% \closein\quelle
-%}
 
 %  Laengenformatierungen / Header / Footer
 % =========================================
@@ -334,8 +321,9 @@
 
   \newdimen\spaceleft % for remaining height of page.
 
-% for use on plain paper
-\DeclareOption{plainpaper_IChO}{%
+% for use on plain paper; not different paper styles to avoid more switches then necessary 
+\DeclareOption{plainpaper}{%
+ \opt{icho}{ 
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
@@ -356,15 +344,15 @@
   }}%
   \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}\opt{rd1,rd2}{\\Bundesland: \opt{c0}{\hrulefill}\opt{c1}{\susbl}}}\opt{rd2}{}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-}
+ }
 
-\DeclareOption{plainpaper_Cds}{%
+ \opt{cds}{
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
   \setlength{\evensidemargin}{-3mm}%
   \setlength{\topmargin}{-17mm}%
-  \setlength{\headheight}{52pt}%
+  \setlength{\headheight}{60.8pt}%
   \setlength{\headsep}{12pt}%
   \setlength{\footheight}{40pt}%
   \addtokomafont{headsepline}{\color{cdscolor}}
@@ -380,35 +368,12 @@
   } \vspace*{0mm}}%
   \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+ }
 }
-% % for use on IPhO-paper
-% \DeclareOption{iphopaper}{%
-%   \setlength{\textwidth}{168mm}%
-%   \setlength{\textheight}{202mm}%
-%   \setlength{\oddsidemargin}{-5mm}%
-%   \setlength{\evensidemargin}{-5mm}%
-%   \setlength{\topmargin}{8mm}%
-%   \setlength{\headheight}{38pt}%
-%   \setlength{\headsep}{24pt}%
-%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%
-% }
-
-% % for use on IPhO-paper with background image
-% \DeclareOption{iphopaperbckgrd}{%
-%   \setlength{\textwidth}{168mm}%
-%   \setlength{\textheight}{202mm}%
-%   \setlength{\oddsidemargin}{-5mm}%
-%   \setlength{\evensidemargin}{-5mm}%
-%   \setlength{\topmargin}{8mm}%
-%   \setlength{\headheight}{38pt}%
-%   \setlength{\headsep}{24pt}%
-%   \cfoot[\thepage~/ \pageref{TotPages}]{\thepage~/ \pageref{TotPages}}%
-%   \CenterWallPaper{1}{IPhO_Briefpapier_2011.pdf}%
-% }
 
 \ProcessOptions\relax
 
-\newcommand{\plainpaperoption}{plainpaper_Cds}
+\newcommand{\plainpaperoption}{plainpaper_Cds}  %WOFUER? das hier und das auskommentierte noch nötig?
 
 
 % \ifx\paperoption\plainpaperoption
@@ -457,11 +422,11 @@
 % ====================
   %\numberwithin{equation}{section}
 
-  \addtokomafont{section}{\color{ichodark}\large\fontseries{b}}
-  \addtokomafont{subsection}{\color{ichodark}\normalsize\fontseries{b}}
+  \addtokomafont{section}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
+  \addtokomafont{subsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
   \setcapindent{0em} % no indentation in captions
 
-  \newcommand{\tasksection}[2][]{
+  \newcommand{\tasksection}[2][]{        %WOFUER? Alles von hier bis zu den label-countern irgendwo verwendet? Irgendwo bei ICHO oder CDS sinnvoll nutzbar?
     \renewcommand{\thesection}{Aufgabe \arabic{section}} %
     \section[#2]{#2 \hfill #1} %
     \renewcommand{\thesection}{\arabic{section}}}
@@ -516,7 +481,7 @@
   fonttitle=\bfseries
 }
 
-% Boxed Example environment
+% Boxed Example environment %WOFUER?
 %================================
 % choice between
 % framed package (problem with color changes in box)
