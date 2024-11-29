@@ -1,4 +1,4 @@
-\def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
+\def\solution{0} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
 \def\bewerb{cds} %cds oder icho
 \def\klasse{10}
@@ -15,37 +15,37 @@
 
 \begin{document}%serienbriefstart 
 \newread\quelle
- \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
- \loop
- \read\quelle to \zeile
-  \ifeof\quelle
-   \global\morefalse
-  \else
-   \expandafter\chopline\zeile\\
+\openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
+\loop
+\read\quelle to \zeile
+\ifeof\quelle
+  \global\morefalse
+\else
+  \expandafter\chopline\zeile\\
 
-\setcounter{page}{1}\setcounter{section}{0}
-\subfile{./Hilfsdateien/deckblatt}
-\subfile{./Hilfsdateien/formelsammlung}
-\subfile{./Hilfsdateien/periodensystem}
-\subfile{./Hilfsdateien/NMR}
+  \setcounter{page}{1}\setcounter{section}{0}
+  \subfile{./Hilfsdateien/deckblatt}
+  \subfile{./Hilfsdateien/formelsammlung}
+  \subfile{./Hilfsdateien/periodensystem}
+  \subfile{./Hilfsdateien/NMR}
 
-%%%%%%%%%%%%%%%%%%
-% 1. Aufgabe
-\subfile{2025-3-11}
+  %%%%%%%%%%%%%%%%%%
+  % 1. Aufgabe
+  \subfile{2025-3-11}
 
-% 2. Aufgabe
-%\subfile{2025-3-12}
+  % 2. Aufgabe
+  %\subfile{2025-3-12}
 
-% 3. Aufgabe
-%\subfile{2025-3-13}
+  % 3. Aufgabe
+  %\subfile{2025-3-13}
 
-% 4. Aufgabe
-%\subfile{2025-3-14}
+  % 4. Aufgabe
+  \subfile{2025-3-14}
 
-%\subfile{To-do}
+  %\subfile{To-do}
 
-%serienbriefende
-  \fi
- \ifmore\repeat
- \closein\quelle
+  %serienbriefende
+\fi
+\ifmore\repeat
+\closein\quelle
 \end{document}
