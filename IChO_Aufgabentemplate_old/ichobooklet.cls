@@ -38,6 +38,7 @@
 
  % \usepackage{framed}
   \usepackage{mdframed}
+  \usepackage{qrcode}
   \usepackage{array}
   \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
   \newcolumntype{L}[1]{>{\arraybackslash}m{#1}}
@@ -309,9 +310,9 @@
 % \setlength{\linespread}{1.2}   % Seperation betweeen lines
   \setlength{\parindent}{0pt}   % Absaetze nicht einruecken
   \setlength{\parskip}{1.5ex plus0.5ex minus0.5ex}   % Absatzabstand
-  \makeatletter  % have normal \parskip also in minipage environment
-    \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex plus0.5ex minus0.5ex}}
-  \makeatother
+%  \makeatletter  % have normal \parskip also in minipage environment; rausgenommen da es QR-Codes zerschiesst
+%    \newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex plus0.5ex minus0.5ex}}
+%  \makeatother
   \RedeclareSectionCommands[beforeskip=0em,afterskip=\parskip]
     {section} % spacing before and after heading
   \RedeclareSectionCommands[beforeskip=0em,afterskip=0.01em]
@@ -342,8 +343,9 @@
     \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
     \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
   }}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}\opt{rd1,rd2}{\\Bundesland: \opt{c0}{\hrulefill}\opt{c1}{\susbl}}}\opt{rd2}{}}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+  \opt{rd2}{\ifoot[]{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}\ofoot[]{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}%
  }
 
  \opt{cds}{
