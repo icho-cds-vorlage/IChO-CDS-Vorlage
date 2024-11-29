@@ -345,7 +345,7 @@
   }}%
   \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-  \opt{rd2}{\ifoot[]{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}\ofoot[]{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}%
+  \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}\ofoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}%
  }
 
  \opt{cds}{
