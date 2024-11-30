@@ -323,6 +323,7 @@
   \newdimen\spaceleft % for remaining height of page.
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary 
+\def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
 \DeclareOption{plainpaper}{%
  \opt{icho}{ 
   \setlength{\textwidth}{168mm}%
@@ -343,9 +344,9 @@
     \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
     \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
   }}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-  \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}\ofoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}%
+  \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
  }
 
  \opt{cds}{
