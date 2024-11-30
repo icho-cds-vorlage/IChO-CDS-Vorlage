@@ -11,41 +11,42 @@
 \def\paperoption{plainpaper}
 \documentclass[\paperoption]{ichobooklet}
 
-\usepackage{todonotes} %zum Ausblenden [disable]
+\usepackage{todonotes} %zum Ausblenden [disable] % Für Aufgabenentwicklungsprozess nicht für finales Ergebnis
 
 \begin{document}%serienbriefstart 
 \newread\quelle
-\openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
-\loop
-\read\quelle to \zeile
-\ifeof\quelle
-  \global\morefalse
-\else
-  \expandafter\chopline\zeile\\
 
-  \setcounter{page}{1}\setcounter{section}{0}
-  \subfile{./Hilfsdateien/deckblatt}
-  \subfile{./Hilfsdateien/formelsammlung}
-  \subfile{./Hilfsdateien/periodensystem}
-  \subfile{./Hilfsdateien/NMR}
+ \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
+ \loop
+ \read\quelle to \zeile
+  \ifeof\quelle
+   \global\morefalse
+  \else
+   \expandafter\chopline\zeile\\
 
-  %%%%%%%%%%%%%%%%%%
-  % 1. Aufgabe
-  \subfile{2025-3-11}
+\setcounter{page}{1}\setcounter{section}{0}
+\subfile{./Hilfsdateien/deckblatt}
+\subfile{./Hilfsdateien/formelsammlung}
+\subfile{./Hilfsdateien/periodensystem}
+\subfile{./Hilfsdateien/NMR}
 
-  % 2. Aufgabe
-  %\subfile{2025-3-12}
+%%%%%%%%%%%%%%%%%%
+% 1. Aufgabe
+\subfile{2025-3-11}
 
-  % 3. Aufgabe
-  %\subfile{2025-3-13}
+% 2. Aufgabe
+\subfile{2025-3-12}
 
-  % 4. Aufgabe
-  \subfile{2025-3-14}
+% 3. Aufgabe
+\subfile{2025-3-13}
 
-  %\subfile{To-do}
+% 4. Aufgabe
+\subfile{2025-3-14}
 
-  %serienbriefende
-\fi
-\ifmore\repeat
-\closein\quelle
+%\subfile{To-do}
+
+%serienbriefende
+  \fi
+ \ifmore\repeat
+ \closein\quelle
 \end{document}

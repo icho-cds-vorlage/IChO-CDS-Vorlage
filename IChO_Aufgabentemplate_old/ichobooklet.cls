@@ -319,54 +319,56 @@
 \newdimen\spaceleft % for remaining height of page.
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary 
+\def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
 \DeclareOption{plainpaper}{%
-  \opt{icho}{
-    \setlength{\textwidth}{168mm}%
-    \setlength{\textheight}{238mm}%
-    \setlength{\oddsidemargin}{-3mm}%
-    \setlength{\evensidemargin}{-3mm}%
-    \setlength{\topmargin}{-17mm}%
-    \setlength{\headheight}{48pt}%
-    \setlength{\headsep}{12pt}%
-    \setlength{\footheight}{40pt}%
-    \addtokomafont{headsepline}{\color{ichodark}}
-    \KOMAoptions{headsepline=1pt:\textwidth}
-    \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
-    \chead[]{\large \parbox{0.33\textwidth}{%
-        \centering
-        \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
-        \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
-        \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
-        \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
-      }}%
-    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}}%
-    \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-    \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}\ofoot[]{\vspace{-4\baselineskip}\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \suscode, \susbl, S.\thepage}}}%
-  }
 
-  \opt{cds}{
-    \setlength{\textwidth}{168mm}%
-    \setlength{\textheight}{238mm}%
-    \setlength{\oddsidemargin}{-3mm}%
-    \setlength{\evensidemargin}{-3mm}%
-    \setlength{\topmargin}{-17mm}%
-    \setlength{\headheight}{60.8pt}%
-    \setlength{\headsep}{12pt}%
-    \setlength{\footheight}{40pt}%
-    \addtokomafont{headsepline}{\color{cdscolor}}
-    \KOMAoptions{headsepline=1pt:\textwidth}
-    \renewcommand*{\familydefault}{\sfdefault}
-    \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
-    \chead[]{\large \vspace*{4pt} \parbox{0.6\textwidth}{%
-        \centering
-        \opt{rd1}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}}}
-        \opt{rd2}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}}
-        \opt{rd3}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}}}
-        \opt{rd4}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}}
-      } \vspace*{0mm}}%
-    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
-    \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-  }
+ \opt{icho}{ 
+  \setlength{\textwidth}{168mm}%
+  \setlength{\textheight}{238mm}%
+  \setlength{\oddsidemargin}{-3mm}%
+  \setlength{\evensidemargin}{-3mm}%
+  \setlength{\topmargin}{-17mm}%
+  \setlength{\headheight}{48pt}%
+  \setlength{\headsep}{12pt}%
+  \setlength{\footheight}{40pt}%
+  \addtokomafont{headsepline}{\color{ichodark}}
+  \KOMAoptions{headsepline=1pt:\textwidth}
+  \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
+  \chead[]{\large \parbox{0.33\textwidth}{%
+    \centering
+    \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
+    \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
+    \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
+    \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
+  }}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
+  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+  \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
+ }
+
+ \opt{cds}{
+  \setlength{\textwidth}{168mm}%
+  \setlength{\textheight}{238mm}%
+  \setlength{\oddsidemargin}{-3mm}%
+  \setlength{\evensidemargin}{-3mm}%
+  \setlength{\topmargin}{-13mm}%
+  \setlength{\headheight}{60.8pt}%
+  \setlength{\headsep}{12pt}%
+  \setlength{\footheight}{40pt}%
+  \addtokomafont{headsepline}{\color{cdscolor}}
+  \KOMAoptions{headsepline=1pt:\textwidth}
+  \renewcommand*{\familydefault}{\sfdefault}
+  \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
+  \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{%
+    \centering
+    \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klassse \klasse}}}
+    \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}
+    \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
+    \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
+  } \vspace*{4mm}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
+  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+ }
 }
 
 \ProcessOptions\relax
