@@ -353,7 +353,7 @@
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
   \setlength{\evensidemargin}{-3mm}%
-  \setlength{\topmargin}{-17mm}%
+  \setlength{\topmargin}{-13mm}%
   \setlength{\headheight}{60.8pt}%
   \setlength{\headsep}{12pt}%
   \setlength{\footheight}{40pt}%
@@ -361,14 +361,14 @@
   \KOMAoptions{headsepline=1pt:\textwidth}
   \renewcommand*{\familydefault}{\sfdefault}
   \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
-  \chead[]{\large \vspace*{4pt} \parbox{0.6\textwidth}{%
+  \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{%
     \centering
-    \opt{rd1}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 1.Runde Klassse \klasse}}}}
-    \opt{rd2}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}}
-    \opt{rd3}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\Aufgabenblatt\\ 3. Runde Klasse \klasse}}}}
-    \opt{rd4}{\normalfont{\Large{\textbf{\glqq{}Chemie - die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}}
-  } \vspace*{0mm}}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\Large\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
+    \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klassse \klasse}}}
+    \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}
+    \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
+    \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
+  } \vspace*{4mm}}%
+  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \hfill}\end{flushright}}}}%
   \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
  }
 }
