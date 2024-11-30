@@ -73,7 +73,7 @@
 % tight: Optional. Wenn tight=t, dann wird der verticale Abstand nach den Kaesten auf entfernt. 
 %        Die Option tight=t sollte genutzt werden, wenn danach wieder eine Reihe an Kästen folgt. 
 %        Sollte nach dem Befehl Text folgen, dann sollte tight=f oder die Option weggelassen werden.
-%         Default ist tight=f.
+%         Default ist tight=t.
 % label1,label2,...: Die Labels der Kästen, getrennt durch Kommata.
 % Inhalt1,Inhalt2,...: Der Inhalt der Kästen, getrennt durch Kommata. 
 %                      Diese Inhalte werden nur bei der Musterlösung angezeigt.
@@ -85,7 +85,7 @@
 
 % Kastenarray mit 4 Kästen, 2.5 cm breit, 3 cm hoch, Abstand 0.2 cm und tight=f,
 % da danach noch ein Kastenarray folgt.
-\kastenarray[2.5cm]{3cm}[0.2cm][t]{G,J,I,W}{1234,6425,672,6489}
+\kastenarray[2.5cm]{3cm}[0.2cm][]{G,J,I,W}{1234,6425,672,6489}
 
 % Kastenarray mit 3 Kästen, 3 cm breit, 4 cm hoch, Abstand 0cm und tight leer gelassen,
 % da danach Text folgt.
@@ -93,9 +93,9 @@
 
 % Kastenarray mit 3 Kästen, Breite automatisch bestimmt, 2 cm hoch, Abstand 0cm und 
 % tight leer gelassen, da danach Text folgt.
-\kastenarray{2cm}[0cm][]{C,D,S}{0123,4567,890a}
+\kastenarray{2cm}[0cm][f]{C,D,S}{0123,4567,890a}
 
-Hier ein Text.
+% Hier ein Text.
 
 % Noch zwei Kastenarrays.
 \kastenarray[7cm]{7cm}{1,2}{Molekuel1,Molekuel2}
