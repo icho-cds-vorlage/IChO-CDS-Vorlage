@@ -8,7 +8,8 @@
 
 
 Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausurrunden 2–4) in \LaTeX. Am Ende des Dokuments sind einige weitere Hinweise zur Aufgabenerstellung gesammelt. 
-Dies ist ein Beispiel für einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde üblich ist.  
+Dies ist ein Beispiel für einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde üblich ist.\\
+\textit{Für kursive Hervorhebung kann dies genuztzte werden}. \textbf{Für fette Hervorherbung dies}.
 
 \teilaufgabe{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugefügt werden}
 \kasten{2.5cm}{
@@ -110,15 +111,28 @@ Noch zwei Kastenarrays.
     pV &= nRT \label{G:test-Gl}\\
     a &= b
 \end{align}
-\textit{Hier soll kursiver Text stehen}.
-In Gleichung \ref{G:test-Gl} ist das ideale Gasgesetz gezeigt \ldots 
-Im Text sollten Vorzeichen wie bei $\delta-$/$\delta+$ besser au\ss{}erhalb des Mathemodusses stehen, aber ein richtiges Minuszeichen verwenden: $\delta$+/$\delta$\textminus{}
-
-Hier kommt mal eine andere Aufz\"ahlung
+\begin{align*}
+    \dd{[NO_3^-]}{t}  = k [NO_3^-]\\
+    a &= b
+\end{align*}
+\begin{equation*}
+    Q = I \cdot t
+\end{equation*}
+In Gleichung ist das ideale Gasgesetz gezeigt \ldots 
+Im Text sollten Vorzeichen wie bei $\delta-$/$\delta+$ besser au\ss{}erhalb des Mathemodusses stehen, aber ein richtiges Minuszeichen verwenden: $\delta$+/$\delta$\textminus{}\\
+Auch innerhalb eines Kastens sind Solche Folmelumgebungen möglich. Zudem sind Punkte und Kommentare in aligns möglich:\\
+\kasten{5cm}{
+\begin{align*}
+    y = x^2 \punkte{2}\kommentar{Test}
+\end{align*}
+Dies ist die Antwort. Dies ist Antwortsatz 2.
+}{}
+Hier kommt mal eine andere Aufz\"ahlung.\\
 \begin{enumerate}[(i)]
     \item Hallo
     \item Tsch\"uss
 \end{enumerate}
+
 Und danach wieder eine Teilaufgabe.
 \teilaufgabe{\operator{Unterscheide} die verschiedenen Aufz\"ahlungen.}{}
 

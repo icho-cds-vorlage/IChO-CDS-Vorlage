@@ -288,7 +288,7 @@
 %Others
 \newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
 \newcommand{\strich}{{\small{}$^\prime$}}
-\newcommand{\dd}[3][]{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
+\newcommand{\dd}[3][]{\ensuremath{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
 \renewcommand{\pH}{\ensuremath{\mathrm{pH}}}
 \renewcommand{\pOH}{\ensuremath{\mathrm{pOH}}}
 \newcommand{\pKs}{\ensuremath{\mathrm{p}K_{\mathrm{S}}}}
