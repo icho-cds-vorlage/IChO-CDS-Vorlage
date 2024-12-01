@@ -1,15 +1,36 @@
 \documentclass[./main.tex]{subfiles}
 \graphicspath{{\subfix{./Abbildungen/}}}
+% \usepackage{xsavebox}
+% \usepackage{atbegshi}
+
+% \xsavebox{PageBGPicture}{
+%     \begin{tikzpicture}[remember picture, overlay]
+%         % Page size
+%         \draw[use as bounding box, opacity=0] (0,0) rectangle (\paperwidth, \paperheight);
+        
+%         % Define positions for the markers
+%         % Corners
+%         \node[anchor=north west] at (current page.north west) {\includegraphics[width=1cm]{4x4_1000-0.png}};
+%         \node[anchor=north east] at (current page.north east) {\includegraphics[width=1cm]{4x4_1000-0.png}};
+%         \node[anchor=south west] at (current page.south west) {\includegraphics[width=1cm]{4x4_1000-0.png}};
+%         \node[anchor=south east] at (current page.south east) {\includegraphics[width=1cm]{4x4_1000-0.png}};
+%     \end{tikzpicture}
+% }
+
+% \AtBeginShipout{
+%   \AtBeginShipoutUpperLeft{\raisebox{-\height}{\xusebox{PageBGPicture}}}
+% }
+
 \begin{document}
-\renewcommand{\tasktitle}{Titel}
+\renewcommand{\tasktitle}{Titel$^1$}
 \renewcommand{\taskpoints}{3.5} %Gesamtpunktzahl der Aufgabe
 \renewcommand{\taskweight}{8.7}
 \aufgabenanfang % Beginn der Aufgabe
-
+\footnotetext[1]{Test}
 
 Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausurrunden 2–4) in \LaTeX. Am Ende des Dokuments sind einige weitere Hinweise zur Aufgabenerstellung gesammelt. 
 Dies ist ein Beispiel für einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde üblich ist.\\
-\textit{Für kursive Hervorhebung kann dies genuztzte werden}. \textbf{Für fette Hervorherbung dies}.
+\textit{Für kursive Hervorhebung kann dies genuztzt werden}. \textbf{Für fette Hervorherbung dies}.
 
 \teilaufgabe{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugefügt werden}
 \kasten{2.5cm}{
@@ -134,7 +155,29 @@ Hier kommt mal eine andere Aufz\"ahlung.\\
 \end{enumerate}
 
 Und danach wieder eine Teilaufgabe.
+\newpage
 \teilaufgabe{\operator{Unterscheide} die verschiedenen Aufz\"ahlungen.}{}
+
+% Kasten mit Umrandung und Kästchen anhand der Punktzahl
+% ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
+% #1 Höhe
+% #2 Kastentext (#2 bei Kasten)
+% #3 Kastentext für Klausur (#3 bie Kasten)
+% #4 Aufgabentext Vor Kasten
+% #5 Punkte
+\punktekasten
+{10cm}
+{Test Kastentext}
+{test klausurtext}
+{Test Aufgabentext}
+{2}
+
+% \fboxparboxargs{
+%     1cm & Test\\
+%     2cm & Test
+% }
+
+\testkasten{test}
 
 \aufgabenende
 \end{document}

@@ -159,6 +159,8 @@
 \patchcmd{\grenew@command}{\new@command}{\gnew@command}{}{}
 \makeatother
 
+\newlength{\boxheight}
+
 \newcounter{multeilaufpunkt}
 \newcounter{mulaufgabenpunkte}
 \newcommand{\tasktitle}{holder} % Platzhalter
@@ -177,12 +179,14 @@
 \ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
   \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb]{optional}
 \else
-  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb, s\scannable]{optional}
 \fi
 
 \opt{1,2}{\usepackage[highlight=true]{soup} % For Crossword Puzzles % Musterlösung
 }
 \opt{0}{\usepackage{soup}}
+
+\newcommand{\getheightoftext}[1]{\settoheight\boxheight{\vbox{#1}}}
 
 % Operator
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
@@ -191,6 +195,79 @@
 \newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\punkteausgabe} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 \newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}\punkteausgabe}} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+
+% Kasten mit Umrandung und Kästchen anhand der Punktzahl
+% ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
+% #1 Höhe
+% #2 Kastentext (#2 bei Kasten)
+% #3 Kastentext für Klausur (#3 bie Kasten)
+% #4 Aufgabentext Vor Kasten
+% #5 Punkte
+\newcommand{\testkasten}[1]{
+  \getheightoftext{#1}
+  \fbox{\parbox[b][\boxheight]{\linewidth}{#1}}
+}
+
+\ExplSyntaxOn
+\NewDocumentCommand { \iterargs } { m m }
+{
+    \clist_item:nn { #1 } { #2 }
+}
+\ExplSyntaxOff
+
+\NewDocumentCommand{\fboxparboxargs}{m}{
+    % Split the input into items using \\ as the linebreak delimiter
+    \seq_set_split:NnV \l_tmpa_seq { \\ } { #1 }
+    % Begin creating the output
+    \seq_map_inline:Nn \l_tmpa_seq {
+        \fbox{%
+            \parbox[c][4cm][c]{5cm}{% Set height (4cm), width (5cm), and alignment (centered)
+                \seq_set_split:NnV \l_tmpb_seq { & } { ##1 }
+                \seq_map_inline:Nn \l_tmpb_seq {
+                    ##1\par % Add each part in a new paragraph
+                }
+            }
+        }\par\vspace{1em} % Add space between boxes
+    }
+}
+
+\ExplSyntaxOff
+
+% Kasten mit Umrandung und Kästchen anhand der Punktzahl
+% ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
+% #1 Höhe
+% #2 Kastentext (#2 bei Kasten)
+% #3 Kastentext für Klausur (#3 bie Kasten)
+% #4 Aufgabentext Vor Kasten
+% #5 Punkte
+
+\newcommand{\punktekasten}[5]{%
+    \fbox{\parbox[b][#1][t]{\linewidth-9pt}{%
+        \begin{minipage}[t]{\linewidth-30pt}%
+            #4\\
+            \getheightoftext{#4\\}
+            \fbox{\parbox[b][#1-\boxheight][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}%
+        \end{minipage}%
+        \hfill%
+        \begin{minipage}[t]{20pt}%
+            \vspace*{\boxheight}
+            \pgfmathsetmacro{\testvar}{round(2 * #5)}%
+            {\setlength{\baselineskip}{0.4\baselineskip}
+            \foreach \i in {1,...,\testvar}{%
+                \quadrat % Draw the square
+                \ifodd\i % Check if \i is odd
+                    % Do something for odd \i
+                \else%
+                    \pgfmathsetmacro{\i}{int(\i/2)}%
+                    \textbf{\ \i} % Print the value for even \i
+                \fi%
+                \par % Go to the next line
+                \vspace{-5pt}%
+
+            }}%
+        \end{minipage}%
+    }}
+}%
 
 %umbrechbarer Antwortkasten
 \newcommand{\FPtruncate}[2]{\FPeval\truncatehelpone{round(#2:0)}\FPsub{\truncatehelptwo}{#2}{0.5}\FPeval\truncatehelpthree{round(truncatehelptwo:0)}\ifthenelse{\equal{\truncatehelpone}{\truncatehelpthree}}{\FPeval{#1}{\truncatehelpone}}{\FPeval{#1}{\truncatehelpthree}}} %Funktion fuer Abschneiden von Nachkommastellen (1. Argument: Zielvariable; 2. Argument: Ausgangswert oder Variable)
