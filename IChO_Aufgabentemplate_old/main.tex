@@ -1,4 +1,4 @@
-\def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
+\def\solution{0} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
 \def\scannable{1} % 0 oder 1 für false oder true
 \def\bewerb{cds} %cds oder icho
@@ -16,6 +16,7 @@
 
 \begin{document}%serienbriefstart 
 \newread\quelle
+
  \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
  \loop
  \read\quelle to \zeile

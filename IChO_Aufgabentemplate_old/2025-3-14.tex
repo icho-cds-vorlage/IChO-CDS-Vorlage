@@ -27,40 +27,39 @@
 % \end{center}
 
 \begin{center}
-\tcbset{
-  width=3.0cm + 6.3pt,
-  colframe=black,
-  colback=white,
-  boxrule=0.4pt,
-  arc=0pt,
-  halign=left,
-  boxsep=3pt,
-  left=0pt,
-  right=0pt,
-  top=0pt,
-  bottom=0pt,
-}
-\begin{tabular}{ccc}
-    \begin{tcolorbox}
-    \begin{minipage}[t][2cm][t]{3cm}
-        \opt{1,2}{\textbf{A}\par\centering abc}\opt{0}{\textbf{A}}
-    \end{minipage}
-    \end{tcolorbox} 
-    \hspace{0.5cm} &
-    \begin{tcolorbox}
-    \begin{minipage}[t][2cm][t]{3cm}
-        \opt{1,2}{\textbf{B}\par\centering def}\opt{0}{\textbf{B}}
-    \end{minipage}
-    \end{tcolorbox} 
-    \hspace{0.5cm} &
-    \begin{tcolorbox}
-    \begin{minipage}[t][2cm][t]{3cm}
-        \opt{1,2}{\textbf{C}\par\centering ghi}\opt{0}{\textbf{C}}
-    \end{minipage}
-    \end{tcolorbox} \\
-\end{tabular}
+    \tcbset{
+        width=3.0cm + 6.3pt,
+        colframe=black,
+        colback=white,
+        boxrule=0.4pt,
+        arc=0pt,
+        halign=left,
+        boxsep=3pt,
+        left=0pt,
+        right=0pt,
+        top=0pt,
+        bottom=0pt,
+    }
+    \begin{tabular}{ccc}
+        \begin{tcolorbox}
+            \begin{minipage}[t][2cm][t]{3cm}
+                \opt{1,2}{\textbf{A}\par\centering abc}\opt{0}{\textbf{A}}
+            \end{minipage}
+        \end{tcolorbox}
+        \hspace{0.5cm} &
+        \begin{tcolorbox}
+            \begin{minipage}[t][2cm][t]{3cm}
+                \opt{1,2}{\textbf{B}\par\centering def}\opt{0}{\textbf{B}}
+            \end{minipage}
+        \end{tcolorbox}
+        \hspace{0.5cm} &
+        \begin{tcolorbox}
+            \begin{minipage}[t][2cm][t]{3cm}
+                \opt{1,2}{\textbf{C}\par\centering ghi}\opt{0}{\textbf{C}}
+            \end{minipage}
+        \end{tcolorbox} \\
+    \end{tabular}
 \end{center}
-
 
 % Der Befeil 
 % \kastenarray[Breite]{Hoehe}[Abstand][tight]{label1,label2,...}{Inhalt1,Inhalt2,...}
@@ -95,14 +94,18 @@
 % tight leer gelassen, da danach Text folgt.
 \kastenarray{2cm}[0cm][f]{C,D,S}{0123,4567,890a}
 
-% Hier ein Text.
+
+% kastenarraycustom malt Kästen ohne Labels. 
+% Und ihre Inhalte sind nicht von opt{} abhängig.
+\kastenarraycustom{2cm}[0cm][]{11, 22, 33, 44}
+
+Hier ein Text.
+
 
 % Noch zwei Kastenarrays.
 \kastenarray[7cm]{7cm}{1,2}{Molekuel1,Molekuel2}
 
 \kastenarray[7cm]{7cm}[0cm][]{3,4}{Molekuel3,Molekuel4}
 
-Hier ein Text.
-\newpage
-\aufgabenende
+Hier ein Text. \newpage \aufgabenende
 \end{document}
