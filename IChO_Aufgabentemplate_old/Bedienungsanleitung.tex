@@ -41,7 +41,7 @@ Diese Bedienungsanleitung soll Standards festlegen, die bei der Arbeit mit dem T
     \item \hypertarget{SI}{} Gr\"o\ss{}en mit Einheiten mit \textit{\textbackslash SI\{\}\{\}}, nur Einheiten mit \textit{\textbackslash si\{\}} (siehe Dokumentation siunitx)
     \item Falls f\"ur Gleichungen gr\"o\ss{}ere Integralzeichen ben\"otigt werden, steht Paket \textit{bigints} zur Verf\"ugung, f\"ur Vektoren \textit{esvect}
     \item F\"ur Spezies und Reaktionsgleichungen das Paket \textit{chemformular} verwenden. Beispielsweise \textit{\hypertarget{ch}{\textbackslash ch}\{H2O + O2 + Hg2\textasciicircum2+ + O\textasciicircum2- -> 2 H2O + HgO\}} ergibt \ch{H2O + O2 + Hg2^2+ + O^2- -> 2 H2O + HgO}. F\"ur die Pfeile und andere Features sei die Lekt\"ure der Anleitung empfohlen:  https://ctan.space-pro.be/tex-archive/macros/latex/contrib/chemformula/chemformula-manual.pdf
-    \item F\"ur pH, pOH, pKs, pKb, pKw~k\"onnen die Befehle \hypertarget{pH}{} \hypertarget{pKs}{} \hypertarget{pKb}{} \hypertarget{pKw}{} \hypertarget{pOH}{} \textit{\textbackslash pH}, \textit{\textbackslash pOH}, \textit{\textbackslash pKS}, \textit{\textbackslash pKb} und \textit{\textbackslash pKw} verwendet werden. Chemische Formeln in \textit{\textbackslash ch\{\}} sind auch in Mathe\-/Umgebungen automatisch aufrecht. Allgemein nicht-kursiv in Mathe\-/Umgebungen schreiben funktioniert mit \textit{\hypertarget{mathrm}{\textbackslash mathrm\{\}}}. 
+    \item F\"ur pH, pOH, pKs, pKb, pKw~k\"onnen die Befehle \hypertarget{pH}{} \hypertarget{pKs}{} \hypertarget{pKb}{} \hypertarget{pKw}{} \hypertarget{pOH}{} \textit{\textbackslash pH}, \textit{\textbackslash pOH}, \textit{\textbackslash pKS}, \textit{\textbackslash pKb} und \textit{\textbackslash pKw} verwendet werden. Chemische Formeln in \textit{\textbackslash ch\{\}} sind auch in Mathe\-/Umgebungen automatisch aufrecht. Allgemein nicht-kursiv in Mathe\-/Umgebungen schreiben funktioniert mit \textit{\textbackslash textnormal\{\}}. 
     \item Bei chemischen Namen f\"ur die Apostrophe (z.B. 3,3\strich-BINAP) \hypertarget{strich}{\textit{\textbackslash strich}} verwenden
     \item F\"ur Aufz\"ahlungen \hypertarget{beginenumerate}{\textit{\textbackslash begin\{enumerate\}[i)]}}
     \item Standardzustand in Mathe-Umgebung mit \textit{\hypertarget{lstandardstate}{\textbackslash lstandardstate}}
@@ -137,7 +137,6 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{linebreak}{\textbackslash{}linebreak}&Erzeugen eines Zeilenumbruchs, unter Beibehaltung des Blocksatzes\\\hline
     \hyperlink{linewidth}{\textbackslash{}linewidth}&Gibt die Textbreite zur\"uck\\\hline
     \hyperlink{lstandardstate}{\textbackslash{}lstandardstate}&Standardzustand in Mathe-Umgebung\\\hline
-    \hyperlink{mathrm}{\textbackslash{}mathrm}&Erzeugt normalen text in Mathe-Umgebung\\\hline
     \hyperlink{MC}{\textbackslash{}MC}&Erzeugt eine Multiple-Choice-Frage im Querformat\\\hline
     \hyperlink{MCrf}{\textbackslash{}MCrf}&Erzeugt eine Multiple-Choice-Frage im Querformat mit M\"oglichkeit richtig/falsch\\\hline
     \hyperlink{MCv}{\textbackslash{}MCv}&Erzeugt eine Multiple-Choice-Frage im Hochformat\\\hline
@@ -160,11 +159,11 @@ Command&kurze Erkl\"arung\hfill\\\hline
 Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{ocumbruch}{\textbackslash{}ocumbruch}&Seitenumbruch innerhalb eines OC-Kastens\\\hline
     \hyperlink{operator}{\textbackslash{}operator}&Hebt den Operator hervor\\\hline
-    \hyperlink{pH}{\textbackslash{}pH}&Erzeugt \ensuremath{\mathrm{pH}} \ in korrekter Formatierung\\\hline
-    \hyperlink{pKs}{\textbackslash{}pKs}&Erzeugt \ensuremath{\mathrm{p}K_{\mathrm{S}}} \ in korrekter Formatierung\\\hline
-    \hyperlink{pKb}{\textbackslash{}pKb}&Erzeugt \ensuremath{\mathrm{p}K_{\mathrm{B}}} \ in korrekter Formatierung\\\hline
-    \hyperlink{pKw}{\textbackslash{}pKw}&Erzeugt \ensuremath{\mathrm{p}K_{\mathrm{W}}} \ in korrekter Formatierung\\\hline
-    \hyperlink{pOH}{\textbackslash{}pOH}&Erzeugt \ensuremath{\mathrm{pOH}} \ in korrekter Formatierung\\\hline
+    \hyperlink{pH}{\textbackslash{}pH}&Erzeugt \ensuremath{\textnormal{pH}} \ in korrekter Formatierung\\\hline
+    \hyperlink{pKs}{\textbackslash{}pKs}&Erzeugt \ensuremath{\textnormal{p}K_{\textnormal{S}}} \ in korrekter Formatierung\\\hline
+    \hyperlink{pKb}{\textbackslash{}pKb}&Erzeugt \ensuremath{\textnormal{p}K_{\textnormal{B}}} \ in korrekter Formatierung\\\hline
+    \hyperlink{pKw}{\textbackslash{}pKw}&Erzeugt \ensuremath{\textnormal{p}K_{\textnormal{W}}} \ in korrekter Formatierung\\\hline
+    \hyperlink{pOH}{\textbackslash{}pOH}&Erzeugt \ensuremath{\textnormal{pOH}} \ in korrekter Formatierung\\\hline
     \hyperlink{par}{\textbackslash{}par}&Erzeugung eines Absatz\\\hline
     \hyperlink{punkte}{\textbackslash{}punkte}&Ausgabe von Punkten f\"ur die Musterl\"osung\\\hline
     \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}&Ausgabe von Punkten f\"ur Teilaufgaben ohne Kasten\\\hline
@@ -177,7 +176,7 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{solution}{\textbackslash{}solution}&Einstellen der Version, welche kompiliert werden soll\\\hline
     \hyperlink{ss\{\}}{\textbackslash{}ss}&Erzeugt \ss \ in korrekter Formatierung\\\hline
     \hyperlink{strich}{\textbackslash{}strich}&Erzeugt einen Strich in einer Strukturformel\\\hline
-    \hyperlink{textnormal}{\textbackslash{}textnormal}&Schreibt den Text normal\\\hline
+    \hyperlink{textnormal}{\textbackslash{}textnormal}&Schreibt den Text normal, d.\.h. nicht kursiv (auch in Mathe-Modus)\\\hline
     \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapit\"alchen\\\hline
     \hyperlink{toprule}{\textbackslash{}toprule}&Zeichnet die oberste Linie einer Tabelle\\\hline
     \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}&Erzeugt einen Kasten mit Umbruch\\\hline
