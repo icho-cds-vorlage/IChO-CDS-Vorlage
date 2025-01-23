@@ -15,7 +15,6 @@
         \textsc{Faraday}-Konstante & $F $ & $ \SI{96485}{\coulomb\per\mole}$\\
         \textsc{Planck}'sches Wirkungsquantum & $h $ & $ \SI{6,626E-34}{\joule\second}$\\
         Lichtgeschwindigkeit & $c$ & $ \SI{2,998E8}{\meter\per\second}$\\
-        Standarddruck & $p^\circ$ & $\SI{1,000E5}{\pascal}$
     \end{tabular}
   \end{center}
 \end{formulabox}
@@ -27,8 +26,7 @@
         Druck & & $\SI{1}{\atm} = \SI{1.013}{\bar}$ = \SI{1.013E5}{\pascal}\\
         Temperatur & & $\vartheta / \si{\celsius} = T/\si{\kelvin} - 273,15$ \\
         L\"ange & & $\SI{1}{\angstrom}=\SI{1E-10}{\meter}$ \\
-        Volumen & & $\SI{1}{\liter}=\SI{1E-3}{\cubic\meter}$ \\
-        %Masse & & $\SI{1}{\atomicmassunit}=\SI{1.6605E-27}{\kilo\gram}$ \\
+        \opt{rd1,rd2}{Volumen & & $\SI{1}{\liter}=\SI{1E-3}{\cubic\meter}$ \\}
         Pr\"afixe & & pico/p: $10^{-12}$\hspace{0.74cm} nano/n: $10^{-9}$\hspace{0.49cm} mikro/$\upmu$: $10^{-6}$ \\
         & &milli/m: $10^{-3}$\hspace{0.7cm} kilo/k: $10^{3}$\hspace{0.95cm} Mega/M: $10^{6}$\\
         & &Giga/G: $10^{9}$\hspace{0.95cm} Tera/T: $10^{12}$\\
@@ -53,11 +51,11 @@
   \begin{center}
   \renewcommand{\arraystretch}{1.8}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
-        Stoffmenge & & $\displaystyle n = \frac{m}{M} = \frac{V}{V_\mathrm{m}} = \frac{N}{N_\mathrm{A}}$\\
-        Konzentration & & $\displaystyle c = \frac{n}{V}$; $\displaystyle \beta = \frac{m}{V}$\\
+        \opt{rd1,rd2}{Stoffmenge & & $\displaystyle n = \frac{m}{M} = \frac{V}{V_\mathrm{m}} = \frac{N}{N_\mathrm{A}}$\\}
+        \opt{rd1,rd2}{Konzentration & & $\displaystyle c = \frac{n}{V}$; $\displaystyle \beta = \frac{m}{V}$\\}
         \textsc{Lambert}-\textsc{Beer}'sches Gesetz & & $\displaystyle A = -\log_{10}{\left(\frac{I}{I_0}\right)} = \varepsilon \cdot c \cdot d$ \\
         Licht/Photonen & & $\displaystyle \nu = \frac{E}{h} = \frac{c}{\lambda}$ \\
-        Masseanteil A in A$_a$B$_b$ & & $\displaystyle \omega_\mathrm{A} = \frac{a \cdot M_\mathrm{A}}{M_{\text{A\textsubscript{a}B\textsubscript{b}}}}$
+        \opt{rd1,rd2}{Masseanteil A in A$_a$B$_b$ & & $\displaystyle \omega_\mathrm{A} = \frac{a \cdot M_\mathrm{A}}{M_{\text{A\textsubscript{a}B\textsubscript{b}}}}$}
     \end{tabular}
   \end{center}
 \end{formulabox}
@@ -82,7 +80,8 @@
         - verd\"unnte L\"osungen: &&$\displaystyle a_\text{X} \approx \frac{c_\text{X}}{c_0} \text{; } c_0 = \SI{1}{\mole \per \liter}$  \\
         - Gase: &&$\displaystyle a_\text{X} \approx \frac{p_X}{p_0} \text{; } p_0 = \SI{1}{\bar}$\\
         L\"oslichkeitsprodukt \\\vspace*{-0.61cm} \ch{A_{$a$}B_{$b$} <=> $a$ A^{$x$+} + $b$ B^{$y$-}} & & \multirow{-2}{*}{$\displaystyle K_\text{L} = c_{\mathrm{A}^{x+}}^a \cdot c_{\mathrm{B}^{y-}}^b$} \\ 
-        Freie Standardenthalpie &&$\Delta G^\circ = -R \cdot T \cdot \ln{K}$ \\
+        Freie Standardenthalpie &&$\Delta G\lstandardstate = -R \cdot T \cdot \ln{K}$ \\
+        Temperaturabh\"angigkeit $K$ && $\displaystyle \ln \frac{K_2}{K_1}  = -\frac{\Delta_{\mathrm{r}}H\lstandardstate}{R}\cdot\left(\frac{1}{T_2}-\frac{1}{T_1}\right)$
     \end{tabular}
   \end{center}
 \end{formulabox}
@@ -92,9 +91,9 @@
   \renewcommand{\arraystretch}{1.8}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
     \pH/\pOH-Wert & & $\pH = -\log_{10}{(a_{\ch{H^+}})}$ \newline $\text{pOH} = -\log_{10}{(a_{\ch{OH^-}})}$ \\
-    \multirow{2}{*}{\makecell[c]{S\"aurest\"arke\\ \ch{HA + H2O <=> A- + H3O+} }}&& $\displaystyle K_\mathrm{S} = \frac{a_{\ch{A-}} \cdot a_{\ch{H+}}}{a_{\ch{HA}}}$ \newline $\displaystyle \pKs = -\log_{10}(K_{\ch{S}})$\\
-    \multirow{2}{*}{\makecell[c]{Basenst\"arke\\ \ch{B + H2O <=> BH+ + OH-} }}&& $\displaystyle K_{\ch{B}} = \frac{a_{\ch{BH+}} \cdot a_{\ch{OH-}}}{a_{\ch{B}}}$ \newline $\pKb = -\log_{10}(K_{\ch{B}})$\\
-    Ionenprodukt des Wassers & & $K_{\ch{W}} =a_{\ch{H+}} \cdot a_{\ch{OH-}} =  10^{-14}$ \newline $\pH + \pOH = 14$ \newline $K_\textrm{S} \cdot K_\textrm{B} = K_\textrm{W}$ \\
+    \opt{rd1,rd2}{\multirow{2}{*}{\makecell[c]{S\"aurest\"arke\\ \ch{HA + H2O <=> A- + H3O+} }}&& $\displaystyle K_\mathrm{S} = \frac{a_{\ch{A-}} \cdot a_{\ch{H+}}}{a_{\ch{HA}}}$ \newline $\displaystyle \pKs = -\log_{10}(K_{\ch{S}})$\\
+    \multirow{2}{*}{\makecell[c]{Basenst\"arke\\ \ch{B + H2O <=> BH+ + OH-} }}&& $\displaystyle K_{\ch{B}} = \frac{a_{\ch{BH+}} \cdot a_{\ch{OH-}}}{a_{\ch{B}}}$ \newline $\pKb = -\log_{10}(K_{\ch{B}})$\\}
+    Ionenprodukt des Wassers & & $K_{\ch{W}} =a_{\ch{H+}} \cdot a_{\ch{OH-}} =  10^{-14}$ \opt{rd1,rd2}{\newline $\pH + \pOH = 14$ \newline $K_\textrm{S} \cdot K_\textrm{B} = K_\textrm{W}$} \\
     pH-N\"aherungsformeln:\\
     - Starke S\"auren/Basen & & $\pH \approx -\log_{10}{(a_{\ch{HA},0})}$ \newline $\pOH \approx -\log_{10}{(a_{\ch{B},0})}$ \\
     - Schwache S\"auren/Basen & & $\pH \approx \frac{1}{2} \cdot (\pKs - \log_{10}{(a_{\ch{HA},0})})$ \newline $\pOH \approx \frac{1}{2} \cdot (\pKb - \log_{10}{(a_{\ch{B},0})})$ \\
@@ -109,7 +108,7 @@
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
     Zellspannung & & $\Delta E = E_\text{Kathode} - E_\text{Anode}$\\
     Freie Enthalpie & & $\Delta G = - \Delta E \cdot z \cdot F$\\
-    \textsc{Nernst}-Gleichung \\\vspace*{-0.61cm} \ch{Ox + $z$e- <=> Red} & & \multirow{-2}{*}{$\displaystyle E = E^\circ + \frac{R \cdot T}{z\cdot F} \cdot \ln \left(\frac{c_\text{Ox}}{c_\text{Red}}\right)$} \\ 
+    \textsc{Nernst}-Gleichung \\\vspace*{-0.61cm} \ch{Ox + $z$e- <=> Red} & & \multirow{-2}{*}{$\displaystyle E = E\lstandardstate + \frac{R \cdot T}{z\cdot F} \cdot \ln \left(\frac{c_\text{Ox}}{c_\text{Red}}\right)$} \\ 
     \textsc{Faraday}-Gesetz & & $Q = I \cdot t = z \cdot F \cdot n$\\
     \end{tabular}
   \end{center}
@@ -119,13 +118,13 @@
   \begin{center}
   \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
-    Freie Enthalpie & & $\Delta G = \Delta H - T \cdot \Delta S$  \newline $\Delta G = -\Delta E \cdot z \cdot F $\newline $\Delta G = \Delta G^\circ + R \cdot T \cdot \ln{Q}$ \\
-    Reaktionsenthalpie & & $\Delta_{\mathrm{r}}H^{\circ} = \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Edukte}}$\\
-    Reaktionsentropie & & $\Delta_{\mathrm{r}}S^{\circ} = \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Edukte}}$ \\
+    Freie Enthalpie & & $\Delta G = \Delta H - T \cdot \Delta S$  \newline $\Delta G = \Delta G\lstandardstate + R \cdot T \cdot \ln{Q}$ \\
+    \opt{rd1,rd2}{Reaktionsenthalpie & & $\Delta_{\mathrm{r}}H^{\circ} = \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}H^{\circ}_{\text{Edukte}}$\\
+    Reaktionsentropie & & $\Delta_{\mathrm{r}}S^{\circ} = \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Produkte}} - \Sigma \Delta_{\mathrm{f}}S^{\circ}_{\text{Edukte}}$ \\}
     \textsc{Gibbs}'sche Phasenregel & & $f = K - P + 2$ \\
-    Innere Energie & & $\Delta U = \Delta H - \Delta (p \cdot V)$ \\
-    \"Anderung der Inneren Energie & & $\Delta U = C_V \cdot \Delta T$ \\
-    Enthalpie\"anderung & & $\Delta H = C_p \cdot \Delta T$  \\
+    $\Delta U$ bei nur Volumenarbeit & & $\Delta U = \Delta H - \Delta (p \cdot V)$ \\
+    $\Delta U$ isochor & & $\Delta U = C_V \cdot \Delta T$ \\
+    $\Delta H$ isobar & & $\Delta H = C_p \cdot \Delta T$  \\
     \end{tabular}
   \end{center}
 \end{formulabox}
@@ -134,7 +133,7 @@
   \begin{center}
   \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
-        Reaktionsgeschwindigkeit & & $\displaystyle r=\frac{1}{\nu_i}\dd{c_i}{t}$ \\
+        \opt{rd1,rd2}{Reaktionsgeschwindigkeit & & $\displaystyle r=\frac{1}{\nu_i}\dd{c_i}{t}$ \\}
         Geschwindigkeitsgesetz & & $r=k\cdot c_{\ch{A}}^x\cdot c_{\ch{B}}^y \cdot \dots$ \\
         Zeitgesetz 0. Ordnung & & $c=c_0-k\cdot t$ \\
         Zeitgesetz 1. Ordnung & & $c=c_0\cdot e^{-kt}$ \\
@@ -144,20 +143,29 @@
   \end{center}
 \end{formulabox}
 
-\begin{formulabox}[Organische Chemie]
+\opt{rd1,rd2}{\begin{formulabox}[Organische Chemie]
   \begin{center}
   \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{>{\raggedleft\arraybackslash}p{0.4\textwidth} p{0.02\textwidth}p{0.58\textwidth}}
         Doppelbindungs\"aquivalente C$_c$N$_n$H$_h$O$_o$X$_x$ & & \multirow{2}{*}{$\displaystyle DBE=\frac{2\cdot c+n-h-x+2}{2}$}\\
     \end{tabular}
   \end{center}
-\end{formulabox}
+\end{formulabox}}
 
 \begin{formulabox}[Sichtbares Licht]
   \begin{center}
   \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{c}
-        Hier k\"onnte Ihre Abbildung stehen.
+        Etwa \SI{400}{\nano\meter} bis \SI{780}{\nano\meter}: violett -- blau -- gr\"un -- gelb -- orange -- rot
+    \end{tabular}
+  \end{center}
+\end{formulabox}
+
+\begin{formulabox}[Weitere Formeln]
+  \begin{center}
+  \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{c}
+        
     \end{tabular}
   \end{center}
 \end{formulabox}
