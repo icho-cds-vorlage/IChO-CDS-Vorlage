@@ -310,7 +310,7 @@
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{
-  \opt{2}{\marginpar{\textcolor{red}{\xintPFloat{\themulteilaufpunkt/20}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+  \opt{2}{\marginpar{\textnormal{\textcolor{red}{\xintPFloat{\themulteilaufpunkt/20}}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
   \par \bigskip
@@ -362,18 +362,20 @@
 %Others
 \newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
 \newcommand{\strich}{{\small{}$^\prime$}}
-\newcommand{\dd}[3][]{\ensuremath{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
-\renewcommand{\pH}{\ensuremath{\mathrm{pH}}}
-\renewcommand{\pOH}{\ensuremath{\mathrm{pOH}}}
-\newcommand{\pKs}{\ensuremath{\mathrm{p}K_{\mathrm{S}}}}
-\renewcommand{\pKb}{\ensuremath{\mathrm{p}K_{\mathrm{B}}}}
-\newcommand{\pKw}{\ensuremath{\mathrm{p}K_{\mathrm{W}}}}
-\newcommand{\pKl}{\ensuremath{\mathrm{p}K_{\mathrm{L}}}}
+\newcommand{\dd}[3][]{\ensuremath{\frac{\textnormal{d}^{#1} #2}{\textnormal{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
+\renewcommand{\pH}{\ensuremath{\textnormal{pH}}}
+\renewcommand{\pOH}{\ensuremath{\textnormal{pOH}}}
+\newcommand{\pKs}{\ensuremath{\textnormal{p}K_{\textnormal{S}}}}
+\renewcommand{\pKb}{\ensuremath{\textnormal{p}K_{\textnormal{B}}}}
+\newcommand{\pKw}{\ensuremath{\textnormal{p}K_{\textnormal{W}}}}
+\newcommand{\pKl}{\ensuremath{\textnormal{p}K_{\textnormal{L}}}}
 
 %Serienbrief
-\def\chopline#1;#2 \\{
+\def\chopline#1;#2;#3;#4 \\{
 \def\suscode{#1}
 \def\susbl{#2}
+\def\suslastname{#3}
+\def\susfirstname{#4}
 }
 \newif\ifmore \moretrue
 
