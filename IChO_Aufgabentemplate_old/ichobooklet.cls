@@ -371,9 +371,11 @@
 \newcommand{\pKl}{\ensuremath{\textnormal{p}K_{\textnormal{L}}}}
 
 %Serienbrief
-\def\chopline#1;#2 \\{
+\def\chopline#1;#2;#3;#4 \\{
 \def\suscode{#1}
 \def\susbl{#2}
+\def\suslastname{#3}
+\def\susfirstname{#4}
 }
 \newif\ifmore \moretrue
 
