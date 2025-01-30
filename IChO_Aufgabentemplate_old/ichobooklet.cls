@@ -639,7 +639,7 @@
 
 %OC-Umgebung mit Zuruecksetzung aller Variablen
 \newcommand{\ocanfang}{\begin{tikzpicture}\FPset\ochsp{0}}
-    \newcommand{\ocumbruch}{\end{tikzpicture}\newpage\begin{tikzpicture}}
+    \newcommand{\ocumbruch}{\end{tikzpicture}\marginpar{\vspace*{1mm}\ch{n>}}\newpage\begin{tikzpicture}}
     \newcommand{\ocende}{\end{tikzpicture}\punkteausgabe
   \grenewcommand{\ochilf}{1} %globale Zuruecksetzung, falls OC-Kasten in einer weiteren Umgebung drin
   \grenewcommand{\oceingabehilf}{1}
