@@ -44,6 +44,7 @@
 \newcolumntype{L}[1]{>{\arraybackslash}m{#1}}
 \usepackage{longtable}
 \usepackage{multirow}
+\usepackage{booktabs}
 \usepackage{makecell}
 \usepackage{tabularx}                % for tables with fixed width
 \usepackage{colortbl}
