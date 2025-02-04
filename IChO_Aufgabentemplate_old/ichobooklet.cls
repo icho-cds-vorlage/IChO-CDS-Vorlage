@@ -573,7 +573,7 @@
 % OC Boxen
 %================================
 %stabiler Ansatz
-%Speichervariablen (Num: Nummer der Verbindung; Sol: Loesung; Con: Inhalt in Schuelerversion) und drei Zaehler leer definieren fuer spaetere Umdefinition
+%Speichervariablen (Num: Nummer der Verbindung; Sol: Loesung; Con: Inhalt in Schuelerversion; In: Inhalt bei Selbstversion; Typ: Umschalter zwischen Standardformat und Selbstversion) und drei Zaehler leer definieren fuer spaetere Umdefinition
 \newcommand{\ocnumone}{}
 \newcommand{\ocnumtwo}{}
 \newcommand{\ocnumthree}{}
@@ -634,16 +634,56 @@
 \newcommand{\occoneighteen}{}
 \newcommand{\occonnineteen}{}
 \newcommand{\occontwenty}{}
+\newcommand{\ocinone}{}
+\newcommand{\ocintwo}{}
+\newcommand{\ocinthree}{}
+\newcommand{\ocinfour}{}
+\newcommand{\ocinfive}{}
+\newcommand{\ocinsix}{}
+\newcommand{\ocinseven}{}
+\newcommand{\ocineight}{}
+\newcommand{\ocinnine}{}
+\newcommand{\ocinten}{}
+\newcommand{\ocineleven}{}
+\newcommand{\ocintwelve}{}
+\newcommand{\ocinthirteen}{}
+\newcommand{\ocinfourteen}{}
+\newcommand{\ocinfifteen}{}
+\newcommand{\ocinsixteen}{}
+\newcommand{\ocinseventeen}{}
+\newcommand{\ocineighteen}{}
+\newcommand{\ocinnineteen}{}
+\newcommand{\ocintwenty}{}
+\newcommand{\octypone}{0}
+\newcommand{\octyptwo}{0}
+\newcommand{\octypthree}{0}
+\newcommand{\octypfour}{0}
+\newcommand{\octypfive}{0}
+\newcommand{\octypsix}{0}
+\newcommand{\octypseven}{0}
+\newcommand{\octypeight}{0}
+\newcommand{\octypnine}{0}
+\newcommand{\octypten}{0}
+\newcommand{\octypeleven}{0}
+\newcommand{\octyptwelve}{0}
+\newcommand{\octypthirteen}{0}
+\newcommand{\octypfourteen}{0}
+\newcommand{\octypfifteen}{0}
+\newcommand{\octypsixteen}{0}
+\newcommand{\octypseventeen}{0}
+\newcommand{\octypeighteen}{0}
+\newcommand{\octypnineteen}{0}
+\newcommand{\octyptwenty}{0}
 \newcommand{\oceingabehilf}{1} %zaehlt eingegebene Teilkasteninhalte
 \newcommand{\ochilf}{1} %z\"ahlt Teilk\"asten
 \FPset\ochsp{0} %merkt sich die bisherige H\"ohe des Gesamtkastens
 
-%OC-Umgebung mit Zuruecksetzung aller Variablen
+%OC-Umgebung mit Zuruecksetzung aller Variablen (ausser octyp, da dies bei ueberschuessigem Kasten in naechster Aufgabe nicht zu Fehlausgabe fuehren kann)
 \newcommand{\ocanfang}{\begin{tikzpicture}\FPset\ochsp{0}}
     \newcommand{\ocumbruch}{\end{tikzpicture}\marginpar{\vspace*{1mm}\ch{n>}}\newpage\begin{tikzpicture}}
     \newcommand{\ocende}{\end{tikzpicture}\punkteausgabe
   \grenewcommand{\ochilf}{1} %globale Zuruecksetzung, falls OC-Kasten in einer weiteren Umgebung drin
-  \grenewcommand{\oceingabehilf}{1}
+  \grenewcommand{\oceingabehilf}{1} %ohne Globale Definition des Inhalts werden nur die OC-Kaesten einer Aufgabe erhalten und in folgenden Aufgaben bleiben sie leer
   \grenewcommand{\ocnumone}{}
   \grenewcommand{\ocnumtwo}{}
   \grenewcommand{\ocnumthree}{}
@@ -704,57 +744,101 @@
   \grenewcommand{\occoneighteen}{}
   \grenewcommand{\occonnineteen}{}
   \grenewcommand{\occontwenty}{}
+  \grenewcommand{\ocinone}{}
+  \grenewcommand{\ocintwo}{}
+  \grenewcommand{\ocinthree}{}
+  \grenewcommand{\ocinfour}{}
+  \grenewcommand{\ocinfive}{}
+  \grenewcommand{\ocinsix}{}
+  \grenewcommand{\ocinseven}{}
+  \grenewcommand{\ocineight}{}
+  \grenewcommand{\ocinnine}{}
+  \grenewcommand{\ocinten}{}
+  \grenewcommand{\ocineleven}{}
+  \grenewcommand{\ocintwelve}{}
+  \grenewcommand{\ocinthirteen}{}
+  \grenewcommand{\ocinfourteen}{}
+  \grenewcommand{\ocinfifteen}{}
+  \grenewcommand{\ocinsixteen}{}
+  \grenewcommand{\ocinseventeen}{}
+  \grenewcommand{\ocineighteen}{}
+  \grenewcommand{\ocinnineteen}{}
+  \grenewcommand{\ocintwenty}{}   
 }
 
 %Eingabe der Werte/Inhalte fuer oben initialisierte und von \ocinhalt aufgerufene Variablen, wobei \oceingabehilf hochzaehlt und Werte dem nächsten freien Variablensatz zuweist: 
 \newcommand{\oc}[3]{
-  \ifthenelse{\equal{\oceingabehilf}{1}}{\renewcommand{\ocnumone}{#1}\renewcommand{\ocsolone}{#2}\renewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
-  {\ifthenelse{\equal{\oceingabehilf}{2}}{\renewcommand{\ocnumtwo}{#1}\renewcommand{\ocsoltwo}{#2}\renewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
-    {\ifthenelse{\equal{\oceingabehilf}{3}}{\renewcommand{\ocnumthree}{#1}\renewcommand{\ocsolthree}{#2}\renewcommand{\occonthree}{#3}\grenewcommand{\oceingabehilf}{4}}
-      {\ifthenelse{\equal{\oceingabehilf}{4}}{\renewcommand{\ocnumfour}{#1}\renewcommand{\ocsolfour}{#2}\renewcommand{\occonfour}{#3}\grenewcommand{\oceingabehilf}{5}}
-        {\ifthenelse{\equal{\oceingabehilf}{5}}{\renewcommand{\ocnumfive}{#1}\renewcommand{\ocsolfive}{#2}\renewcommand{\occonfive}{#3}\grenewcommand{\oceingabehilf}{6}}
-          {\ifthenelse{\equal{\oceingabehilf}{6}}{\renewcommand{\ocnumsix}{#1}\renewcommand{\ocsolsix}{#2}\renewcommand{\occonsix}{#3}\grenewcommand{\oceingabehilf}{7}}
-            {\ifthenelse{\equal{\oceingabehilf}{7}}{\renewcommand{\ocnumseven}{#1}\renewcommand{\ocsolseven}{#2}\renewcommand{\occonseven}{#3}\grenewcommand{\oceingabehilf}{8}}
-              {\ifthenelse{\equal{\oceingabehilf}{8}}{\renewcommand{\ocnumeight}{#1}\renewcommand{\ocsoleight}{#2}\renewcommand{\occoneight}{#3}\grenewcommand{\oceingabehilf}{9}}
-                {\ifthenelse{\equal{\oceingabehilf}{9}}{\renewcommand{\ocnumnine}{#1}\renewcommand{\ocsolnine}{#2}\renewcommand{\occonnine}{#3}\grenewcommand{\oceingabehilf}{10}}
-                  {\ifthenelse{\equal{\oceingabehilf}{10}}{\renewcommand{\ocnumten}{#1}\renewcommand{\ocsolten}{#2}\renewcommand{\occonten}{#3}\grenewcommand{\oceingabehilf}{11}}
-                    {\ifthenelse{\equal{\oceingabehilf}{11}}{\renewcommand{\ocnumeleven}{#1}\renewcommand{\ocsoleleven}{#2}\renewcommand{\occoneleven}{#3}\grenewcommand{\oceingabehilf}{12}}
-                      {\ifthenelse{\equal{\oceingabehilf}{12}}{\renewcommand{\ocnumtwelve}{#1}\renewcommand{\ocsoltwelve}{#2}\renewcommand{\occontwelve}{#3}\grenewcommand{\oceingabehilf}{13}}
-                        {\ifthenelse{\equal{\oceingabehilf}{13}}{\renewcommand{\ocnumthirteen}{#1}\renewcommand{\ocsolthirteen}{#2}\renewcommand{\occonthirteen}{#3}\grenewcommand{\oceingabehilf}{14}}
-                          {\ifthenelse{\equal{\oceingabehilf}{14}}{\renewcommand{\ocnumfourteen}{#1}\renewcommand{\ocsolfourteen}{#2}\renewcommand{\occonfourteen}{#3}\grenewcommand{\oceingabehilf}{15}}
-                            {\ifthenelse{\equal{\oceingabehilf}{15}}{\renewcommand{\ocnumfifteen}{#1}\renewcommand{\ocsolfifteen}{#2}\renewcommand{\occonfifteen}{#3}\grenewcommand{\oceingabehilf}{16}}
-                              {\ifthenelse{\equal{\oceingabehilf}{16}}{\renewcommand{\ocnumsixteen}{#1}\renewcommand{\ocsolsixteen}{#2}\renewcommand{\occonsixteen}{#3}\grenewcommand{\oceingabehilf}{17}}
-                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\renewcommand{\ocnumseventeen}{#1}\renewcommand{\ocsolseventeen}{#2}\renewcommand{\occonseventeen}{#3}\grenewcommand{\oceingabehilf}{18}}
-                                  {\ifthenelse{\equal{\oceingabehilf}{18}}{\renewcommand{\ocnumeighteen}{#1}\renewcommand{\ocsoleighteen}{#2}\renewcommand{\occoneighteen}{#3}\grenewcommand{\oceingabehilf}{19}}
-                                    {\ifthenelse{\equal{\oceingabehilf}{19}}{\renewcommand{\ocnumnineteen}{#1}\renewcommand{\ocsolnineteen}{#2}\renewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
-                                      {\ifthenelse{\equal{\oceingabehilf}{20}}{\renewcommand{\ocnumtwenty}{#1}\renewcommand{\ocsoltwenty}{#2}\renewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
+  \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{0}\grenewcommand{\ocnumone}{#1}\grenewcommand{\ocsolone}{#2}\grenewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
+  {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{0}\grenewcommand{\ocnumtwo}{#1}\grenewcommand{\ocsoltwo}{#2}\grenewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
+    {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{0}\grenewcommand{\ocnumthree}{#1}\grenewcommand{\ocsolthree}{#2}\grenewcommand{\occonthree}{#3}\grenewcommand{\oceingabehilf}{4}}
+      {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{0}\grenewcommand{\ocnumfour}{#1}\grenewcommand{\ocsolfour}{#2}\grenewcommand{\occonfour}{#3}\grenewcommand{\oceingabehilf}{5}}
+        {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{0}\grenewcommand{\ocnumfive}{#1}\grenewcommand{\ocsolfive}{#2}\grenewcommand{\occonfive}{#3}\grenewcommand{\oceingabehilf}{6}}
+          {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{0}\grenewcommand{\ocnumsix}{#1}\grenewcommand{\ocsolsix}{#2}\grenewcommand{\occonsix}{#3}\grenewcommand{\oceingabehilf}{7}}
+            {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{0}\grenewcommand{\ocnumseven}{#1}\grenewcommand{\ocsolseven}{#2}\grenewcommand{\occonseven}{#3}\grenewcommand{\oceingabehilf}{8}}
+              {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{0}\grenewcommand{\ocnumeight}{#1}\grenewcommand{\ocsoleight}{#2}\grenewcommand{\occoneight}{#3}\grenewcommand{\oceingabehilf}{9}}
+                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{0}\grenewcommand{\ocnumnine}{#1}\grenewcommand{\ocsolnine}{#2}\grenewcommand{\occonnine}{#3}\grenewcommand{\oceingabehilf}{10}}
+                  {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{0}\grenewcommand{\ocnumten}{#1}\grenewcommand{\ocsolten}{#2}\grenewcommand{\occonten}{#3}\grenewcommand{\oceingabehilf}{11}}
+                    {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{0}\grenewcommand{\ocnumeleven}{#1}\grenewcommand{\ocsoleleven}{#2}\grenewcommand{\occoneleven}{#3}\grenewcommand{\oceingabehilf}{12}}
+                      {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{0}\grenewcommand{\ocnumtwelve}{#1}\grenewcommand{\ocsoltwelve}{#2}\grenewcommand{\occontwelve}{#3}\grenewcommand{\oceingabehilf}{13}}
+                        {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{0}\grenewcommand{\ocnumthirteen}{#1}\grenewcommand{\ocsolthirteen}{#2}\grenewcommand{\occonthirteen}{#3}\grenewcommand{\oceingabehilf}{14}}
+                          {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{0}\grenewcommand{\ocnumfourteen}{#1}\grenewcommand{\ocsolfourteen}{#2}\grenewcommand{\occonfourteen}{#3}\grenewcommand{\oceingabehilf}{15}}
+                            {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{0}\grenewcommand{\ocnumfifteen}{#1}\grenewcommand{\ocsolfifteen}{#2}\grenewcommand{\occonfifteen}{#3}\grenewcommand{\oceingabehilf}{16}}
+                              {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{0}\grenewcommand{\ocnumsixteen}{#1}\grenewcommand{\ocsolsixteen}{#2}\grenewcommand{\occonsixteen}{#3}\grenewcommand{\oceingabehilf}{17}}
+                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{0}\grenewcommand{\ocnumseventeen}{#1}\grenewcommand{\ocsolseventeen}{#2}\grenewcommand{\occonseventeen}{#3}\grenewcommand{\oceingabehilf}{18}}
+                                  {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{0}\grenewcommand{\ocnumeighteen}{#1}\grenewcommand{\ocsoleighteen}{#2}\grenewcommand{\occoneighteen}{#3}\grenewcommand{\oceingabehilf}{19}}
+                                    {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{0}\grenewcommand{\ocnumnineteen}{#1}\grenewcommand{\ocsolnineteen}{#2}\grenewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
+                                      {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{0}\grenewcommand{\ocnumtwenty}{#1}\grenewcommand{\ocsoltwenty}{#2}\grenewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
                                         {}}}}}}}}}}}}}}}}}}}}
-}
+}     
+
+%Eingabebefehl, wenn Kasteninhalt selbst versioniert werden soll. Mit \oc mischbar
+\newcommand{\ocselbst}[1]{
+  \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{1}\grenewcommand{\ocinone}{#1}\grenewcommand{\oceingabehilf}{2}}
+  {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{1}\grenewcommand{\ocintwo}{#1}\grenewcommand{\oceingabehilf}{3}}
+    {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{1}\grenewcommand{\ocinthree}{#1}\grenewcommand{\oceingabehilf}{4}}
+      {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{1}\grenewcommand{\ocinfour}{#1}\grenewcommand{\oceingabehilf}{5}}
+        {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{1}\grenewcommand{\ocinfive}{#1}\grenewcommand{\oceingabehilf}{6}}
+          {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{1}\grenewcommand{\ocinsix}{#1}\grenewcommand{\oceingabehilf}{7}}
+            {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{1}\grenewcommand{\ocinseven}{#1}\grenewcommand{\oceingabehilf}{8}}
+              {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{1}\grenewcommand{\ocineight}{#1}\grenewcommand{\oceingabehilf}{9}}
+                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{1}\grenewcommand{\ocinnine}{#1}\grenewcommand{\oceingabehilf}{10}}
+                  {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{1}\grenewcommand{\ocinten}{#1}\grenewcommand{\oceingabehilf}{11}}
+                    {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{1}\grenewcommand{\ocineleven}{#1}\grenewcommand{\oceingabehilf}{12}}
+                      {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{1}\grenewcommand{\ocintwelve}{#1}\grenewcommand{\oceingabehilf}{13}}
+                        {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{1}\grenewcommand{\ocinthirteen}{#1}\grenewcommand{\oceingabehilf}{14}}
+                          {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{1}\grenewcommand{\ocinfourteen}{#1}\grenewcommand{\oceingabehilf}{15}}
+                            {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{1}\grenewcommand{\ocinfifteen}{#1}\grenewcommand{\oceingabehilf}{16}}
+                              {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{1}\grenewcommand{\ocinsixteen}{#1}\grenewcommand{\oceingabehilf}{17}}
+                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{1}\grenewcommand{\ocinseventeen}{#1}\grenewcommand{\oceingabehilf}{18}}
+                                  {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{1}\grenewcommand{\ocineighteen}{#1}\grenewcommand{\oceingabehilf}{19}}
+                                    {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{1}\grenewcommand{\ocinnineteen}{#1}\grenewcommand{\oceingabehilf}{20}}
+                                      {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{1}\grenewcommand{\ocintwenty}{#1}\grenewcommand{\oceingabehilf}{21}}
+                                        {}}}}}}}}}}}}}}}}}}}}
+}     
 
 %Hilfsbefehl fuer \ockasten, gibt entsprechend der von \ochilf gezaehlten Teilkaesten den Inhalt des Variablensatzes fuer diesen Teilkasten zurueck
 \newcommand{\ocinhalt}{
-  \ifthenelse{\equal{\ochilf}{1}}{\textbf{\ocnumone}\\\opt{1,2}{\ocsolone}\opt{0}{\occonone}\grenewcommand{\ochilf}{2}}
-  {\ifthenelse{\equal{\ochilf}{2}}{\textbf{\ocnumtwo}\\\opt{1,2}{\ocsoltwo}\opt{0}{\occontwo}\grenewcommand{\ochilf}{3}}
-    {\ifthenelse{\equal{\ochilf}{3}}{\textbf{\ocnumthree}\\\opt{1,2}{\ocsolthree}\opt{0}{\occonthree}\grenewcommand{\ochilf}{4}}
-      {\ifthenelse{\equal{\ochilf}{4}}{\textbf{\ocnumfour}\\\opt{1,2}{\ocsolfour}\opt{0}{\occonfour}\grenewcommand{\ochilf}{5}}
-        {\ifthenelse{\equal{\ochilf}{5}}{\textbf{\ocnumfive}\\\opt{1,2}{\ocsolfive}\opt{0}{\occonfive}\grenewcommand{\ochilf}{6}}
-          {\ifthenelse{\equal{\ochilf}{6}}{\textbf{\ocnumsix}\\\opt{1,2}{\ocsolsix}\opt{0}{\occonsix}\grenewcommand{\ochilf}{7}}
-            {\ifthenelse{\equal{\ochilf}{7}}{\textbf{\ocnumseven}\\\opt{1,2}{\ocsolseven}\opt{0}{\occonseven}\grenewcommand{\ochilf}{8}}
-              {\ifthenelse{\equal{\ochilf}{8}}{\textbf{\ocnumeight}\\\opt{1,2}{\ocsoleight}\opt{0}{\occoneight}\grenewcommand{\ochilf}{9}}
-                {\ifthenelse{\equal{\ochilf}{9}}{\textbf{\ocnumnine}\\\opt{1,2}{\ocsolnine}\opt{0}{\occonnine}\grenewcommand{\ochilf}{10}}
-                  {\ifthenelse{\equal{\ochilf}{10}}{\textbf{\ocnumten}\\\opt{1,2}{\ocsolten}\opt{0}{\occonten}\grenewcommand{\ochilf}{11}}
-                    {\ifthenelse{\equal{\ochilf}{11}}{\textbf{\ocnumeleven}\\\opt{1,2}{\ocsoleleven}\opt{0}{\occoneleven}\grenewcommand{\ochilf}{12}}
-                      {\ifthenelse{\equal{\ochilf}{12}}{\textbf{\ocnumtwelve}\\\opt{1,2}{\ocsoltwelve}\opt{0}{\occontwelve}\grenewcommand{\ochilf}{13}}
-                        {\ifthenelse{\equal{\ochilf}{13}}{\textbf{\ocnumthirteen}\\\opt{1,2}{\ocsolthirteen}\opt{0}{\occonthirteen}\grenewcommand{\ochilf}{14}}
-                          {\ifthenelse{\equal{\ochilf}{14}}{\textbf{\ocnumfourteen}\\\opt{1,2}{\ocsolfourteen}\opt{0}{\occonfourteen}\grenewcommand{\ochilf}{15}}
-                            {\ifthenelse{\equal{\ochilf}{15}}{\textbf{\ocnumfifteen}\\\opt{1,2}{\ocsolfifteen}\opt{0}{\occonfifteen}\grenewcommand{\ochilf}{16}}
-                              {\ifthenelse{\equal{\ochilf}{16}}{\textbf{\ocnumsixteen}\\\opt{1,2}{\ocsolsixteen}\opt{0}{\occonsixteen}\grenewcommand{\ochilf}{17}}
-                                {\ifthenelse{\equal{\ochilf}{17}}{\textbf{\ocnumseventeen}\\\opt{1,2}{\ocsolseventeen}\opt{0}{\occonseventeen}\grenewcommand{\ochilf}{18}}
-                                  {\ifthenelse{\equal{\ochilf}{18}}{\textbf{\ocnumeighteen}\\\opt{1,2}{\ocsoleighteen}\opt{0}{\occoneighteen}\grenewcommand{\ochilf}{19}}
-                                    {\ifthenelse{\equal{\ochilf}{19}}{\textbf{\ocnumnineteen}\\\opt{1,2}{\ocsolnineteen}\opt{0}{\occonnineteen}\grenewcommand{\ochilf}{20}}
-                                      {\ifthenelse{\equal{\ochilf}{20}}{\textbf{\ocnumtwenty}\\\opt{1,2}{\ocsoltwenty}\opt{0}{\occontwenty}\grenewcommand{\ochilf}{21}}
+  \ifthenelse{\equal{\ochilf}{1}}{\ifthenelse{\equal{\octypone}{0}}{\textbf{\ocnumone}\\\opt{1,2}{\ocsolone}\opt{0}{\occonone}\grenewcommand{\ochilf}{2}}{\ifthenelse{\equal{\octypone}{1}}{\ocinone\grenewcommand{\ochilf}{2}}{}}}
+  {\ifthenelse{\equal{\ochilf}{2}}{\ifthenelse{\equal{\octyptwo}{0}}{\textbf{\ocnumtwo}\\\opt{1,2}{\ocsoltwo}\opt{0}{\occontwo}\grenewcommand{\ochilf}{3}}{\ifthenelse{\equal{\octyptwo}{1}}{\ocintwo\grenewcommand{\ochilf}{3}}{}}}
+    {\ifthenelse{\equal{\ochilf}{3}}{\ifthenelse{\equal{\octypthree}{0}}{\textbf{\ocnumthree}\\\opt{1,2}{\ocsolthree}\opt{0}{\occonthree}\grenewcommand{\ochilf}{4}}{\ifthenelse{\equal{\octypthree}{1}}{\ocinthree\grenewcommand{\ochilf}{4}}{}}}
+      {\ifthenelse{\equal{\ochilf}{4}}{\ifthenelse{\equal{\octypfour}{0}}{\textbf{\ocnumfour}\\\opt{1,2}{\ocsolfour}\opt{0}{\occonfour}\grenewcommand{\ochilf}{5}}{\ifthenelse{\equal{\octypfour}{1}}{\ocinfour\grenewcommand{\ochilf}{5}}{}}}
+        {\ifthenelse{\equal{\ochilf}{5}}{\ifthenelse{\equal{\octypfive}{0}}{\textbf{\ocnumfive}\\\opt{1,2}{\ocsolfive}\opt{0}{\occonfive}\grenewcommand{\ochilf}{6}}{\ifthenelse{\equal{\octypfive}{1}}{\ocinfive\grenewcommand{\ochilf}{6}}{}}}
+          {\ifthenelse{\equal{\ochilf}{6}}{\ifthenelse{\equal{\octypsix}{0}}{\textbf{\ocnumsix}\\\opt{1,2}{\ocsolsix}\opt{0}{\occonsix}\grenewcommand{\ochilf}{7}}{\ifthenelse{\equal{\octypsix}{1}}{\ocinsix\grenewcommand{\ochilf}{7}}{}}}
+            {\ifthenelse{\equal{\ochilf}{7}}{\ifthenelse{\equal{\octypseven}{0}}{\textbf{\ocnumseven}\\\opt{1,2}{\ocsolseven}\opt{0}{\occonseven}\grenewcommand{\ochilf}{8}}{\ifthenelse{\equal{\octypseven}{1}}{\ocinseven\grenewcommand{\ochilf}{8}}{}}}
+              {\ifthenelse{\equal{\ochilf}{8}}{\ifthenelse{\equal{\octypeight}{0}}{\textbf{\ocnumeight}\\\opt{1,2}{\ocsoleight}\opt{0}{\occoneight}\grenewcommand{\ochilf}{9}}{\ifthenelse{\equal{\octypeight}{1}}{\ocineight\grenewcommand{\ochilf}{9}}{}}}
+                {\ifthenelse{\equal{\ochilf}{9}}{\ifthenelse{\equal{\octypnine}{0}}{\textbf{\ocnumnine}\\\opt{1,2}{\ocsolnine}\opt{0}{\occonnine}\grenewcommand{\ochilf}{10}}{\ifthenelse{\equal{\octypnine}{1}}{\ocinnine\grenewcommand{\ochilf}{10}}{}}}
+                  {\ifthenelse{\equal{\ochilf}{10}}{\ifthenelse{\equal{\octypten}{0}}{\textbf{\ocnumten}\\\opt{1,2}{\ocsolten}\opt{0}{\occonten}\grenewcommand{\ochilf}{11}}{\ifthenelse{\equal{\octypten}{1}}{\ocinten\grenewcommand{\ochilf}{11}}{}}}
+                    {\ifthenelse{\equal{\ochilf}{11}}{\ifthenelse{\equal{\octypeleven}{0}}{\textbf{\ocnumeleven}\\\opt{1,2}{\ocsoleleven}\opt{0}{\occoneleven}\grenewcommand{\ochilf}{12}}{\ifthenelse{\equal{\octypeleven}{1}}{\ocineleven\grenewcommand{\ochilf}{12}}{}}}
+                      {\ifthenelse{\equal{\ochilf}{12}}{\ifthenelse{\equal{\octyptwelve}{0}}{\textbf{\ocnumtwelve}\\\opt{1,2}{\ocsoltwelve}\opt{0}{\occontwelve}\grenewcommand{\ochilf}{13}}{\ifthenelse{\equal{\octyptwelve}{1}}{\ocintwelve\grenewcommand{\ochilf}{13}}{}}}
+                        {\ifthenelse{\equal{\ochilf}{13}}{\ifthenelse{\equal{\octypthirteen}{0}}{\textbf{\ocnumthirteen}\\\opt{1,2}{\ocsolthirteen}\opt{0}{\occonthirteen}\grenewcommand{\ochilf}{14}}{\ifthenelse{\equal{\octypthirteen}{1}}{\ocinthirteen\grenewcommand{\ochilf}{14}}{}}}
+                          {\ifthenelse{\equal{\ochilf}{14}}{\ifthenelse{\equal{\octypfourteen}{0}}{\textbf{\ocnumfourteen}\\\opt{1,2}{\ocsolfourteen}\opt{0}{\occonfourteen}\grenewcommand{\ochilf}{15}}{\ifthenelse{\equal{\octypfourteen}{1}}{\ocinfourteen\grenewcommand{\ochilf}{15}}{}}}
+                            {\ifthenelse{\equal{\ochilf}{15}}{\ifthenelse{\equal{\octypfifteen}{0}}{\textbf{\ocnumfifteen}\\\opt{1,2}{\ocsolfifteen}\opt{0}{\occonfifteen}\grenewcommand{\ochilf}{16}}{\ifthenelse{\equal{\octypfifteen}{1}}{\ocinfifteen\grenewcommand{\ochilf}{16}}{}}}
+                              {\ifthenelse{\equal{\ochilf}{16}}{\ifthenelse{\equal{\octypsixteen}{0}}{\textbf{\ocnumsixteen}\\\opt{1,2}{\ocsolsixteen}\opt{0}{\occonsixteen}\grenewcommand{\ochilf}{17}}{\ifthenelse{\equal{\octypsixteen}{1}}{\ocinsixteen\grenewcommand{\ochilf}{17}}{}}}
+                                {\ifthenelse{\equal{\ochilf}{17}}{\ifthenelse{\equal{\octypseventeen}{0}}{\textbf{\ocnumseventeen}\\\opt{1,2}{\ocsolseventeen}\opt{0}{\occonseventeen}\grenewcommand{\ochilf}{18}}{\ifthenelse{\equal{\octypseventeen}{1}}{\ocinseventeen\grenewcommand{\ochilf}{18}}{}}}
+                                  {\ifthenelse{\equal{\ochilf}{18}}{\ifthenelse{\equal{\octypeighteen}{0}}{\textbf{\ocnumeighteen}\\\opt{1,2}{\ocsoleighteen}\opt{0}{\occoneighteen}\grenewcommand{\ochilf}{19}}{\ifthenelse{\equal{\octypeighteen}{1}}{\ocineighteen\grenewcommand{\ochilf}{19}}{}}}
+                                    {\ifthenelse{\equal{\ochilf}{19}}{\ifthenelse{\equal{\octypnineteen}{0}}{\textbf{\ocnumnineteen}\\\opt{1,2}{\ocsolnineteen}\opt{0}{\occonnineteen}\grenewcommand{\ochilf}{20}}{\ifthenelse{\equal{\octypnineteen}{1}}{\ocinnineteen\grenewcommand{\ochilf}{20}}{}}}
+                                      {\ifthenelse{\equal{\ochilf}{20}}{\ifthenelse{\equal{\octyptwenty}{0}}{\textbf{\ocnumtwenty}\\\opt{1,2}{\ocsoltwenty}\opt{0}{\occontwenty}\grenewcommand{\ochilf}{21}}{\ifthenelse{\equal{\octyptwenty}{1}}{\ocintwenty\grenewcommand{\ochilf}{21}}{}}}
                                         {}}}}}}}}}}}}}}}}}}}}
-  %ochilf muss global gezaehlt werden, daher via grenewcommand
 }
 
 %OC-Kasten: Rechteck mit Textbreite, dann Erkennung fester Spaltenverteilung (1. Argument) für vertikale Unterteilungsstriche und passende minipage-Umgebungen in den Teilkaestchen; Zeilenhoehe als 2. Argument; jeder Teilkasten ruft Inhalt aus \ocinhalt ab, bleibt ohne vorherige Inhaltsangabe leer
