@@ -320,7 +320,7 @@
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
-\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{figure}{0}\setcounter{table}{0}\setcounter{scheme}{0}\setcounter{equation}{0}\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
@@ -359,6 +359,16 @@
 \renewcommand{\thesection}{Aufgabe \round\,--\,\ifnum\c@section<10\relax\padwithzero\fi\latex@@thesection}
 \newcount\dummycntr
 \makeatother
+
+%count floats within section
+\counterwithin{figure}{section} %for correct hyperref, but would give "Abbildung Aufgabe 3-18.1:" 
+\counterwithin{equation}{section}
+\counterwithin{table}{section}
+\AtBeginDocument{\counterwithin{scheme}{section}}
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}} %for wanted number format
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\AtBeginDocument{\renewcommand{\thescheme}{\arabic{section}.\arabic{scheme}}}
 
 %Others
 \newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
