@@ -1071,6 +1071,16 @@
   {\opt{0}{\underline{\hspace{#2}}}}%Angegebene Länge
 }
 
+
+%Befehle um Kastenausgabe in Schuelerversion zu unterlassen
+\newcommand{\kastenok}[3]{\opt{1,2}{\kasten{#1}{#2}{#3}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kasten{#1}{#2}{#3}}{}}}}
+\newcommand{\selfkastenok}[2]{\opt{1,2}{\selfkasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\selfkasten{#1}{#2}}{}}}}
+\newcommand{\umbruchkastenok}[6]{\opt{1,2}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}{}}}}
+\newcommand{\ockastenok}[2]{\opt{1,2}{\ockasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\ockasten{#1}{#2}}{}}}}
+\NewDocumentCommand{\kastenarrayok}{ O{} m O{0cm} O{t} m m }{\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kastenarray[#1]{#2}[#3][#4]{#5}{#6}}\opt{1,2}{\kastenarray[#1]{#2}[#3][#4]{#5}{#6}}{}}}}
+\NewDocumentCommand{\kastenarraycustomok}{ O{} m O{0cm} O{t} m }{\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kastenarraycustom[#1]{#2}[#3][#4]{#5}}\opt{1,2}{\kastenarraycustom[#1]{#2}[#3][#4]{#5}}{}}}}
+
+
 %   \newcommand{\ipho}[2]{\href{http://ipho.org/problems-and-solutions.html}{Internationale PhysikOlympiade} #1, Aufgabe #2}
 %   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}
 % %  \DeclareDocumentCommand{\iphode}{m m g}{%
