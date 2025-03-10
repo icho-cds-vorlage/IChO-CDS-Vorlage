@@ -451,8 +451,8 @@
   \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=15mm]{CDS_Logo_Map_verbessert.eps}}\opt{rd2}{\vspace*{1.5mm}}}%
   \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{%
     \centering
-    \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klassse \klasse}}}
-    \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{} Klasse \klasse}}}
+    \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klasse \klasse}}}
+    \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{}\\ Klasse \klasse}}}
     \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
     \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
   } \vspace*{4mm}}%
