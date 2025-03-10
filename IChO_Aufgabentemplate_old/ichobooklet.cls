@@ -361,7 +361,7 @@
 \makeatother
 
 %count floats within section
-\counterwithin{figure}{section} %for correct hyperref, but would give "Abbildung Aufgabe 3-18.1:" 
+\counterwithin{figure}{section} %for correct hyperref, but would give "Abbildung Aufgabe 3-18.1:"
 \counterwithin{equation}{section}
 \counterwithin{table}{section}
 \AtBeginDocument{\counterwithin{scheme}{section}}
@@ -408,11 +408,11 @@
 
 \newdimen\spaceleft % for remaining height of page.
 
-% for use on plain paper; not different paper styles to avoid more switches then necessary 
+% for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
 \DeclareOption{plainpaper}{%
 
- \opt{icho}{ 
+ \opt{icho}{
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{238mm}%
   \setlength{\oddsidemargin}{-3mm}%
@@ -773,10 +773,10 @@
   \grenewcommand{\ocinseventeen}{}
   \grenewcommand{\ocineighteen}{}
   \grenewcommand{\ocinnineteen}{}
-  \grenewcommand{\ocintwenty}{}   
+  \grenewcommand{\ocintwenty}{}
 }
 
-%Eingabe der Werte/Inhalte fuer oben initialisierte und von \ocinhalt aufgerufene Variablen, wobei \oceingabehilf hochzaehlt und Werte dem nächsten freien Variablensatz zuweist: 
+%Eingabe der Werte/Inhalte fuer oben initialisierte und von \ocinhalt aufgerufene Variablen, wobei \oceingabehilf hochzaehlt und Werte dem nächsten freien Variablensatz zuweist:
 \newcommand{\oc}[3]{
   \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{0}\grenewcommand{\ocnumone}{#1}\grenewcommand{\ocsolone}{#2}\grenewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
   {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{0}\grenewcommand{\ocnumtwo}{#1}\grenewcommand{\ocsoltwo}{#2}\grenewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
@@ -799,7 +799,7 @@
                                     {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{0}\grenewcommand{\ocnumnineteen}{#1}\grenewcommand{\ocsolnineteen}{#2}\grenewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
                                       {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{0}\grenewcommand{\ocnumtwenty}{#1}\grenewcommand{\ocsoltwenty}{#2}\grenewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
                                         {}}}}}}}}}}}}}}}}}}}}
-}     
+}
 
 %Eingabebefehl, wenn Kasteninhalt selbst versioniert werden soll. Mit \oc mischbar
 \newcommand{\ocselbst}[1]{
@@ -824,7 +824,7 @@
                                     {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{1}\grenewcommand{\ocinnineteen}{#1}\grenewcommand{\oceingabehilf}{20}}
                                       {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{1}\grenewcommand{\ocintwenty}{#1}\grenewcommand{\oceingabehilf}{21}}
                                         {}}}}}}}}}}}}}}}}}}}}
-}     
+}
 
 %Hilfsbefehl fuer \ockasten, gibt entsprechend der von \ochilf gezaehlten Teilkaesten den Inhalt des Variablensatzes fuer diesen Teilkasten zurueck
 \newcommand{\ocinhalt}{
