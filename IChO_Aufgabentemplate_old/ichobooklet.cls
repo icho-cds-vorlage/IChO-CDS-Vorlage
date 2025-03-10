@@ -311,7 +311,7 @@
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{
-  \opt{2}{\marginpar{\textnormal{\textcolor{red}{\xintPFloat{\themulteilaufpunkt/20}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+  \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
   \par \bigskip
