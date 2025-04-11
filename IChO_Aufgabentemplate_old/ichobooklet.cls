@@ -42,6 +42,7 @@
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
 \newcolumntype{L}[1]{>{\arraybackslash}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{booktabs}
