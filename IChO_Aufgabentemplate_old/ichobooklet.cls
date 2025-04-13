@@ -317,6 +317,11 @@
   \setcounter{multeilaufpunkt}{0}
   \par \bigskip
 }
+\newcommand{\punkteausgabeNoBreak}{ %fuer Verwendung nach float-Objekten, die schon genug Absatz erzeugen
+  \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+  \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
+  \setcounter{multeilaufpunkt}{0}
+}
 
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
