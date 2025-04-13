@@ -321,6 +321,7 @@
   \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
+  \par
 }
 
 %Beginn und Ende
@@ -697,7 +698,7 @@
 %OC-Umgebung mit Zuruecksetzung aller Variablen (ausser octyp, da dies bei ueberschuessigem Kasten in naechster Aufgabe nicht zu Fehlausgabe fuehren kann)
 \newcommand{\ocanfang}{\begin{tikzpicture}\FPset\ochsp{0}}
     \newcommand{\ocumbruch}{\end{tikzpicture}\marginpar{\vspace*{1mm}\ch{n>}}\newpage\begin{tikzpicture}}
-    \newcommand{\ocende}{\end{tikzpicture}\punkteausgabe
+    \newcommand{\ocende}{\end{tikzpicture}\punkteausgabeNoBreak
   \grenewcommand{\ochilf}{1} %globale Zuruecksetzung, falls OC-Kasten in einer weiteren Umgebung drin
   \grenewcommand{\oceingabehilf}{1} %ohne Globale Definition des Inhalts werden nur die OC-Kaesten einer Aufgabe erhalten und in folgenden Aufgaben bleiben sie leer
   \grenewcommand{\ocnumone}{}
