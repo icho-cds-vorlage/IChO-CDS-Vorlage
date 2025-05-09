@@ -42,6 +42,7 @@
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}} % vertikal und horizontal zentrierte Tabellenzellen mit fester Breite, z.B. C{3cm}
 \newcolumntype{L}[1]{>{\arraybackslash}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{booktabs}
@@ -290,6 +291,7 @@
   \marginpar{\vspace*{1mm}\ch{n>}}\vspace*{-1mm}\begin{tcolorbox}[colback=white, colframe=black, sharp corners, boxrule=0.4pt, breakable, top=0.5pt, left=0.5pt, right=0.5pt, bottom=0.5pt, use color stack] %ohne color stack ist erster Absatz nach Umbruch schwarz, unabhaengig von textcolor
     \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
   \end{tcolorbox}
+  \setcounter{multeilaufpunkt}{\xintPFloat{\themulteilaufpunkt/2}}
   \punkteausgabe
 }
 
@@ -315,6 +317,12 @@
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
   \par \bigskip
+}
+\newcommand{\punkteausgabeNoBreak}{ %fuer Verwendung nach float-Objekten, die schon genug Absatz erzeugen
+  \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
+  \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
+  \setcounter{multeilaufpunkt}{0}
+  \par
 }
 
 %Beginn und Ende
@@ -691,7 +699,7 @@
 %OC-Umgebung mit Zuruecksetzung aller Variablen (ausser octyp, da dies bei ueberschuessigem Kasten in naechster Aufgabe nicht zu Fehlausgabe fuehren kann)
 \newcommand{\ocanfang}{\begin{tikzpicture}\FPset\ochsp{0}}
     \newcommand{\ocumbruch}{\end{tikzpicture}\marginpar{\vspace*{1mm}\ch{n>}}\newpage\begin{tikzpicture}}
-    \newcommand{\ocende}{\end{tikzpicture}\punkteausgabe
+    \newcommand{\ocende}{\end{tikzpicture}\punkteausgabeNoBreak
   \grenewcommand{\ochilf}{1} %globale Zuruecksetzung, falls OC-Kasten in einer weiteren Umgebung drin
   \grenewcommand{\oceingabehilf}{1} %ohne Globale Definition des Inhalts werden nur die OC-Kaesten einer Aufgabe erhalten und in folgenden Aufgaben bleiben sie leer
   \grenewcommand{\ocnumone}{}
