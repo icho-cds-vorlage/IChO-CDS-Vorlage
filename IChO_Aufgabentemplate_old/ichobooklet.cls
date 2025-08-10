@@ -49,6 +49,7 @@
 \usepackage{makecell}
 \usepackage{tabularx}                % for tables with fixed width
 \usepackage{colortbl}
+\usepackage{tabularray}              % more options with other table type; supports directly the functions of array, longtable, multirow, makecell, tabularx and colortbl
 \usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
 \usepackage{wallpaper}
