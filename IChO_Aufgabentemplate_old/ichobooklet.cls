@@ -103,10 +103,8 @@
 \usepackage{stringstrings} % MC fix
 
 % Chemistry
-\usepackage{chemscheme} %scheme analog figure
 \usepackage{chemformula}
 \usepackage{chemmacros}
-\let\listofschemes\relax
 \usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}
 \usepackage{chemfig}
 \newcommand{\actualscale}{1.0} % give here your wished scale
@@ -135,6 +133,25 @@
 }
 \usepackage{modiagram}
 \usepackage{endiagram}
+\usepackage{newfloat} %scheme Umgebung (die Alternative chemscheme f\"uhrt zu Problemen, wenn die Tabellenbeschriftung \"uber Tabellen soll, daher selbst gebaut)
+\DeclareFloatingEnvironment[
+  fileext=los,
+  listname={Schemenverzeichnis}, % Titel der Liste
+  name=Schema,                 % Beschriftung vor der Nummer
+  placement=tbp
+]{scheme}
+\providecommand{\listschemename}{Schemenverzeichnis}
+\AtBeginDocument{\crefname{scheme}{Schema}{Schemen}\Crefname{scheme}{Schema}{Schemen}}
+\makeatletter
+\renewcommand*{\listofschemes}{%
+  \begingroup
+    \setlength\parskip{2pt}%
+    \subsection{\listschemename}%
+    \@starttoc{los}%
+    \vspace*{-3pt}%
+  \endgroup
+}
+\makeatother
 
 % miscellaneous
 \usepackage{blindtext}
@@ -345,7 +362,7 @@
                 & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
         richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
         falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
-      \end{tabular}}\endgroup\punkteausgabe}
+      \end{tabular}}\punkteausgabe}
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
 \newcommand{\MCvAnfang}{\renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline}
