@@ -153,6 +153,9 @@
 }
 \makeatother
 
+\usepackage[hidelinks]{hyperref}
+\usepacke{cleveref}
+
 % miscellaneous
 \usepackage{blindtext}
 \usepackage[normalem]{ulem}
