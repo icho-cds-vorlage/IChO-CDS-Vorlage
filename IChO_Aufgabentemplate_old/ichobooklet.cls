@@ -31,7 +31,6 @@
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{here}
-\usepackage[hidelinks]{hyperref}
 \usepackage{picinpar,wrapfig}
 \usepackage{epstopdf}
 \usepackage{xcolor}
