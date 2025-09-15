@@ -327,7 +327,13 @@
   \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
-\newcommand{\teilaufgabe}[2]{\begin{enumerate}[a), resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\usepackage{alphalph}
+\makeatletter
+\newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
+\newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
+\AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
+\makeatother
+\newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
