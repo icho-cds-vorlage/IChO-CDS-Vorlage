@@ -329,7 +329,7 @@
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\punktehalbieren}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{\themulteilaufpunkt}{-0.5}}}}
 \usepackage{alphalph}
-\makeatletter
+\makeatletter % nach Teilaufgabe z) mit aa) weiter
 \newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
