@@ -327,6 +327,7 @@
   \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
+\newcommand{\punktehalbieren}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{\themulteilaufpunkt}{-0.5}}}}
 \usepackage{alphalph}
 \makeatletter
 \newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
