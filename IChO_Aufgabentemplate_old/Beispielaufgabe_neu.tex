@@ -48,19 +48,16 @@ Auch hier mit richtig/falsch möglich:\par
 
 
 Alternativ kann auch sortiert werden (zum Beispiel auch Moleküle nach ihrer Reaktivität):
-\teilaufgabe{\operator{Sortiere} die Zahlen nach Größe.}{Dabei ist 5 die größte und 1 die kleinste Zahl.}
-\MSort{\includegraphics[width=0.17\textwidth]{Abbildungen/13C.png}}{29}{78}{-12}{103}{23415}
-
-In der folgenden Teilaufgabe folgt das Einfügen von OC Formeln Bildern und OC Kästchen.
-
-\ocanfang
-\oc{\textbf{1}}{}{}
+\teilaufgabe{\operator{Sortiere} die Zahlen nach Größe.}{Dabei ist 5 die größte und 1 die kleinste Zahl.\punkte{2}}
+\MSort{0}{29}{78}{-12}{103}{23415}
 
 
 
 
 
-Zum anderen lässt sich aus ChemDraw eine .eps Datei exportieren und hier wie ein Bild Einfügen
+
+
+Aus ChemDraw lässt sich eine .eps Datei exportieren und hier wie ein Bild Einfügen.
 Mit \ocscale kann die Größe aller Abbildungen gleich skaliert werden, wenn sie im Chemdraw auch gleich groß sind:
 \renewcommand{\ocscale}{0.95}
 \begin{scheme}[H]
@@ -77,7 +74,14 @@ Alternativ geht auch die Feststellung der Breite mit linewidth:
 \end{scheme}
 
 Zu der Darstellung der OC- Lösungskästchen dient der Befehl:\\
-OC K\"asten werden mit dem Befehl \textbackslash kastenarray erstellt:\\
+In der folgenden Teilaufgabe folgt das Einfügen von OC Formeln Bildern und OC Kästchen. 
+
+\ocanfang
+\oc{\textbf{1}}{\includegraphics[scale=\ocscale]{beta_lacton.eps}}{}
+\oc{\textbf{2}}{\includegraphics[scale=\ocscale]{H2CO3.eps}}{}
+\oc{\textbf{3}}{\includegraphics[width=0.5\linewidth]{H2CO3.eps}}{}
+\ockasten{112}{4}
+\ocende
 % \kastenarray
 %     [] % Breite (kann weggelassen werden, dann an Inhalt angepasst)
 %     {4cm} % Höhe

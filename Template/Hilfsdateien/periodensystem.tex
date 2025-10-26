@@ -1,0 +1,62 @@
+\documentclass[./main.tex]{subfiles}
+\graphicspath{{\subfix{./Abbildungen/}}}
+\begin{document}
+% Draw the Contour of Groups
+\def\DrawGroup;{
+    \clip[]
+        (16in,0)|-+(-1in,1in)|-+(2in,-6in)|-cycle
+        (17in,-2in)rectangle+(10in,-4in)
+        (17in,-7in)rectangle+(14in,-2in)
+        (32in,-0in)-|+(-5in,-6in)-|+(1in,1in)-|cycle;
+}
+
+% Atomic Number \PNn => Coordinate (\PNx,\PNy)
+\def\PositionByNumber;{
+    \pgfmathtruncatemacro\PNn{\n}
+    \foreach\PNa/\PNb in{1/30,34/24,66/24,98/14,130/14}{
+        \ifnum\PNn>\PNa
+            \pgfmathtruncatemacro\PNn{\PNn+\PNb}\xdef\PNn{\PNn}
+        \fi
+    }
+}
+
+% Coordinate (\PNx,\PNy) => Move and Group
+\def\GroupByPosition;{
+    \pgfmathtruncatemacro\PNx{mod(\PNn-0.5,32)+.5}
+    \pgfmathtruncatemacro\PNy{(\PNn-\PNx)/32}
+    \ifnum\PNx>2\ifnum\PNx<17
+        \pgfmathtruncatemacro\PNy{\PNy+3}
+        \pgfmathtruncatemacro\PNx{\PNx+14}
+    \fi\fi
+    \ifnum\PNx<3
+        \pgfmathtruncatemacro\PNx{\PNx+14}
+    \fi
+    \ifnum\PNx>26\ifnum\PNy<8
+        \pgfmathtruncatemacro\PNx{\PNx}
+    \fi\fi
+    \pgftransformreset;\pgftransformxshift{\PNx in};\pgftransformyshift{-\PNy in};
+}
+
+\newread\linereader
+\def\foreachline#1#2{\openin\linereader=#1\nextline#2}
+\def\nextline#1{\read\linereader to \line\ifeof\linereader\closein\linereader\else\expandafter#1\line\end\expandafter\nextline\expandafter#1\fi}
+\def\element#1 #2 #3 #4\end{
+    \xdef\n{#1}
+    \PositionByNumber;
+    \GroupByPosition;
+    \draw[black](0,0)rectangle(1in,1in)
+        (.5,.9in)node{\Large #1}
+        (.5in,.1in)node{\Large #4}
+        (.5in,.5in)node{\Huge #2};
+}
+
+\begin{center}
+    \rotatebox{90}{\resizebox{\textheight}{!}{
+        \begin{tikzpicture}
+            \DrawGroup;
+            \foreachline{./Hilfsdateien/elements.txt}\element
+        \end{tikzpicture}
+    }}
+\end{center}
+\newpage
+\end{document}
