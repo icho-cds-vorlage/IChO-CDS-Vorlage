@@ -112,14 +112,14 @@
 \pgfmathsetmacro{\currentscale}{\actualscale}
 \tikzset{
   shrtdbl/.code 2 args={
-      \tikzset{,shorten >= 0pt,shorten <= 0pt}\global\CF_addtomacro\CF_currentbondstyle{,shorten >= #1*\currentscale,shorten <= #2*\currentscale}
-    },
+    \tikzset{,shorten >= 0pt,shorten <= 0pt}\global\CF_addtomacro\CF_currentbondstyle{,shorten >= #1*\currentscale,shorten <= #2*\currentscale}
+  },
   smb/.style={
-      shrtdbl={0.625mm}{0.625mm}
-    },
+    shrtdbl={0.625mm}{0.625mm}
+  },
   lmb/.style={
-      shrtdbl={0.0mm}{0.0mm}
-    }
+    shrtdbl={0.0mm}{0.0mm}
+  }
 }
 \catcode`\_=8
 \setchemfig{
@@ -145,10 +145,10 @@
 \makeatletter
 \renewcommand*{\listofschemes}{%
   \begingroup
-    \setlength\parskip{2pt}%
-    \subsection{\listschemename}%
-    \@starttoc{los}%
-    \vspace*{-3pt}%
+  \setlength\parskip{2pt}%
+  \subsection{\listschemename}%
+  \@starttoc{los}%
+  \vspace*{-3pt}%
   \endgroup
 }
 \makeatother
@@ -214,9 +214,20 @@
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
 
 % Antwortkasten
-\newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\punkteausgabe} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+\newcommand{\kasten}[3]{
+  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
+    \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
+  }}
+  \punkteausgabe
+} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
-\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}}\punkteausgabe} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+\newcommand{\selfkasten}[2]{
+  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
+    #2
+  }}
+  \punkteausgabe
+} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
 % ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
@@ -233,24 +244,24 @@
 \ExplSyntaxOn
 \NewDocumentCommand { \iterargs } { m m }
 {
-    \clist_item:nn { #1 } { #2 }
+  \clist_item:nn { #1 } { #2 }
 }
 \ExplSyntaxOff
 
 \NewDocumentCommand{\fboxparboxargs}{m}{
-    % Split the input into items using \\ as the linebreak delimiter
-    \seq_set_split:NnV \l_tmpa_seq { \\ } { #1 }
-    % Begin creating the output
-    \seq_map_inline:Nn \l_tmpa_seq {
-        \fbox{%
-            \parbox[c][4cm][c]{5cm}{% Set height (4cm), width (5cm), and alignment (centered)
-                \seq_set_split:NnV \l_tmpb_seq { & } { ##1 }
-                \seq_map_inline:Nn \l_tmpb_seq {
-                    ##1\par % Add each part in a new paragraph
-                }
-            }
-        }\par\vspace{1em} % Add space between boxes
-    }
+  % Split the input into items using \\ as the linebreak delimiter
+  \seq_set_split:NnV \l_tmpa_seq { \\ } { #1 }
+  % Begin creating the output
+  \seq_map_inline:Nn \l_tmpa_seq {
+    \fbox{%
+      \parbox[c][4cm][c]{5cm}{% Set height (4cm), width (5cm), and alignment (centered)
+        \seq_set_split:NnV \l_tmpb_seq { & } { ##1 }
+        \seq_map_inline:Nn \l_tmpb_seq {
+          ##1\par % Add each part in a new paragraph
+        }
+      }
+    }\par\vspace{1em} % Add space between boxes
+  }
 }
 
 \ExplSyntaxOff
@@ -264,31 +275,32 @@
 % #5 Punkte
 
 \newcommand{\punktekasten}[5]{%
-    \fbox{\parbox[b][#1][t]{\linewidth-9pt}{%
-        \begin{minipage}[t]{\linewidth-30pt}%
-            #4\\
-            \getheightoftext{#4\\}
-            \fbox{\parbox[b][#1-\boxheight][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}%
-        \end{minipage}%
-        \hfill%
-        \begin{minipage}[t]{20pt}%
-            \vspace*{\boxheight}
-            \pgfmathsetmacro{\testvar}{round(2 * #5)}%
-            {\setlength{\baselineskip}{0.4\baselineskip}
-            \foreach \i in {1,...,\testvar}{%
-                \quadrat % Draw the square
-                \ifodd\i % Check if \i is odd
-                    % Do something for odd \i
-                \else%
-                    \pgfmathsetmacro{\i}{int(\i/2)}%
-                    \textbf{\ \i} % Print the value for even \i
-                \fi%
-                \par % Go to the next line
-                \vspace{-5pt}%
-
-            }}%
-        \end{minipage}%
-    }}
+  \fbox{\parbox[b][#1][t]{\linewidth-9pt}{%
+    \begin{minipage}[t]{\linewidth-30pt}%
+      #4\\
+      \getheightoftext{#4\\}
+      \fbox{\parbox[b][#1-\boxheight][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}%
+    \end{minipage}%
+    \hfill%
+    \begin{minipage}[t]{20pt}%
+      \vspace*{\boxheight}
+      \pgfmathsetmacro{\testvar}{round(2 * #5)}%
+      {
+        \setlength{\baselineskip}{0.4\baselineskip}
+        \foreach \i in {1,...,\testvar}{%
+          \quadrat % Draw the square
+          \ifodd\i % Check if \i is odd
+              % Do something for odd \i
+          \else%
+              \pgfmathsetmacro{\i}{int(\i/2)}%
+              \textbf{\ \i} % Print the value for even \i
+          \fi%
+          \par % Go to the next line
+          \vspace{-5pt}%
+        }
+      }%
+    \end{minipage}%
+  }}
 }%
 
 %umbrechbarer Antwortkasten
@@ -360,65 +372,74 @@
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{
-\begin{tikzpicture}
+  \begin{tikzpicture}
     \draw (0, 0) rectangle ++(0.25,0.25);
-    %\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); %old square
     \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);
-\end{tikzpicture}} %MC-Quadrat
+  \end{tikzpicture}} %MC-Quadrat
 \newcommand{\quadratkor}{
-\begin{tikzpicture}
+  \begin{tikzpicture}
     \draw (0, 0) rectangle ++(0.25,0.25);
-    %\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0);
     \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);
     \draw[color=black, thick] (0.005,0.005) -- (0.245,0.245);
     \draw[color=black, thick] (0.005,0.245) -- (0.245,0.005);
-\end{tikzpicture}}
+  \end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 
 \newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
-      \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
-        #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
-        \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-      \end{tabular}}\punkteausgabe}
-\newcommand{\MCrf}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
-      \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
-                & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
-        richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-        falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
-      \end{tabular}}\punkteausgabe}
+  \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
+    #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
+    \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
+  \end{tabular}}\punkteausgabe}
+\newcommand{\MCrf}[6]{{
+  \setlength{\tabcolsep}{0.004\textwidth}
+  \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
+    & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
+    richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
+    falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
+  \end{tabular}}
+  \punkteausgabe
+}
 
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
 \newcommand{\MCvAnfang}{
-    \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
+
 \newcommand{\MCvrfAnfang}{
-    \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
+
 \newcommand{\MCvUmbruch}{
-    \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
+
 \newcommand{\MCvrfUmbruch}{
-    \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
+
 \newcommand{\MCvEnde}{
-    \end{tabular}\punkteausgabe
+  \end{tabular}\punkteausgabe
 }
+
 \newcommand{\MCvrfEnde}{
-    \end{tabular}\punkteausgabe
+  \end{tabular}\punkteausgabe
 }
+
 \newcommand{\MCv}[2]{
   \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
   \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
   & #2 \\\hline
 }
 %Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
-\newcommand{\MSort}[6]{
-{{\setlength{\tabcolsep}{0.004\textwidth}
-      \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
-                 #1& #2& #3& #4& #5\\\hline
-                 \opt{1,2}{\substring{#6}{1}{1}}&\opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}}&\opt{1,2}{\substring{#6}{4}{4}} &\opt{1,2}{\substring{#6}{5}{5}}\\\hline
-      \end{tabular}}\punkteausgabe}
+\newcommand{\MSort}[6]{{
+    \setlength{\tabcolsep}{0.004\textwidth}
+    \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
+    #1                              & #2                              & #3                              & #4                              & #5                              \\\hline
+    \opt{1,2}{\substring{#6}{1}{1}} & \opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}} & \opt{1,2}{\substring{#6}{4}{4}} & \opt{1,2}{\substring{#6}{5}{5}} \\\hline
+    \end{tabular}
+  }
+  \punkteausgabe
 }
 
 
@@ -427,9 +448,7 @@
 % Redifine \section to fullfill IChO-style
 \makeatletter
 \let\latex@@thesection\thesection
-\newcommand{\padwithzero}{%
-  0%
-}%
+\newcommand{\padwithzero}{0}
 \renewcommand{\thesection}{Aufgabe \round\,--\,\ifnum\c@section<10\relax\padwithzero\fi\latex@@thesection}
 \newcount\dummycntr
 \makeatother
@@ -457,11 +476,12 @@
 
 
 %Serienbrief
-\def\chopline#1;#2;#3;#4 \\{
-    \def\suscode{#1}
-    \def\susbl{#2}
-    \def\suslastname{#3}
-    \def\susfirstname{#4}
+\def\chopline#1;#2;#3;#4 \\
+{
+  \def\suscode{#1}
+  \def\susbl{#2}
+  \def\suslastname{#3}
+  \def\susfirstname{#4}
 }
 \newif\ifmore \moretrue
 
@@ -485,55 +505,54 @@
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
-\DeclareOption{plainpaper}{%
+\DeclareOption{plainpaper}{
+  \opt{icho}{
+    \setlength{\textwidth}{168mm}%
+    \setlength{\textheight}{238mm}%
+    \setlength{\oddsidemargin}{-3mm}%
+    \setlength{\evensidemargin}{-3mm}%
+    \setlength{\topmargin}{-17mm}%
+    \setlength{\headheight}{48pt}%
+    \setlength{\headsep}{12pt}%
+    \setlength{\footheight}{40pt}%
+    \addtokomafont{headsepline}{\color{ichodark}}
+    \KOMAoptions{headsepline=1pt:\textwidth}
+    \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
+    \chead[]{\large \parbox{0.33\textwidth}{
+      \centering
+      \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
+      \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
+      \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
+      \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
+    }}%
+    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
+    \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+    \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
+  }
 
- \opt{icho}{
-  \setlength{\textwidth}{168mm}%
-  \setlength{\textheight}{238mm}%
-  \setlength{\oddsidemargin}{-3mm}%
-  \setlength{\evensidemargin}{-3mm}%
-  \setlength{\topmargin}{-17mm}%
-  \setlength{\headheight}{48pt}%
-  \setlength{\headsep}{12pt}%
-  \setlength{\footheight}{40pt}%
-  \addtokomafont{headsepline}{\color{ichodark}}
-  \KOMAoptions{headsepline=1pt:\textwidth}
-  \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
-  \chead[]{\large \parbox{0.33\textwidth}{%
-    \centering
-    \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
-    \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
-    \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
-    \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
-  }}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
-  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-  \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
- }
-
- \opt{cds}{
-  \setlength{\textwidth}{168mm}%
-  \setlength{\textheight}{238mm}%
-  \setlength{\oddsidemargin}{-3mm}%
-  \setlength{\evensidemargin}{-3mm}%
-  \setlength{\topmargin}{-13mm}%
-  \setlength{\headheight}{60.8pt}%
-  \setlength{\headsep}{12pt}%
-  \setlength{\footheight}{40pt}%
-  \addtokomafont{headsepline}{\color{cdscolor}}
-  \KOMAoptions{headsepline=1pt:\textwidth}
-  \renewcommand*{\familydefault}{\sfdefault}
-  \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=20mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
-  \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{%
-    \centering
-    \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klasse \klasse}}}
-    \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{}\\ Klasse \klasse}}}
-    \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
-    \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
-  } \vspace*{4mm}}%
-  \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse - \suscode}\end{flushright}}}}%
-  \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
- }
+  \opt{cds}{
+    \setlength{\textwidth}{168mm}%
+    \setlength{\textheight}{238mm}%
+    \setlength{\oddsidemargin}{-3mm}%
+    \setlength{\evensidemargin}{-3mm}%
+    \setlength{\topmargin}{-13mm}%
+    \setlength{\headheight}{60.8pt}%
+    \setlength{\headsep}{12pt}%
+    \setlength{\footheight}{40pt}%
+    \addtokomafont{headsepline}{\color{cdscolor}}
+    \KOMAoptions{headsepline=1pt:\textwidth}
+    \renewcommand*{\familydefault}{\sfdefault}
+    \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=20mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
+    \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{
+        \centering
+        \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klasse \klasse}}}
+        \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{}\\ Klasse \klasse}}}
+        \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
+        \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
+    } \vspace*{4mm}}%
+    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse -\suscode\hfill}\end{flushright}}}}%
+    \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+  }
 }
 
 \ProcessOptions\relax
@@ -603,9 +622,9 @@
 \newenvironment{enumsec} % enumeration with section number included
 % added \addtolength{\leftmargin}{4pt} to account for higher counter numbers 20170119
 {\begin{list}%
-    {\thesection.\alph{enumi})}%
-    {\usecounter{enumi}\addtolength{\leftmargin}{6pt}\addtolength{\labelwidth}{26pt}\setlength{\topsep}{0pt}}}
-    {\end{list}}
+  {\thesection.\alph{enumi})}%
+  {\usecounter{enumi}\addtolength{\leftmargin}{6pt}\addtolength{\labelwidth}{26pt}\setlength{\topsep}{0pt}}}
+{\end{list}}
 
 \ifdefined\solutions
   \newcommand{\solnewpage}{\newpage}
@@ -852,59 +871,59 @@
   \grenewcommand{\ocinseventeen}{}
   \grenewcommand{\ocineighteen}{}
   \grenewcommand{\ocinnineteen}{}
-  \grenewcommand{\ocintwenty}{}
+    \grenewcommand{\ocintwenty}{}
 }
 
 %Eingabe der Werte/Inhalte fuer oben initialisierte und von \ocinhalt aufgerufene Variablen, wobei \oceingabehilf hochzaehlt und Werte dem nächsten freien Variablensatz zuweist:
 
 % 
 \newcommand{\oc}[3]{
-  \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{0}\grenewcommand{\ocnumone}{#1}\grenewcommand{\ocsolone}{\begin{center}#2\end{center}}\grenewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
-  {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{0}\grenewcommand{\ocnumtwo}{#1}\grenewcommand{\ocsoltwo}{\begin{center}#2\end{center}}\grenewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
-    {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{0}\grenewcommand{\ocnumthree}{#1}\grenewcommand{\ocsolthree}{\begin{center}#2\end{center}}\grenewcommand{\occonthree}{#3}\grenewcommand{\oceingabehilf}{4}}
-      {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{0}\grenewcommand{\ocnumfour}{#1}\grenewcommand{\ocsolfour}{\begin{center}#2\end{center}}\grenewcommand{\occonfour}{#3}\grenewcommand{\oceingabehilf}{5}}
-        {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{0}\grenewcommand{\ocnumfive}{#1}\grenewcommand{\ocsolfive}{\begin{center}#2\end{center}}\grenewcommand{\occonfive}{#3}\grenewcommand{\oceingabehilf}{6}}
-          {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{0}\grenewcommand{\ocnumsix}{#1}\grenewcommand{\ocsolsix}{\begin{center}#2\end{center}}\grenewcommand{\occonsix}{#3}\grenewcommand{\oceingabehilf}{7}}
-            {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{0}\grenewcommand{\ocnumseven}{#1}\grenewcommand{\ocsolseven}{\begin{center}#2\end{center}}\grenewcommand{\occonseven}{#3}\grenewcommand{\oceingabehilf}{8}}
-              {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{0}\grenewcommand{\ocnumeight}{#1}\grenewcommand{\ocsoleight}{\begin{center}#2\end{center}}\grenewcommand{\occoneight}{#3}\grenewcommand{\oceingabehilf}{9}}
-                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{0}\grenewcommand{\ocnumnine}{#1}\grenewcommand{\ocsolnine}{\begin{center}#2\end{center}}\grenewcommand{\occonnine}{#3}\grenewcommand{\oceingabehilf}{10}}
-                  {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{0}\grenewcommand{\ocnumten}{#1}\grenewcommand{\ocsolten}{\begin{center}#2\end{center}}\grenewcommand{\occonten}{#3}\grenewcommand{\oceingabehilf}{11}}
-                    {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{0}\grenewcommand{\ocnumeleven}{#1}\grenewcommand{\ocsoleleven}{\begin{center}#2\end{center}}\grenewcommand{\occoneleven}{#3}\grenewcommand{\oceingabehilf}{12}}
-                      {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{0}\grenewcommand{\ocnumtwelve}{#1}\grenewcommand{\ocsoltwelve}{\begin{center}#2\end{center}}\grenewcommand{\occontwelve}{#3}\grenewcommand{\oceingabehilf}{13}}
-                        {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{0}\grenewcommand{\ocnumthirteen}{#1}\grenewcommand{\ocsolthirteen}{\begin{center}#2\end{center}}\grenewcommand{\occonthirteen}{#3}\grenewcommand{\oceingabehilf}{14}}
-                          {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{0}\grenewcommand{\ocnumfourteen}{#1}\grenewcommand{\ocsolfourteen}{\begin{center}#2\end{center}}\grenewcommand{\occonfourteen}{#3}\grenewcommand{\oceingabehilf}{15}}
-                            {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{0}\grenewcommand{\ocnumfifteen}{#1}\grenewcommand{\ocsolfifteen}{\begin{center}#2\end{center}}\grenewcommand{\occonfifteen}{#3}\grenewcommand{\oceingabehilf}{16}}
-                              {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{0}\grenewcommand{\ocnumsixteen}{#1}\grenewcommand{\ocsolsixteen}{\begin{center}#2\end{center}}\grenewcommand{\occonsixteen}{#3}\grenewcommand{\oceingabehilf}{17}}
-                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{0}\grenewcommand{\ocnumseventeen}{#1}\grenewcommand{\ocsolseventeen}{\begin{center}#2\end{center}}\grenewcommand{\occonseventeen}{#3}\grenewcommand{\oceingabehilf}{18}}
-                                  {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{0}\grenewcommand{\ocnumeighteen}{#1}\grenewcommand{\ocsoleighteen}{\begin{center}#2\end{center}}\grenewcommand{\occoneighteen}{#3}\grenewcommand{\oceingabehilf}{19}}
-                                    {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{0}\grenewcommand{\ocnumnineteen}{#1}\grenewcommand{\ocsolnineteen}{\begin{center}#2\end{center}}\grenewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
-                                      {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{0}\grenewcommand{\ocnumtwenty}{#1}\grenewcommand{\ocsoltwenty}{\begin{center}#2\end{center}}\grenewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
-                                        {}}}}}}}}}}}}}}}}}}}}
+    \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{0}\grenewcommand{\ocnumone}{#1}\grenewcommand{\ocsolone}{\begin{center}#2\end{center}}\grenewcommand{\occonone}{#3}\grenewcommand{\oceingabehilf}{2}}
+    {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{0}\grenewcommand{\ocnumtwo}{#1}\grenewcommand{\ocsoltwo}{\begin{center}#2\end{center}}\grenewcommand{\occontwo}{#3}\grenewcommand{\oceingabehilf}{3}}
+        {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{0}\grenewcommand{\ocnumthree}{#1}\grenewcommand{\ocsolthree}{\begin{center}#2\end{center}}\grenewcommand{\occonthree}{#3}\grenewcommand{\oceingabehilf}{4}}
+            {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{0}\grenewcommand{\ocnumfour}{#1}\grenewcommand{\ocsolfour}{\begin{center}#2\end{center}}\grenewcommand{\occonfour}{#3}\grenewcommand{\oceingabehilf}{5}}
+                {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{0}\grenewcommand{\ocnumfive}{#1}\grenewcommand{\ocsolfive}{\begin{center}#2\end{center}}\grenewcommand{\occonfive}{#3}\grenewcommand{\oceingabehilf}{6}}
+                    {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{0}\grenewcommand{\ocnumsix}{#1}\grenewcommand{\ocsolsix}{\begin{center}#2\end{center}}\grenewcommand{\occonsix}{#3}\grenewcommand{\oceingabehilf}{7}}
+                        {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{0}\grenewcommand{\ocnumseven}{#1}\grenewcommand{\ocsolseven}{\begin{center}#2\end{center}}\grenewcommand{\occonseven}{#3}\grenewcommand{\oceingabehilf}{8}}
+                            {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{0}\grenewcommand{\ocnumeight}{#1}\grenewcommand{\ocsoleight}{\begin{center}#2\end{center}}\grenewcommand{\occoneight}{#3}\grenewcommand{\oceingabehilf}{9}}
+                                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{0}\grenewcommand{\ocnumnine}{#1}\grenewcommand{\ocsolnine}{\begin{center}#2\end{center}}\grenewcommand{\occonnine}{#3}\grenewcommand{\oceingabehilf}{10}}
+                                    {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{0}\grenewcommand{\ocnumten}{#1}\grenewcommand{\ocsolten}{\begin{center}#2\end{center}}\grenewcommand{\occonten}{#3}\grenewcommand{\oceingabehilf}{11}}
+                                        {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{0}\grenewcommand{\ocnumeleven}{#1}\grenewcommand{\ocsoleleven}{\begin{center}#2\end{center}}\grenewcommand{\occoneleven}{#3}\grenewcommand{\oceingabehilf}{12}}
+                                            {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{0}\grenewcommand{\ocnumtwelve}{#1}\grenewcommand{\ocsoltwelve}{\begin{center}#2\end{center}}\grenewcommand{\occontwelve}{#3}\grenewcommand{\oceingabehilf}{13}}
+                                                {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{0}\grenewcommand{\ocnumthirteen}{#1}\grenewcommand{\ocsolthirteen}{\begin{center}#2\end{center}}\grenewcommand{\occonthirteen}{#3}\grenewcommand{\oceingabehilf}{14}}
+                                                    {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{0}\grenewcommand{\ocnumfourteen}{#1}\grenewcommand{\ocsolfourteen}{\begin{center}#2\end{center}}\grenewcommand{\occonfourteen}{#3}\grenewcommand{\oceingabehilf}{15}}
+                                                        {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{0}\grenewcommand{\ocnumfifteen}{#1}\grenewcommand{\ocsolfifteen}{\begin{center}#2\end{center}}\grenewcommand{\occonfifteen}{#3}\grenewcommand{\oceingabehilf}{16}}
+                                                            {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{0}\grenewcommand{\ocnumsixteen}{#1}\grenewcommand{\ocsolsixteen}{\begin{center}#2\end{center}}\grenewcommand{\occonsixteen}{#3}\grenewcommand{\oceingabehilf}{17}}
+                                                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{0}\grenewcommand{\ocnumseventeen}{#1}\grenewcommand{\ocsolseventeen}{\begin{center}#2\end{center}}\grenewcommand{\occonseventeen}{#3}\grenewcommand{\oceingabehilf}{18}}
+                                                                    {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{0}\grenewcommand{\ocnumeighteen}{#1}\grenewcommand{\ocsoleighteen}{\begin{center}#2\end{center}}\grenewcommand{\occoneighteen}{#3}\grenewcommand{\oceingabehilf}{19}}
+                                                                        {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{0}\grenewcommand{\ocnumnineteen}{#1}\grenewcommand{\ocsolnineteen}{\begin{center}#2\end{center}}\grenewcommand{\occonnineteen}{#3}\grenewcommand{\oceingabehilf}{20}}
+                                                                            {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{0}\grenewcommand{\ocnumtwenty}{#1}\grenewcommand{\ocsoltwenty}{\begin{center}#2\end{center}}\grenewcommand{\occontwenty}{#3}\grenewcommand{\oceingabehilf}{21}}
+                                                                                {}}}}}}}}}}}}}}}}}}}}
 }
 
 %Eingabebefehl, wenn Kasteninhalt selbst versioniert werden soll. Mit \oc mischbar
 \newcommand{\ocselbst}[1]{
-  \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{1}\grenewcommand{\ocinone}{#1}\grenewcommand{\oceingabehilf}{2}}
-  {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{1}\grenewcommand{\ocintwo}{#1}\grenewcommand{\oceingabehilf}{3}}
-    {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{1}\grenewcommand{\ocinthree}{#1}\grenewcommand{\oceingabehilf}{4}}
-      {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{1}\grenewcommand{\ocinfour}{#1}\grenewcommand{\oceingabehilf}{5}}
-        {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{1}\grenewcommand{\ocinfive}{#1}\grenewcommand{\oceingabehilf}{6}}
-          {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{1}\grenewcommand{\ocinsix}{#1}\grenewcommand{\oceingabehilf}{7}}
-            {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{1}\grenewcommand{\ocinseven}{#1}\grenewcommand{\oceingabehilf}{8}}
-              {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{1}\grenewcommand{\ocineight}{#1}\grenewcommand{\oceingabehilf}{9}}
-                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{1}\grenewcommand{\ocinnine}{#1}\grenewcommand{\oceingabehilf}{10}}
-                  {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{1}\grenewcommand{\ocinten}{#1}\grenewcommand{\oceingabehilf}{11}}
-                    {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{1}\grenewcommand{\ocineleven}{#1}\grenewcommand{\oceingabehilf}{12}}
-                      {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{1}\grenewcommand{\ocintwelve}{#1}\grenewcommand{\oceingabehilf}{13}}
-                        {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{1}\grenewcommand{\ocinthirteen}{#1}\grenewcommand{\oceingabehilf}{14}}
-                          {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{1}\grenewcommand{\ocinfourteen}{#1}\grenewcommand{\oceingabehilf}{15}}
-                            {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{1}\grenewcommand{\ocinfifteen}{#1}\grenewcommand{\oceingabehilf}{16}}
-                              {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{1}\grenewcommand{\ocinsixteen}{#1}\grenewcommand{\oceingabehilf}{17}}
-                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{1}\grenewcommand{\ocinseventeen}{#1}\grenewcommand{\oceingabehilf}{18}}
-                                  {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{1}\grenewcommand{\ocineighteen}{#1}\grenewcommand{\oceingabehilf}{19}}
-                                    {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{1}\grenewcommand{\ocinnineteen}{#1}\grenewcommand{\oceingabehilf}{20}}
-                                      {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{1}\grenewcommand{\ocintwenty}{#1}\grenewcommand{\oceingabehilf}{21}}
-                                        {}}}}}}}}}}}}}}}}}}}}
+    \ifthenelse{\equal{\oceingabehilf}{1}}{\grenewcommand{\octypone}{1}\grenewcommand{\ocinone}{#1}\grenewcommand{\oceingabehilf}{2}}
+    {\ifthenelse{\equal{\oceingabehilf}{2}}{\grenewcommand{\octyptwo}{1}\grenewcommand{\ocintwo}{#1}\grenewcommand{\oceingabehilf}{3}}
+        {\ifthenelse{\equal{\oceingabehilf}{3}}{\grenewcommand{\octypthree}{1}\grenewcommand{\ocinthree}{#1}\grenewcommand{\oceingabehilf}{4}}
+            {\ifthenelse{\equal{\oceingabehilf}{4}}{\grenewcommand{\octypfour}{1}\grenewcommand{\ocinfour}{#1}\grenewcommand{\oceingabehilf}{5}}
+                {\ifthenelse{\equal{\oceingabehilf}{5}}{\grenewcommand{\octypfive}{1}\grenewcommand{\ocinfive}{#1}\grenewcommand{\oceingabehilf}{6}}
+                    {\ifthenelse{\equal{\oceingabehilf}{6}}{\grenewcommand{\octypsix}{1}\grenewcommand{\ocinsix}{#1}\grenewcommand{\oceingabehilf}{7}}
+                        {\ifthenelse{\equal{\oceingabehilf}{7}}{\grenewcommand{\octypseven}{1}\grenewcommand{\ocinseven}{#1}\grenewcommand{\oceingabehilf}{8}}
+                            {\ifthenelse{\equal{\oceingabehilf}{8}}{\grenewcommand{\octypeight}{1}\grenewcommand{\ocineight}{#1}\grenewcommand{\oceingabehilf}{9}}
+                                {\ifthenelse{\equal{\oceingabehilf}{9}}{\grenewcommand{\octypnine}{1}\grenewcommand{\ocinnine}{#1}\grenewcommand{\oceingabehilf}{10}}
+                                    {\ifthenelse{\equal{\oceingabehilf}{10}}{\grenewcommand{\octypten}{1}\grenewcommand{\ocinten}{#1}\grenewcommand{\oceingabehilf}{11}}
+                                        {\ifthenelse{\equal{\oceingabehilf}{11}}{\grenewcommand{\octypeleven}{1}\grenewcommand{\ocineleven}{#1}\grenewcommand{\oceingabehilf}{12}}
+                                            {\ifthenelse{\equal{\oceingabehilf}{12}}{\grenewcommand{\octyptwelve}{1}\grenewcommand{\ocintwelve}{#1}\grenewcommand{\oceingabehilf}{13}}
+                                                {\ifthenelse{\equal{\oceingabehilf}{13}}{\grenewcommand{\octypthirteen}{1}\grenewcommand{\ocinthirteen}{#1}\grenewcommand{\oceingabehilf}{14}}
+                                                    {\ifthenelse{\equal{\oceingabehilf}{14}}{\grenewcommand{\octypfourteen}{1}\grenewcommand{\ocinfourteen}{#1}\grenewcommand{\oceingabehilf}{15}}
+                                                        {\ifthenelse{\equal{\oceingabehilf}{15}}{\grenewcommand{\octypfifteen}{1}\grenewcommand{\ocinfifteen}{#1}\grenewcommand{\oceingabehilf}{16}}
+                                                            {\ifthenelse{\equal{\oceingabehilf}{16}}{\grenewcommand{\octypsixteen}{1}\grenewcommand{\ocinsixteen}{#1}\grenewcommand{\oceingabehilf}{17}}
+                                                                {\ifthenelse{\equal{\oceingabehilf}{17}}{\grenewcommand{\octypseventeen}{1}\grenewcommand{\ocinseventeen}{#1}\grenewcommand{\oceingabehilf}{18}}
+                                                                    {\ifthenelse{\equal{\oceingabehilf}{18}}{\grenewcommand{\octypeighteen}{1}\grenewcommand{\ocineighteen}{#1}\grenewcommand{\oceingabehilf}{19}}
+                                                                        {\ifthenelse{\equal{\oceingabehilf}{19}}{\grenewcommand{\octypnineteen}{1}\grenewcommand{\ocinnineteen}{#1}\grenewcommand{\oceingabehilf}{20}}
+                                                                            {\ifthenelse{\equal{\oceingabehilf}{20}}{\grenewcommand{\octyptwenty}{1}\grenewcommand{\ocintwenty}{#1}\grenewcommand{\oceingabehilf}{21}}
+                                                                                {}}}}}}}}}}}}}}}}}}}}
 }
 
 %Hilfsbefehl fuer \ockasten, gibt entsprechend der von \ochilf gezaehlten Teilkaesten den Inhalt des Variablensatzes fuer diesen Teilkasten zurueck
@@ -912,54 +931,54 @@
 
 
 \newcommand{\ocinhalt}{
-  \ifthenelse{\equal{\ochilf}{1}}{\ifthenelse{\equal{\octypone}{0}}{\textbf{\ocnumone}\\\opt{1,2}{\ocsolone}\opt{0}{\occonone}\grenewcommand{\ochilf}{2}}{\ifthenelse{\equal{\octypone}{1}}{\ocinone\grenewcommand{\ochilf}{2}}{}}}
-  {\ifthenelse{\equal{\ochilf}{2}}{\ifthenelse{\equal{\octyptwo}{0}}{\textbf{\ocnumtwo}\\\opt{1,2}{\ocsoltwo}\opt{0}{\occontwo}\grenewcommand{\ochilf}{3}}{\ifthenelse{\equal{\octyptwo}{1}}{\ocintwo\grenewcommand{\ochilf}{3}}{}}}
-    {\ifthenelse{\equal{\ochilf}{3}}{\ifthenelse{\equal{\octypthree}{0}}{\textbf{\ocnumthree}\\\opt{1,2}{\ocsolthree}\opt{0}{\occonthree}\grenewcommand{\ochilf}{4}}{\ifthenelse{\equal{\octypthree}{1}}{\ocinthree\grenewcommand{\ochilf}{4}}{}}}
-      {\ifthenelse{\equal{\ochilf}{4}}{\ifthenelse{\equal{\octypfour}{0}}{\textbf{\ocnumfour}\\\opt{1,2}{\ocsolfour}\opt{0}{\occonfour}\grenewcommand{\ochilf}{5}}{\ifthenelse{\equal{\octypfour}{1}}{\ocinfour\grenewcommand{\ochilf}{5}}{}}}
-        {\ifthenelse{\equal{\ochilf}{5}}{\ifthenelse{\equal{\octypfive}{0}}{\textbf{\ocnumfive}\\\opt{1,2}{\ocsolfive}\opt{0}{\occonfive}\grenewcommand{\ochilf}{6}}{\ifthenelse{\equal{\octypfive}{1}}{\ocinfive\grenewcommand{\ochilf}{6}}{}}}
-          {\ifthenelse{\equal{\ochilf}{6}}{\ifthenelse{\equal{\octypsix}{0}}{\textbf{\ocnumsix}\\\opt{1,2}{\ocsolsix}\opt{0}{\occonsix}\grenewcommand{\ochilf}{7}}{\ifthenelse{\equal{\octypsix}{1}}{\ocinsix\grenewcommand{\ochilf}{7}}{}}}
-            {\ifthenelse{\equal{\ochilf}{7}}{\ifthenelse{\equal{\octypseven}{0}}{\textbf{\ocnumseven}\\\opt{1,2}{\ocsolseven}\opt{0}{\occonseven}\grenewcommand{\ochilf}{8}}{\ifthenelse{\equal{\octypseven}{1}}{\ocinseven\grenewcommand{\ochilf}{8}}{}}}
-              {\ifthenelse{\equal{\ochilf}{8}}{\ifthenelse{\equal{\octypeight}{0}}{\textbf{\ocnumeight}\\\opt{1,2}{\ocsoleight}\opt{0}{\occoneight}\grenewcommand{\ochilf}{9}}{\ifthenelse{\equal{\octypeight}{1}}{\ocineight\grenewcommand{\ochilf}{9}}{}}}
-                {\ifthenelse{\equal{\ochilf}{9}}{\ifthenelse{\equal{\octypnine}{0}}{\textbf{\ocnumnine}\\\opt{1,2}{\ocsolnine}\opt{0}{\occonnine}\grenewcommand{\ochilf}{10}}{\ifthenelse{\equal{\octypnine}{1}}{\ocinnine\grenewcommand{\ochilf}{10}}{}}}
-                  {\ifthenelse{\equal{\ochilf}{10}}{\ifthenelse{\equal{\octypten}{0}}{\textbf{\ocnumten}\\\opt{1,2}{\ocsolten}\opt{0}{\occonten}\grenewcommand{\ochilf}{11}}{\ifthenelse{\equal{\octypten}{1}}{\ocinten\grenewcommand{\ochilf}{11}}{}}}
-                    {\ifthenelse{\equal{\ochilf}{11}}{\ifthenelse{\equal{\octypeleven}{0}}{\textbf{\ocnumeleven}\\\opt{1,2}{\ocsoleleven}\opt{0}{\occoneleven}\grenewcommand{\ochilf}{12}}{\ifthenelse{\equal{\octypeleven}{1}}{\ocineleven\grenewcommand{\ochilf}{12}}{}}}
-                      {\ifthenelse{\equal{\ochilf}{12}}{\ifthenelse{\equal{\octyptwelve}{0}}{\textbf{\ocnumtwelve}\\\opt{1,2}{\ocsoltwelve}\opt{0}{\occontwelve}\grenewcommand{\ochilf}{13}}{\ifthenelse{\equal{\octyptwelve}{1}}{\ocintwelve\grenewcommand{\ochilf}{13}}{}}}
-                        {\ifthenelse{\equal{\ochilf}{13}}{\ifthenelse{\equal{\octypthirteen}{0}}{\textbf{\ocnumthirteen}\\\opt{1,2}{\ocsolthirteen}\opt{0}{\occonthirteen}\grenewcommand{\ochilf}{14}}{\ifthenelse{\equal{\octypthirteen}{1}}{\ocinthirteen\grenewcommand{\ochilf}{14}}{}}}
-                          {\ifthenelse{\equal{\ochilf}{14}}{\ifthenelse{\equal{\octypfourteen}{0}}{\textbf{\ocnumfourteen}\\\opt{1,2}{\ocsolfourteen}\opt{0}{\occonfourteen}\grenewcommand{\ochilf}{15}}{\ifthenelse{\equal{\octypfourteen}{1}}{\ocinfourteen\grenewcommand{\ochilf}{15}}{}}}
-                            {\ifthenelse{\equal{\ochilf}{15}}{\ifthenelse{\equal{\octypfifteen}{0}}{\textbf{\ocnumfifteen}\\\opt{1,2}{\ocsolfifteen}\opt{0}{\occonfifteen}\grenewcommand{\ochilf}{16}}{\ifthenelse{\equal{\octypfifteen}{1}}{\ocinfifteen\grenewcommand{\ochilf}{16}}{}}}
-                              {\ifthenelse{\equal{\ochilf}{16}}{\ifthenelse{\equal{\octypsixteen}{0}}{\textbf{\ocnumsixteen}\\\opt{1,2}{\ocsolsixteen}\opt{0}{\occonsixteen}\grenewcommand{\ochilf}{17}}{\ifthenelse{\equal{\octypsixteen}{1}}{\ocinsixteen\grenewcommand{\ochilf}{17}}{}}}
-                                {\ifthenelse{\equal{\ochilf}{17}}{\ifthenelse{\equal{\octypseventeen}{0}}{\textbf{\ocnumseventeen}\\\opt{1,2}{\ocsolseventeen}\opt{0}{\occonseventeen}\grenewcommand{\ochilf}{18}}{\ifthenelse{\equal{\octypseventeen}{1}}{\ocinseventeen\grenewcommand{\ochilf}{18}}{}}}
-                                  {\ifthenelse{\equal{\ochilf}{18}}{\ifthenelse{\equal{\octypeighteen}{0}}{\textbf{\ocnumeighteen}\\\opt{1,2}{\ocsoleighteen}\opt{0}{\occoneighteen}\grenewcommand{\ochilf}{19}}{\ifthenelse{\equal{\octypeighteen}{1}}{\ocineighteen\grenewcommand{\ochilf}{19}}{}}}
-                                    {\ifthenelse{\equal{\ochilf}{19}}{\ifthenelse{\equal{\octypnineteen}{0}}{\textbf{\ocnumnineteen}\\\opt{1,2}{\ocsolnineteen}\opt{0}{\occonnineteen}\grenewcommand{\ochilf}{20}}{\ifthenelse{\equal{\octypnineteen}{1}}{\ocinnineteen\grenewcommand{\ochilf}{20}}{}}}
-                                      {\ifthenelse{\equal{\ochilf}{20}}{\ifthenelse{\equal{\octyptwenty}{0}}{\textbf{\ocnumtwenty}\\\opt{1,2}{\ocsoltwenty}\opt{0}{\occontwenty}\grenewcommand{\ochilf}{21}}{\ifthenelse{\equal{\octyptwenty}{1}}{\ocintwenty\grenewcommand{\ochilf}{21}}{}}}
-                                        {}}}}}}}}}}}}}}}}}}}}
+    \ifthenelse{\equal{\ochilf}{1}}{\ifthenelse{\equal{\octypone}{0}}{\textbf{\ocnumone}\\\opt{1,2}{\ocsolone}\opt{0}{\occonone}\grenewcommand{\ochilf}{2}}{\ifthenelse{\equal{\octypone}{1}}{\ocinone\grenewcommand{\ochilf}{2}}{}}}
+    {\ifthenelse{\equal{\ochilf}{2}}{\ifthenelse{\equal{\octyptwo}{0}}{\textbf{\ocnumtwo}\\\opt{1,2}{\ocsoltwo}\opt{0}{\occontwo}\grenewcommand{\ochilf}{3}}{\ifthenelse{\equal{\octyptwo}{1}}{\ocintwo\grenewcommand{\ochilf}{3}}{}}}
+        {\ifthenelse{\equal{\ochilf}{3}}{\ifthenelse{\equal{\octypthree}{0}}{\textbf{\ocnumthree}\\\opt{1,2}{\ocsolthree}\opt{0}{\occonthree}\grenewcommand{\ochilf}{4}}{\ifthenelse{\equal{\octypthree}{1}}{\ocinthree\grenewcommand{\ochilf}{4}}{}}}
+            {\ifthenelse{\equal{\ochilf}{4}}{\ifthenelse{\equal{\octypfour}{0}}{\textbf{\ocnumfour}\\\opt{1,2}{\ocsolfour}\opt{0}{\occonfour}\grenewcommand{\ochilf}{5}}{\ifthenelse{\equal{\octypfour}{1}}{\ocinfour\grenewcommand{\ochilf}{5}}{}}}
+                {\ifthenelse{\equal{\ochilf}{5}}{\ifthenelse{\equal{\octypfive}{0}}{\textbf{\ocnumfive}\\\opt{1,2}{\ocsolfive}\opt{0}{\occonfive}\grenewcommand{\ochilf}{6}}{\ifthenelse{\equal{\octypfive}{1}}{\ocinfive\grenewcommand{\ochilf}{6}}{}}}
+                    {\ifthenelse{\equal{\ochilf}{6}}{\ifthenelse{\equal{\octypsix}{0}}{\textbf{\ocnumsix}\\\opt{1,2}{\ocsolsix}\opt{0}{\occonsix}\grenewcommand{\ochilf}{7}}{\ifthenelse{\equal{\octypsix}{1}}{\ocinsix\grenewcommand{\ochilf}{7}}{}}}
+                        {\ifthenelse{\equal{\ochilf}{7}}{\ifthenelse{\equal{\octypseven}{0}}{\textbf{\ocnumseven}\\\opt{1,2}{\ocsolseven}\opt{0}{\occonseven}\grenewcommand{\ochilf}{8}}{\ifthenelse{\equal{\octypseven}{1}}{\ocinseven\grenewcommand{\ochilf}{8}}{}}}
+                            {\ifthenelse{\equal{\ochilf}{8}}{\ifthenelse{\equal{\octypeight}{0}}{\textbf{\ocnumeight}\\\opt{1,2}{\ocsoleight}\opt{0}{\occoneight}\grenewcommand{\ochilf}{9}}{\ifthenelse{\equal{\octypeight}{1}}{\ocineight\grenewcommand{\ochilf}{9}}{}}}
+                                {\ifthenelse{\equal{\ochilf}{9}}{\ifthenelse{\equal{\octypnine}{0}}{\textbf{\ocnumnine}\\\opt{1,2}{\ocsolnine}\opt{0}{\occonnine}\grenewcommand{\ochilf}{10}}{\ifthenelse{\equal{\octypnine}{1}}{\ocinnine\grenewcommand{\ochilf}{10}}{}}}
+                                    {\ifthenelse{\equal{\ochilf}{10}}{\ifthenelse{\equal{\octypten}{0}}{\textbf{\ocnumten}\\\opt{1,2}{\ocsolten}\opt{0}{\occonten}\grenewcommand{\ochilf}{11}}{\ifthenelse{\equal{\octypten}{1}}{\ocinten\grenewcommand{\ochilf}{11}}{}}}
+                                        {\ifthenelse{\equal{\ochilf}{11}}{\ifthenelse{\equal{\octypeleven}{0}}{\textbf{\ocnumeleven}\\\opt{1,2}{\ocsoleleven}\opt{0}{\occoneleven}\grenewcommand{\ochilf}{12}}{\ifthenelse{\equal{\octypeleven}{1}}{\ocineleven\grenewcommand{\ochilf}{12}}{}}}
+                                            {\ifthenelse{\equal{\ochilf}{12}}{\ifthenelse{\equal{\octyptwelve}{0}}{\textbf{\ocnumtwelve}\\\opt{1,2}{\ocsoltwelve}\opt{0}{\occontwelve}\grenewcommand{\ochilf}{13}}{\ifthenelse{\equal{\octyptwelve}{1}}{\ocintwelve\grenewcommand{\ochilf}{13}}{}}}
+                                                {\ifthenelse{\equal{\ochilf}{13}}{\ifthenelse{\equal{\octypthirteen}{0}}{\textbf{\ocnumthirteen}\\\opt{1,2}{\ocsolthirteen}\opt{0}{\occonthirteen}\grenewcommand{\ochilf}{14}}{\ifthenelse{\equal{\octypthirteen}{1}}{\ocinthirteen\grenewcommand{\ochilf}{14}}{}}}
+                                                    {\ifthenelse{\equal{\ochilf}{14}}{\ifthenelse{\equal{\octypfourteen}{0}}{\textbf{\ocnumfourteen}\\\opt{1,2}{\ocsolfourteen}\opt{0}{\occonfourteen}\grenewcommand{\ochilf}{15}}{\ifthenelse{\equal{\octypfourteen}{1}}{\ocinfourteen\grenewcommand{\ochilf}{15}}{}}}
+                                                        {\ifthenelse{\equal{\ochilf}{15}}{\ifthenelse{\equal{\octypfifteen}{0}}{\textbf{\ocnumfifteen}\\\opt{1,2}{\ocsolfifteen}\opt{0}{\occonfifteen}\grenewcommand{\ochilf}{16}}{\ifthenelse{\equal{\octypfifteen}{1}}{\ocinfifteen\grenewcommand{\ochilf}{16}}{}}}
+                                                            {\ifthenelse{\equal{\ochilf}{16}}{\ifthenelse{\equal{\octypsixteen}{0}}{\textbf{\ocnumsixteen}\\\opt{1,2}{\ocsolsixteen}\opt{0}{\occonsixteen}\grenewcommand{\ochilf}{17}}{\ifthenelse{\equal{\octypsixteen}{1}}{\ocinsixteen\grenewcommand{\ochilf}{17}}{}}}
+                                                                {\ifthenelse{\equal{\ochilf}{17}}{\ifthenelse{\equal{\octypseventeen}{0}}{\textbf{\ocnumseventeen}\\\opt{1,2}{\ocsolseventeen}\opt{0}{\occonseventeen}\grenewcommand{\ochilf}{18}}{\ifthenelse{\equal{\octypseventeen}{1}}{\ocinseventeen\grenewcommand{\ochilf}{18}}{}}}
+                                                                    {\ifthenelse{\equal{\ochilf}{18}}{\ifthenelse{\equal{\octypeighteen}{0}}{\textbf{\ocnumeighteen}\\\opt{1,2}{\ocsoleighteen}\opt{0}{\occoneighteen}\grenewcommand{\ochilf}{19}}{\ifthenelse{\equal{\octypeighteen}{1}}{\ocineighteen\grenewcommand{\ochilf}{19}}{}}}
+                                                                        {\ifthenelse{\equal{\ochilf}{19}}{\ifthenelse{\equal{\octypnineteen}{0}}{\textbf{\ocnumnineteen}\\\opt{1,2}{\ocsolnineteen}\opt{0}{\occonnineteen}\grenewcommand{\ochilf}{20}}{\ifthenelse{\equal{\octypnineteen}{1}}{\ocinnineteen\grenewcommand{\ochilf}{20}}{}}}
+                                                                            {\ifthenelse{\equal{\ochilf}{20}}{\ifthenelse{\equal{\octyptwenty}{0}}{\textbf{\ocnumtwenty}\\\opt{1,2}{\ocsoltwenty}\opt{0}{\occontwenty}\grenewcommand{\ochilf}{21}}{\ifthenelse{\equal{\octyptwenty}{1}}{\ocintwenty\grenewcommand{\ochilf}{21}}{}}}
+                                                                                {}}}}}}}}}}}}}}}}}}}}
 }
 
 %OC-Kasten: Rechteck mit Textbreite, dann Erkennung fester Spaltenverteilung (1. Argument) für vertikale Unterteilungsstriche und passende minipage-Umgebungen in den Teilkaestchen; Zeilenhoehe als 2. Argument; jeder Teilkasten ruft Inhalt aus \ocinhalt ab, bleibt ohne vorherige Inhaltsangabe leer
 
 
 \newcommand{\ockasten}[2]{
-  \draw (0, -\ochsp) rectangle (\linewidth-0.4pt, -\ochsp-#2);
+    \draw (0, -\ochsp) rectangle (\linewidth-0.4pt, -\ochsp-#2);
 
-  \ifthenelse{\equal{#1}{1}}{\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{\linewidth}\ocinhalt\end{minipage}};}
+    \ifthenelse{\equal{#1}{1}}{\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{\linewidth}\ocinhalt\end{minipage}};}
 
-  {\ifthenelse{\equal{#1}{11}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
+    {\ifthenelse{\equal{#1}{11}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
 
-    {\ifthenelse{\equal{#1}{12}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};}
+        {\ifthenelse{\equal{#1}{12}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};}
 
-      {\ifthenelse{\equal{#1}{21}}{\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
+            {\ifthenelse{\equal{#1}{21}}{\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.64\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
 
-        {\ifthenelse{\equal{#1}{111}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
+                {\ifthenelse{\equal{#1}{111}}{\draw (0.333333\linewidth-0.13pt, -\ochsp) -- (0.333333\linewidth-0.13pt, -\ochsp-#2);\draw (0.666667\linewidth-0.26pt, -\ochsp) -- (0.666667\linewidth-0.26pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.333333\linewidth-0.13pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.666667\linewidth-0.26pt, -\ochsp) {\begin{minipage}{0.32\linewidth}\ocinhalt\end{minipage}};}
 
-          {\ifthenelse{\equal{#1}{211}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
+                    {\ifthenelse{\equal{#1}{211}}{\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
 
-            {\ifthenelse{\equal{#1}{121}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
+                        {\ifthenelse{\equal{#1}{121}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
 
-              {\ifthenelse{\equal{#1}{112}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
+                            {\ifthenelse{\equal{#1}{112}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.48\linewidth}\ocinhalt\end{minipage}};}
 
-                {\ifthenelse{\equal{#1}{1111}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
-                  {}}}}}}}}}
-  \FPeval{\ochsp}{\ochsp+#2}
+                                {\ifthenelse{\equal{#1}{1111}}{\draw (0.25\linewidth-0.1pt, -\ochsp) -- (0.25\linewidth-0.1pt, -\ochsp-#2);\draw (0.5\linewidth-0.2pt, -\ochsp) -- (0.5\linewidth-0.2pt, -\ochsp-#2);\draw (0.75\linewidth-0.3pt, -\ochsp) -- (0.75\linewidth-0.3pt, -\ochsp-#2);\node[anchor=north west] at (0, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.25\linewidth-0.1pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.5\linewidth-0.2pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};\node[anchor=north west] at (0.75\linewidth-0.3pt, -\ochsp) {\begin{minipage}{0.24\linewidth}\ocinhalt\end{minipage}};}
+                                    {}}}}}}}}}
+    \FPeval{\ochsp}{\ochsp+#2}
 }
 
 % experimental
@@ -992,12 +1011,12 @@
       \clist_pop:NN \l__kastenarray_left_tl \l_tmpl_tl
       \clist_pop:NN \l__kastenarray_right_tl \l_tmpr_tl
       \tl_set:NV \l_frame_tl {\begin{minipage}[t][#2][t]{#1}}
-          \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering}
-          \tl_if_eq:nnTF {#6} {T} { \tl_put_right:NV \l_frame_tl {\l_tmpr_tl} } { \tl_put_right:Nn \l_frame_tl {\opt{1,2}{\l_tmpr_tl}} }
-          \tl_put_right:NV \l_frame_tl {\end{minipage}}
+        \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering}
+        \tl_if_eq:nnTF {#6} {T} { \tl_put_right:NV \l_frame_tl {\l_tmpr_tl} } { \tl_put_right:Nn \l_frame_tl {\opt{1,2}{\l_tmpr_tl}} }
+        \tl_put_right:NV \l_frame_tl {\end{minipage}}
       \tl_put_right:NV \l_row_tl {\begin{tcolorbox}}
-          \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
-          \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
+        \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
+        \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
       %\tl_put_right:Nx \l_row_tl { \frame{ \exp_not:V \l_frame_tl} }
       \tl_put_right:NV \l_row_tl {\hspace*{#3}}
       \tl_put_right:Nn \l_row_tl {&}
@@ -1005,12 +1024,12 @@
   \clist_pop:NN \l__kastenarray_left_tl \l_tmpl_tl
   \clist_pop:NN \l__kastenarray_right_tl \l_tmpr_tl
   \tl_set:NV \l_frame_tl {\begin{minipage}[t][#2][t]{#1}}
-      \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering}
-      \tl_if_eq:nnTF {#6} {T} { \tl_put_right:NV \l_frame_tl {\l_tmpr_tl} } { \tl_put_right:Nn \l_frame_tl {\opt{1,2}{\l_tmpr_tl}} }
-      \tl_put_right:NV \l_frame_tl {\end{minipage}}
+    \tl_put_right:NV \l_frame_tl {\textbf{\l_tmpl_tl}\par\centering}
+    \tl_if_eq:nnTF {#6} {T} { \tl_put_right:NV \l_frame_tl {\l_tmpr_tl} } { \tl_put_right:Nn \l_frame_tl {\opt{1,2}{\l_tmpr_tl}} }
+    \tl_put_right:NV \l_frame_tl {\end{minipage}}
   \tl_put_right:NV \l_row_tl {\begin{tcolorbox}}
-      \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
-      \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
+    \tl_put_right:Nx \l_row_tl {\exp_not:V \l_frame_tl}
+    \tl_put_right:NV \l_row_tl {\end{tcolorbox}}
   %\tl_put_right:Nx \l_row_tl { \frame{ \exp_not:V \l_frame_tl} }
   %\tl_put_right:Nn \l_row_tl {\\}
   \begin{center}
@@ -1104,18 +1123,22 @@
   {\normalsize\itshape\color{gray} (#1)}\par}
 \newcommand{\auth}[1]{{\normalsize\itshape(Idee: #1)}\par\vspace*{4pt}}
 \newcommand{\diffic}[1]{% Difficulty estimation (1-7)
-  \ifthenelse{\equal{#1}{1}}{\LEFTcircle\Circle\Circle}          % 1-2 Pkt.
-  {\ifthenelse{\equal{#1}{2}}{\CIRCLE\Circle\Circle}            % 2-3 Pkt.
-    {\ifthenelse{\equal{#1}{3}}{\CIRCLE\LEFTcircle\Circle}      % 3-4 Pkt.
-      {\ifthenelse{\equal{#1}{4}}{\CIRCLE\CIRCLE\Circle}        % 4-5 Pkt.
-        {\ifthenelse{\equal{#1}{5}}{\CIRCLE\CIRCLE\LEFTcircle}  % 5-6 Pkt.
-          {\ifthenelse{\equal{#1}{6}}{\CIRCLE\CIRCLE\CIRCLE}    % 6-7 Pkt.
-            {\ifthenelse{\equal{#1}{7}}{\CIRCLE\CIRCLE\CIRCLE*} % > 7 Pkt.
-              {}}}}}}}}                                           % other
+    \ifthenelse{\equal{#1}{1}}{\LEFTcircle\Circle\Circle}          % 1-2 Pkt.
+    {\ifthenelse{\equal{#1}{2}}{\CIRCLE\Circle\Circle}            % 2-3 Pkt.
+        {\ifthenelse{\equal{#1}{3}}{\CIRCLE\LEFTcircle\Circle}      % 3-4 Pkt.
+            {\ifthenelse{\equal{#1}{4}}{\CIRCLE\CIRCLE\Circle}        % 4-5 Pkt.
+                {\ifthenelse{\equal{#1}{5}}{\CIRCLE\CIRCLE\LEFTcircle}  % 5-6 Pkt.
+                    {\ifthenelse{\equal{#1}{6}}{\CIRCLE\CIRCLE\CIRCLE}    % 6-7 Pkt.
+                        {\ifthenelse{\equal{#1}{7}}{\CIRCLE\CIRCLE\CIRCLE*} % > 7 Pkt.
+                            {}}}}}}}}                                           % other
 
-\newcommand{\picright}[3]{\begin{minipage}[t]
-    {\textwidth-1em-#1}#2\end{minipage}\hfill % to put pictures aside text
-  \begin{minipage}[t]{#1}#3\end{minipage}}
+\newcommand{\picright}[3]{
+  \begin{minipage}[t]
+    {\textwidth-1em-#1}#2
+  \end{minipage}\hfill % to put pictures aside text
+  \begin{minipage}[t]
+    {#1}#3
+  \end{minipage}}
 
 \newcommand{\picleft}[3]{\begin{minipage}[t]{#1}#3\end{minipage}
   \hfill\begin{minipage}[t]{\textwidth-1em-#1}#2\end{minipage}}
