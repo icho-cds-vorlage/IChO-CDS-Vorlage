@@ -1,11 +1,12 @@
 TO-DO-LISTE
-- Layout Feinschliff geben, wo nötig 
-  - IChO-Deckblatt; CDS-Version fehlt noch komplett
+- Layout Feinschliff geben, wo nötig
+  - IChO-Deckblatt und CDS-Version können noch verschönert werden
   - Abbildungen in der IChO-Formelsammlung zu Licht und NMR; evtl. NMR für Rd2 rausnehmen; CDS PSE-Kärtchen statt Formelsammlung
-- Layout für IChO Rd2: doppelte Kästen mit Punkten zum Ankreuzen, Max fragen was noch fehlt
+- Layout für IChO Rd2 Max will noch Word
 - braucht Tim noch was für CDS Rd3?
 - die neuen Befehle unter "% other commands" dokumentieren
 - an die, die es geschrieben haben: die mit WOFUER? kommentierten Abschnitte im Code besser dokumentieren (falls sie noch Relevanz besitzen)
-- von Xincheng weitere Version seines Kastens, die Inhalt nicht automatisch an Version anpasst
+- arraykasten: funktioniert zur Zeit nicht!!! zudem: von Xincheng weitere Version seines Kastens, die Inhalt nicht automatisch an Version anpasst
 - Dateien aufräumen --> alles raus, was nicht mehr gebraucht wird; etwas Ordnung in der csl-Datei schaffen
 - evtl. umbrechbare Antwortkästen verbessern (es müsste der Abstand von Kastenende bis Ende des Schreibbereichs auf der Seite von remainingheight subtrahiert werden)
+- sinnvolle Struktur in Ordner Abbildungen reinbringen, die auch von die Aufgabenautoren verwendet werden kann
