@@ -10,10 +10,14 @@ CDS_Old/blanko_ab.*
 CDS_Old/Format_Material/CDS_Logo_Map_verbessert-eps-converted-to.pdf
 *.aux
 *.synctex.gz
+*.synctex(busy)
 *.fdb_latexmk
 *.fls
 *.log
 *.out
 .vscode/
-main.pdf
-Beispielaufgabe_neu.pdf
+/Template/main.pdf
+/Template/Beispielaufgabe_neu.pdf
+/Template/Hilfsdateien/periodensystem.pdf
+/Template/Hilfsdateien/NMR.pdf
+/Template/Hilfsdateien/formelsammlung.pdf
