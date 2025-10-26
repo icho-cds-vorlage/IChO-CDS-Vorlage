@@ -1,0 +1,63 @@
+\def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
+
+\def\scannable{1} % 0 oder 1 für false oder true
+\def\wettbewerb{cds} %cds oder icho
+\def\klasse{10}
+\def\bundesland{Mecklenburg-Vorpommern}
+\def\cyear{2025}
+\def\round{3} % 1, 2, 3, 4
+\def\exam{2} % 1, 2; Nur fuer 3. & 4. Runde
+\def\fullname{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (fuer Deckblatt)
+\def\code{1} %0: Linie; 1: aus Datei importieren
+\def\kastenanzeigen{1} %0: in der Klausurvariante ohne Kasten (keine Auswirkung auf die anderen Varianten), 1: immer Kasten anzeigen
+\def\paperoption{plainpaper}
+\documentclass[\paperoption]{ichobooklet}
+
+\usepackage{todonotes} %zum Ausblenden [disable] % Für Aufgabenentwicklungsprozess nicht für finales Ergebnis
+
+
+% das Fehlen eines Schülercodes wirft Fehler, wenn Dokumente einzeln kompiliert werden, deswegen hier definiert, um dies zu umgehen
+% das sollte keinen Einfluss auf Serienbriefe haben (bitte trd vor dem Drucken checken)
+% optional können auch susbl, susfirstname und suslastname so vordefiniert werden, falls diese Fehler werfen
+\def\suscode{KEIN SCHÜLERCODE!}
+
+
+\begin{document}
+%serienbriefstart 
+\newread\quelle
+\openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
+\loop\read\quelle to \zeile
+    \ifeof\quelle
+        \global\morefalse
+    \else
+        \expandafter\chopline\zeile\\
+
+
+\setcounter{page}{1}\setcounter{section}{0}
+\subfile{./Hilfsdateien/deckblatt}
+\subfile{./Hilfsdateien/formelsammlung}
+\subfile{./Hilfsdateien/periodensystem}
+\subfile{./Hilfsdateien/NMR}
+
+%%%%%%%%%%%%%%%%%%
+% 1. Aufgabe
+\subfile{2025-3-11}
+
+% 2. Aufgabe
+\subfile{2025-3-12}
+
+% 3. Aufgabe
+\subfile{2025-3-13}
+
+% 4. Aufgabe
+%\subfile{2025-3-14}
+
+% \subfile{Beispielaufgabe_neu}
+
+%\subfile{To-do}
+
+%serienbriefende
+  \fi
+ \ifmore\repeat
+ \closein\quelle
+\end{document}
