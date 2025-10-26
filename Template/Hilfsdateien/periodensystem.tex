@@ -34,7 +34,7 @@
     \ifnum\PNx>26\ifnum\PNy<8
         \pgfmathtruncatemacro\PNx{\PNx}
     \fi\fi
-    \pgftransformreset;\pgftransformxshift{\PNx in};\pgftransformyshift{-\PNy in};
+    \pgftransformreset\pgftransformxshift{\PNx in}\pgftransformyshift{-\PNy in}
 }
 
 \newread\linereader

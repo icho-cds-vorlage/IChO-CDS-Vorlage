@@ -343,7 +343,7 @@
   \fi
 }
 \newcommand{\punkte}[1]{%
-  \spacecontrol\opt{2}{\text{\textcolor{red}{~(\SI{#1}{}\,P.)}}}%
+  \spacecontrol\opt{2}{\textnormal{\textcolor{red}{~(\SI{#1}{}\,P.)}}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\punktehalbieren}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{\themulteilaufpunkt}{-0.5}}}}
@@ -354,7 +354,7 @@
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
 \makeatother
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
-\newcommand{\kommentar}[1]{\opt{2}{\text{\textcolor{red}{#1}}}}
+\newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)

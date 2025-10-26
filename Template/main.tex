@@ -1,7 +1,7 @@
 \def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
 \def\scannable{1} % 0 oder 1 für false oder true
-\def\wettbewerb{cds} %cds oder icho
+\def\wettbewerb{icho} %cds oder icho
 \def\klasse{10}
 \def\bundesland{Mecklenburg-Vorpommern}
 \def\cyear{2025}
@@ -23,6 +23,9 @@
 \opt{cds}{\def\suscode{00}}
 
 \begin{document}
+
+\textsc{Walter}-Reaktion
+
 %serienbriefstart 
 \newread\quelle
 \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
@@ -33,10 +36,10 @@
 
 \setcounter{page}{1}\setcounter{section}{0}
 % resettet counter, z.b. equation numbering
-% \subfile{./Hilfsdateien/deckblatt}
-% \subfile{./Hilfsdateien/formelsammlung}
-% \subfile{./Hilfsdateien/periodensystem}
-% \subfile{./Hilfsdateien/NMR}
+\subfile{./Hilfsdateien/deckblatt}
+\subfile{./Hilfsdateien/formelsammlung}
+\subfile{./Hilfsdateien/periodensystem}
+\subfile{./Hilfsdateien/NMR}
 
 %%%%%%%%%%%%%%%%%%
 \subfile{Beispielaufgabe_neu}
