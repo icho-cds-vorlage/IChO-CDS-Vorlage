@@ -16,6 +16,7 @@
 % ===============
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
 \usepackage{mathpazo}
@@ -153,7 +154,7 @@
 \makeatother
 
 \usepackage[hidelinks]{hyperref}
-\usepacke{cleveref}
+\usepackage{cleveref}
 
 % miscellaneous
 \usepackage{blindtext}
@@ -198,9 +199,9 @@
 %  "simple" commands for task writing
 % =========================================
 \ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
-  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \wettbewerb]{optional}
 \else
-  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb, s\scannable]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \wettbewerb, s\scannable]{optional}
 \fi
 
 \opt{1,2}{\usepackage[highlight=true]{soup} % For Crossword Puzzles % Musterlösung
@@ -215,7 +216,7 @@
 % Antwortkasten
 \newcommand{\kasten}[3]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{\opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}}}\punkteausgabe} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
-\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}\punkteausgabe}} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+\newcommand{\selfkasten}[2]{\fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{#2}}\punkteausgabe} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
 % ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
@@ -324,7 +325,7 @@
   \fi
 }
 \newcommand{\punkte}[1]{%
-  \spacecontrol\opt{2}{\textcolor{red}{~(\SI{#1}{}\,P.)}}%
+  \spacecontrol\opt{2}{\text{\textcolor{red}{~(\SI{#1}{}\,P.)}}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
 \newcommand{\punktehalbieren}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{\themulteilaufpunkt}{-0.5}}}}
@@ -335,7 +336,7 @@
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
 \makeatother
 \newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
-\newcommand{\kommentar}[1]{\opt{2}{\textcolor{red}{#1}}}
+\newcommand{\kommentar}[1]{\opt{2}{\text{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
@@ -358,9 +359,22 @@
 \newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
 %Multiple-Choice-Design
-\newcommand{\quadrat}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);\end{tikzpicture}} %MC-Quadrat
-\newcommand{\quadratkor}{\begin{tikzpicture}\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385); \draw[color=black, thick] (0,0) -- (0.25,0.25); \draw[color=black, thick] (0,0.25) -- (0.25,0);\end{tikzpicture}}
+\newcommand{\quadrat}{
+\begin{tikzpicture}
+    \draw (0, 0) rectangle ++(0.25,0.25);
+    %\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0); %old square
+    \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);
+\end{tikzpicture}} %MC-Quadrat
+\newcommand{\quadratkor}{
+\begin{tikzpicture}
+    \draw (0, 0) rectangle ++(0.25,0.25);
+    %\draw (0,0) -- (0.25,0) -- (0.25,0.25) -- (0,0.25) -- (0,0);
+    \draw[color=white,opacity=0] (0,0.385) -- (0.25,0.385);
+    \draw[color=black, thick] (0.005,0.005) -- (0.245,0.245);
+    \draw[color=black, thick] (0.005,0.245) -- (0.245,0.005);
+\end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
+
 \newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
       \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
         #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
@@ -372,18 +386,43 @@
         richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
         falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
       \end{tabular}}\punkteausgabe}
+
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
-\newcommand{\MCvAnfang}{\renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline}
-    \newcommand{\MCvrfAnfang}{\renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline}
-               \newcommand{\MCvUmbruch}{\end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline}
-                                                                                                         \newcommand{\MCvrfUmbruch}{\end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline}
-               \newcommand{\MCvEnde}{\end{tabular}}
-    \newcommand{\MCvrfEnde}{\end{tabular}}
+\newcommand{\MCvAnfang}{
+    \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+}
+\newcommand{\MCvrfAnfang}{
+    \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+}
+\newcommand{\MCvUmbruch}{
+    \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+}
+\newcommand{\MCvrfUmbruch}{
+    \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+}
+\newcommand{\MCvEnde}{
+    \end{tabular}\punkteausgabe
+}
+\newcommand{\MCvrfEnde}{
+    \end{tabular}\punkteausgabe
+}
 \newcommand{\MCv}[2]{
   \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
   \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
-  & #2 \\\hline}
+  & #2 \\\hline
+}
+%Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
+\newcommand{\MSort}[6]{
+{{\setlength{\tabcolsep}{0.004\textwidth}
+      \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
+                 #1& #2& #3& #4& #5\\\hline
+                 \opt{1,2}{\substring{#6}{1}{1}}&\opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}}&\opt{1,2}{\substring{#6}{4}{4}} &\opt{1,2}{\substring{#6}{5}{5}}\\\hline
+      \end{tabular}}\punkteausgabe}
+}
+
+
+
 
 % Redifine \section to fullfill IChO-style
 \makeatletter
@@ -416,12 +455,13 @@
 \newcommand{\pKw}{\ensuremath{\textnormal{p}K_{\textnormal{W}}}}
 \newcommand{\pKl}{\ensuremath{\textnormal{p}K_{\textnormal{L}}}}
 
+
 %Serienbrief
 \def\chopline#1;#2;#3;#4 \\{
-\def\suscode{#1}
-\def\susbl{#2}
-\def\suslastname{#3}
-\def\susfirstname{#4}
+    \def\suscode{#1}
+    \def\susbl{#2}
+    \def\suslastname{#3}
+    \def\susfirstname{#4}
 }
 \newif\ifmore \moretrue
 
@@ -547,6 +587,7 @@
 
 \addtokomafont{section}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
 \addtokomafont{subsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{subsubsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \setcapindent{0em} % no indentation in captions
 
 \newcommand{\tasksection}[2][]{        %WOFUER? Alles von hier bis zu den label-countern irgendwo verwendet? Irgendwo bei ICHO oder CDS sinnvoll nutzbar?
@@ -592,9 +633,12 @@
 \newcommand{\hclabelc}{\alph{hcc})}
 
 %Boxen fuer Formelsammlung
+\newcommand{\formulaboxframecolor}{black}
+\opt{icho}{\renewcommand{\formulaboxframecolor}{ichodark}}
+\opt{cds}{\renewcommand{\formulaboxframecolor}{cdscolor}}
 \newtcolorbox{formulabox}[1][]{
   colback=white,
-  colframe=ichodark,
+  colframe=\formulaboxframecolor,
   coltitle=white,
   title={#1},
   sharp corners,
@@ -1093,7 +1137,8 @@
     \begin{tikzpicture}[scale=#1]
       % Draw the grid (millimeter paper)
       \draw[step=1mm, lightgray, very thin] (0, 0) grid (#2, #3); % 1mm steps
-      \draw[step=5mm, darkgray, thin] (0, 0) grid (#2, #3);    % 5mm steps (darker)
+      \draw[step=5mm, gray, very thin] (0, 0) grid (#2, #3);    % 5mm steps (darker)
+      \draw[step=10mm, gray, thin] (0, 0) grid (#2, #3);    % 5mm steps (darker)
     \end{tikzpicture}
   \end{center}}
 
