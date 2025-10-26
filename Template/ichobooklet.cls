@@ -557,7 +557,7 @@
         \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
         \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
     } \vspace*{4mm}}%
-    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse -\suscode\hfill}\end{flushright}}}}%
+    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse -\opt{c1}{\suscode}\hfill}\end{flushright}}}}%
     \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
   }
 }
