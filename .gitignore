@@ -16,5 +16,8 @@ CDS_Old/Format_Material/CDS_Logo_Map_verbessert-eps-converted-to.pdf
 *.log
 *.out
 .vscode/
-main.pdf
-Beispielaufgabe_neu.pdf
+/Template/main.pdf
+/Template/Beispielaufgabe_neu.pdf
+/Template/Hilfsdateien/periodensystem.pdf
+/Template/Hilfsdateien/NMR.pdf
+/Template/Hilfsdateien/formelsammlung.pdf
