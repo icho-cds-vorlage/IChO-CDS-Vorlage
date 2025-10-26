@@ -372,7 +372,7 @@
 }
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenanfang}{\begingroup\section{\texorpdfstring{\tasktitle \hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
 \newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
@@ -548,7 +548,7 @@
     \addtokomafont{headsepline}{\color{cdscolor}}
     \KOMAoptions{headsepline=1pt:\textwidth}
     \renewcommand*{\familydefault}{\sfdefault}
-    \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=20mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
+    \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=18mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
     \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{
         \centering
         \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klasse \klasse}}}
