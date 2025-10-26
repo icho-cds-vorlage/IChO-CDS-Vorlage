@@ -3,9 +3,9 @@
 
 \begin{document}
 \renewcommand{\tasktitle}{Titel$^1$}
-\renewcommand{\taskpoints}{3.5} %Gesamtpunktzahl der Aufgabe
+\renewcommand{\taskpoints}{30} %Gesamtpunktzahl der Aufgabe
 \renewcommand{\taskweight}{17}
-\aufgabenanfang % Beginn der Aufgabe
+\aufgabenanfang% Beginn der Aufgabe
 \footnotetext[1]{Test}
 
 Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausurrunden 2–4) und Cds-Aufgaben in \LaTeX. 
@@ -47,6 +47,8 @@ Auch hier mit richtig/falsch möglich:\par
 \MCvrfEnde
 
 
+testeste123
+
 Alternativ kann auch sortiert werden (zum Beispiel auch Moleküle nach ihrer Reaktivität):
 \teilaufgabe{\operator{Sortiere} die Zahlen nach Größe.}{Dabei ist 5 die größte und 1 die kleinste Zahl.\punkte{2}}
 \MSort{0}{29}{78}{-12}{103}{23415}
@@ -60,7 +62,7 @@ Mit \ocscale kann die Größe aller Abbildungen gleich skaliert werden, wenn sie
     \centering
     \includegraphics[scale=\ocscale]{Komplex.eps}
     \caption{Eine Synthese f\"ur die Tonne}
-    \label{ACFKomplex}
+    \label{ACFKomplex\suscode}
 \end{scheme}
 Alternativ geht auch die Feststellung der Breite mit linewidth:
 \begin{scheme}[H]
@@ -118,9 +120,10 @@ Hier wurde Punkteausgabe benutzt, da die Aufgabe keine Form benutzt, die die Pun
     Hier wird noch die Punktzahl der Teilaufgabe halbiert \punktehalbieren
 }
 
-Formeln im Text können mit align und labeln erstellt werden, um verlinkt zu werden z.B. Gleichung \ref{G:test-Gl}:
+Formeln im Text können mit align und labeln erstellt werden, um verlinkt zu werden z.B. Gleichung \ref{G:test-Gl\suscode}:
 \begin{align}
-    pV &= nRT \label{G:test-Gl}\\
+    pV &= nRT \label{G:test-Gl\suscode}\\
+    % Beim Label wurde der Schülercode mit eingefügt, um im Serienbrief Probleme zu vermeiden
     a &= b
 \end{align}
 \begin{equation*}
@@ -135,7 +138,7 @@ Auch innerhalb eines Kastens sind solche Formelumgebungen möglich. Zudem sind P
 \end{align*}
 Dies ist die Antwort. Dies ist Antwortsatz 2.
 }{}
-Hier kommt mal eine andere Aufz\"ahlung:\\
+Hier kommt mal eine andere Aufz\"ahlung:
 \begin{enumerate}[(i)]
     \item Hallo
     \item Tschüss
@@ -152,7 +155,7 @@ Ein bisschen Millimeterpapier:\\
 Zwei Tabellen voller Daten:
 \begin{table}[H]
     \caption{Tabelle mit verschiedenen thermodynamischen Daten ausgew\"ahlter Stoffe bei $\SI{298}{\kelvin}$.}
-    \label{tab: 2025-10-3_therm. Daten}
+    \label{tab: 2025-10-3_therm. Daten\suscode}
     \centering
     \begin{tabular}{|c|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
     \hline
@@ -165,7 +168,7 @@ Zwei Tabellen voller Daten:
 
 \begin{table}[H]
     \caption{Tabelle mit verschiedenen thermodynamischen Daten ausgew\"ahlter Stoffe bei $\SI{298}{\kelvin}$.}
-    \label{tab: 2025-10-3_therm. Daten2}
+    \label{tab: 2025-10-3_therm. Daten2\suscode}
     \centering
     \begin{tabular}{cC{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
     \toprule

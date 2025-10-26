@@ -27,21 +27,19 @@
 \newread\quelle
 \openin\quelle=\opt{c1}{Codes.csv}\opt{c0}{./Hilfsdateien/Dummycode.csv}
 \loop\read\quelle to \zeile
-    \ifeof\quelle
-        \global\morefalse
-    \else
-        \expandafter\chopline\zeile\\
+  \ifeof\quelle\global\morefalse
+  \else\expandafter\chopline\zeile\\
 
 
 \setcounter{page}{1}\setcounter{section}{0}
-\subfile{./Hilfsdateien/deckblatt}
-\subfile{./Hilfsdateien/formelsammlung}
-\subfile{./Hilfsdateien/periodensystem}
-\subfile{./Hilfsdateien/NMR}
+% resettet counter, z.b. equation numbering
+% \subfile{./Hilfsdateien/deckblatt}
+% \subfile{./Hilfsdateien/formelsammlung}
+% \subfile{./Hilfsdateien/periodensystem}
+% \subfile{./Hilfsdateien/NMR}
 
 %%%%%%%%%%%%%%%%%%
 \subfile{Beispielaufgabe_neu}
-
 %\subfile{To-do}
 
 %serienbriefende

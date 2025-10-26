@@ -213,6 +213,12 @@
 % Operator
 \newcommand{\operator}[1]{\uline{\textbf{#1}}}
 
+% disables overfull and underfull h(and v)box warnings
+\hfuzz=0.4cm
+\vfuzz=0.2cm
+%\hbadness=10000
+
+
 % Antwortkasten
 \newcommand{\kasten}[3]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
