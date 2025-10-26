@@ -543,6 +543,7 @@
     \setlength{\evensidemargin}{-3mm}%
     \setlength{\topmargin}{-13mm}%
     \setlength{\headheight}{60.8pt}%
+    \opt{rd2}{\setlength{\headheight}{76.8pt}}%headheight zu kurz wenn 4 Zeilen in header, ist nur in 2. Rd cds der Fall
     \setlength{\headsep}{12pt}%
     \setlength{\footheight}{40pt}%
     \addtokomafont{headsepline}{\color{cdscolor}}

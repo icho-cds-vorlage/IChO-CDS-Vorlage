@@ -8,7 +8,7 @@
 \def\round{3} % 1, 2, 3, 4
 \def\exam{2} % 1, 2; Nur fuer 3. & 4. Runde
 \def\fullname{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (fuer Deckblatt)
-\def\code{1} %0: Linie; 1: aus Datei importieren
+\def\code{0} %0: Linie; 1: aus Datei importieren
 \def\kastenanzeigen{1} %0: in der Klausurvariante ohne Kasten (keine Auswirkung auf die anderen Varianten), 1: immer Kasten anzeigen
 \def\paperoption{plainpaper}
 \documentclass[\paperoption]{ichobooklet}
@@ -19,12 +19,12 @@
 % das Fehlen eines Schülercodes wirft Fehler, wenn Dokumente einzeln kompiliert werden, deswegen hier definiert, um dies zu umgehen
 % das sollte keinen Einfluss auf Serienbriefe haben (bitte trd vor dem Drucken checken)
 % optional können auch susbl, susfirstname und suslastname so vordefiniert werden, falls diese Fehler werfen
-\opt{icho}{\def\suscode{KEIN SCHÜLERCODE!}}
+
+\opt{icho}{\def\suscode{KEIN SCHÜLERCODE!}\opt{rd2}{\def\susbl{}}}
 \opt{cds}{\def\suscode{00}}
 
-\begin{document}
 
-\textsc{Walter}-Reaktion
+\begin{document}
 
 %serienbriefstart 
 \newread\quelle
@@ -33,9 +33,9 @@
   \ifeof\quelle\global\morefalse
   \else\expandafter\chopline\zeile\\
 
-
 \setcounter{page}{1}\setcounter{section}{0}
 % resettet counter, z.b. equation numbering
+
 \subfile{./Hilfsdateien/deckblatt}
 \subfile{./Hilfsdateien/formelsammlung}
 \subfile{./Hilfsdateien/periodensystem}
@@ -47,6 +47,6 @@
 
 %serienbriefende
   \fi
- \ifmore\repeat
- \closein\quelle
+\ifmore\repeat
+\closein\quelle
 \end{document}
