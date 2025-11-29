@@ -59,24 +59,24 @@ Mit \ocscale kann die Gr\"oße aller Abbildungen gleich skaliert werden, wenn si
 \renewcommand{\ocscale}{0.95}
 \begin{scheme}[H]
     \centering
-    \includegraphics[scale=\ocscale]{Komplex.eps}
+    \includegraphics[scale=\ocscale]{Dokumentation/Komplex.eps}
     \caption{Eine Synthese f\"ur die Tonne}
-    \label{ACFKomplex\suscode}
+    \label{ACFKomplex}
 \end{scheme}
 Alternativ geht auch die Feststellung der Breite mit linewidth:
 \begin{scheme}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{Komplex.eps}
+    \includegraphics[width=0.85\linewidth]{Abbildungen/Dokumentation/Komplex.eps}
     \caption{Zweite Synthese f\"ur die Tonne}
 \end{scheme}
 
-Zu der Darstellung der OC- L\"osungsk\"astchen dient der Befehl:\\
+Zu der Darstellung der OC- L\"osungsk\"astchen dient die Befehlfamilie \textbackslash oc{}{}{}\\
 In der folgenden Teilaufgabe folgt das Einf\"ugen von OC Formeln Bildern und OC K\"astchen. 
 
 \ocanfang
-\oc{\textbf{1}}{\includegraphics[scale=\ocscale]{beta_lacton.eps}}{}
-\oc{\textbf{2}}{\includegraphics[scale=\ocscale]{H2CO3.eps}}{}
-\oc{\textbf{3}}{\includegraphics[width=0.5\linewidth]{H2CO3.eps}}{}
+\oc{\textbf{1}}{\includegraphics[scale=\ocscale]{Abbildungen/Dokumentation/beta_lacton.eps}}{}
+\oc{\textbf{2}}{\includegraphics[scale=\ocscale]{Abbildungen/Dokumentation/H2CO3.eps}}{}
+\oc{\textbf{3}}{\includegraphics[width=0.5\linewidth]{Abbildungen/Dokumentation/H2CO3.eps}}{}
 \ockasten{112}{4}
 \ocende
 % \kastenarray
@@ -105,7 +105,7 @@ Reaktion erster Ordnung: \ch{A -> B}\punkte{1}
 \newpage
 \teilaufgabe{\operator{Male} das Mandala aus.\punkte{69}}{Dies wurde nur hinzugef\"ugt, um \textbackslash punkteausgabe zu zeigen.}
 \begin{scheme}[H]
-    \includegraphics[width=\linewidth]{mandala.jpg}
+    \includegraphics[width=\linewidth]{Abbildungen/Dokumentation/mandala.jpg}
 \end{scheme}
 \punkteausgabe
 
@@ -119,9 +119,9 @@ Hier wurde Punkteausgabe benutzt, da die Aufgabe keine Form benutzt, die die Pun
     Hier wird noch die Punktzahl der Teilaufgabe halbiert \punktehalbieren
 }
 
-Formeln im Text k\"onnen mit align und labeln erstellt werden, um verlinkt zu werden z.B. Gleichung \ref{G:test-Gl\suscode}:
+Formeln im Text k\"onnen mit align und labeln erstellt werden, um verlinkt zu werden z.B. Gleichung \ref{G:test-Gl}:
 \begin{align}
-    pV &= nRT \label{G:test-Gl\suscode}\\
+    pV &= nRT \label{G:test-Gl}\\
     % Beim Label wurde der Sch\"ulercode mit eingef\"ugt, um im Serienbrief Probleme zu vermeiden
     a &= b
 \end{align}
@@ -154,27 +154,27 @@ Ein bisschen Millimeterpapier:\\
 Zwei Tabellen voller Daten:
 \begin{table}[H]
     \caption{Tabelle mit verschiedenen thermodynamischen Daten ausgew\"ahlter Stoffe bei $\SI{298}{\kelvin}$.}
-    \label{tab: 2025-10-3_therm. Daten\suscode}
+    \label{tab: 2025-10-3_therm. Daten}
     \centering
     \begin{tabular}{|c|C{1.5cm}|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
     \hline
         & \ch{CH4} & \ch{H2O} & \ch{CO} & \ch{H2}\\\hline
-        $\Delta_fH^{\circ}_m$ / $\si{\kilo\joule\per\mole}$ & -74,85 & -241,8 & -110,5 & 0\\\hline
-        $S^{\circ}_m$ / $\si{\joule\per\mole\per\kelvin}$ & 186,2 & 188,9 & 198,0 & 130,6\\\hline
-        $C_{p, m}$ / $\si{\joule\per\mole\per\kelvin}$ & 35,31 & 33,58 & 29,14 & 28,82\\\hline
+        $\Delta_\mathrm{f}H^{\circ}_\mathrm{m}$ / $\si{\kilo\joule\per\mole}$ & -74,85 & -241,8 & -110,5 & 0\\\hline
+        $S^{\circ}_\mathrm{m}$ / $\si{\joule\per\mole\per\kelvin}$ & 186,2 & 188,9 & 198,0 & 130,6\\\hline
+        $C_{p, \mathrm{m}}$ / $\si{\joule\per\mole\per\kelvin}$ & 35,31 & 33,58 & 29,14 & 28,82\\\hline
     \end{tabular}
 \end{table}
 
 \begin{table}[H]
     \caption{Tabelle mit verschiedenen thermodynamischen Daten ausgew\"ahlter Stoffe bei $\SI{298}{\kelvin}$.}
-    \label{tab: 2025-10-3_therm. Daten2\suscode}
+    \label{tab: 2025-10-3_therm. Daten2}
     \centering
     \begin{tabular}{cC{1.5cm}C{1.5cm}C{1.5cm}C{1.5cm}}
     \toprule
         & \ch{CH4} & \ch{H2O} & \ch{CO} & \ch{H2}\\\midrule
-        $\Delta_fH^{\circ}_m$ / $\si{\kilo\joule\per\mole}$ & -74,85 & -241,8 & -110,5 & 0\\
-        $S^{\circ}_m$ / $\si{\joule\per\mole\per\kelvin}$ & 186,2 & 188,9 & 198,0 & 130,6\\
-        $C_{p, m}$ / $\si{\joule\per\mole\per\kelvin}$ & 35,31 & 33,58 & 29,14 & 28,82\\\bottomrule
+        $\Delta_\mathrm{f}H^{\circ}_\mathrm{m}$ / $\si{\kilo\joule\per\mole}$ & -74,85 & -241,8 & -110,5 & 0\\
+        $S^{\circ}_\mathrm{m}$ / $\si{\joule\per\mole\per\kelvin}$ & 186,2 & 188,9 & 198,0 & 130,6\\
+        $C_{p, \mathrm{m}}$ / $\si{\joule\per\mole\per\kelvin}$ & 35,31 & 33,58 & 29,14 & 28,82\\\bottomrule
     \end{tabular}
 \end{table}
 

@@ -1,12 +1,12 @@
 \def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
 \def\scannable{1} % 0 oder 1 für false oder true
-\def\wettbewerb{cds} %cds oder icho
+\def\wettbewerb{icho} %cds oder icho
 \def\klasse{10}
 \def\bundesland{Mecklenburg-Vorpommern}
 \def\cyear{2025}
 \def\round{3} % 1, 2, 3, 4
-\def\exam{2} % 1, 2; Nur fuer 3. & 4. Runde
+\def\exam{1} % 1, 2; Nur fuer 3. & 4. Runde
 \def\fullname{57. IChO 2025 in den Vereinigten Arabischen Emiraten} %z.B. 56. IChO 2024 in Saudi-Arabien (fuer Deckblatt)
 \def\code{0} %0: Linie; 1: aus Datei importieren
 %code 0 für leeren Schülercode -> selbst eintragen; code 1 für Serienbrief (sowohl cds als auch icho)
@@ -21,7 +21,7 @@
 % das sollte keinen Einfluss auf Serienbriefe haben (bitte trd vor dem Drucken checken)
 % optional können auch susbl, susfirstname und suslastname so vordefiniert werden, falls diese Fehler werfen
 
-\def\suscode{KEIN SCHÜLERCODE!}\opt{icho}{\opt{rd2}{\def\susbl{}}}
+%\def\suscode{KEIN SCHÜLERCODE!}\opt{icho}{\opt{rd2}{\def\susbl{}}}
 
 \begin{document}
 
@@ -41,7 +41,7 @@
 \subfile{./Hilfsdateien/NMR}
 
 %%%%%%%%%%%%%%%%%%
-\subfile{Beispielaufgabe_neu}
+\subfile{Dokumentation/Beispielaufgabe}
 %\subfile{To-do}
 
 %serienbriefende

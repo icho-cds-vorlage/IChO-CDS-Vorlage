@@ -28,7 +28,7 @@
 \usepackage{esvect,bigints}
 \usepackage{mathtools}        % provides \Aboxed{} environment for boxed aligned formulas
 \usepackage{apacite}          % Bibtex citing in APA style
-\usepackage[font=it,labelsep=colon, figurename=Abb.]{caption}
+\usepackage[labelsep=colon, figurename=Abb.]{caption}
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{here}
