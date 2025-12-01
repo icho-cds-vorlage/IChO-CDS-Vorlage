@@ -1,6 +1,6 @@
 \def\solution{2} % 0: Klausurvariante, 1: Sch\"ulerversion, 2: Betreuerversion
 
-\def\scannable{1} % 0 oder 1 für false oder true
+\def\scannable{1} % 1 for true; nur implementiert bei icho Rd2
 \def\wettbewerb{icho} %cds oder icho
 \def\klasse{10}
 \def\bundesland{Mecklenburg-Vorpommern}
@@ -15,14 +15,6 @@
 \documentclass[\paperoption]{ichobooklet}
 
 \usepackage{todonotes} %zum Ausblenden [disable] % Für Aufgabenentwicklungsprozess nicht für finales Ergebnis
-
-
-% das Fehlen eines Schülercodes wirft Fehler, wenn Dokumente einzeln kompiliert werden, deswegen hier definiert, um dies zu umgehen
-% das sollte keinen Einfluss auf Serienbriefe haben (bitte trd vor dem Drucken checken)
-% optional können auch susbl, susfirstname und suslastname so vordefiniert werden, falls diese Fehler werfen
-
-\def\suscode{KEIN SCHÜLERCODE!}\opt{icho}{\opt{rd2}{\def\susbl{}}}
-
 
 \begin{document}
 

@@ -3,11 +3,20 @@
 %% xmiao 20231202
 %%
 
+% versions
+% ==============
+\ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb, s\scannable]{optional}
+\else
+  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb, s\scannable]{optional}
+\fi
+
 %  identifications
 % =====================
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]           % use LaTeX2e
 \ProvidesClass{ichobooklet}[2023/12/02 xmiao]
-\LoadClass[fontsize=11pt,a4paper,toc=flat]{scrartcl} % Class KOMA-article
+\opt{icho}{\LoadClass[fontsize=10pt,a4paper,toc=flat]{scrartcl}} % Class KOMA-article
+\opt{cds}{\LoadClass[fontsize=11pt,a4paper,toc=flat]{scrartcl}}
 % add option fleqn for
 % formulas with left indent
 \pdfminorversion=7 %um aktuelle PDFs ohne Fehler einbinden zu koennen
@@ -19,7 +28,10 @@
 \usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
-\usepackage{mathpazo}
+\opt{cds}{\usepackage{mathpazo}}
+%\usepackage[sfdefault,book]{FiraSans}  %näher an IPN-Schrift, aber SI passt sich nicht an Mathe oder Text an
+\opt{icho}{\usepackage[sfdefault]{noto}} %auch ähnlich IPN-Schrift
+
 \usepackage{textcomp}
 \usepackage[shortcuts]{extdash}
 \usepackage{scrlayer-scrpage} % control of headers and footers
@@ -65,7 +77,7 @@
   per-mode = reciprocal,
   inter-unit-product = \ensuremath{{}\cdot{}},
   separate-uncertainty,
-  detect-all,
+  mode = match
 }
 \DeclareSIUnit\angstrom{\text{\r{A}}}
 \DeclareSIUnit\bar{bar}
@@ -198,12 +210,6 @@
 
 %  "simple" commands for task writing
 % =========================================
-\ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
-  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \wettbewerb]{optional}
-\else
-  \usepackage[\solution,rd\round,ex\exam,c\code, \wettbewerb, s\scannable]{optional}
-\fi
-
 \opt{1,2}{\usepackage[highlight=true]{soup} % For Crossword Puzzles % Musterlösung
 }
 \opt{0}{\usepackage{soup}}
@@ -218,22 +224,21 @@
 \vfuzz=0.2cm
 %\hbadness=10000
 
-
-% Antwortkasten
+% Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
 \newcommand{\kasten}[3]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
   \punkteausgabe
-} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+} %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 
-%letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
+%Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 \newcommand{\selfkasten}[2]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
     #2
   }}
   \punkteausgabe
-} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+} 
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
 % ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
@@ -342,7 +347,7 @@
     \fi
   \fi
 }
-\newcommand{\punkte}[1]{%
+\newcommand{\punkte}[1]{%kleinstes moegliches Inkrement 0.05 wegen Faktor 20
   \spacecontrol\opt{2}{\textnormal{\textcolor{red}{~(\SI{#1}{}\,P.)}}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
@@ -372,7 +377,7 @@
 }
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\section{\texorpdfstring{\tasktitle \hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
 \newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
@@ -472,13 +477,13 @@
 %Others
 \newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
 \newcommand{\strich}{{\small{}$^\prime$}}
-\newcommand{\dd}[3][]{\ensuremath{\frac{\textnormal{d}^{#1} #2}{\textnormal{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
-\renewcommand{\pH}{\ensuremath{\textnormal{pH}}}
-\renewcommand{\pOH}{\ensuremath{\textnormal{pOH}}}
-\newcommand{\pKs}{\ensuremath{\textnormal{p}K_{\textnormal{S}}}}
-\renewcommand{\pKb}{\ensuremath{\textnormal{p}K_{\textnormal{B}}}}
-\newcommand{\pKw}{\ensuremath{\textnormal{p}K_{\textnormal{W}}}}
-\newcommand{\pKl}{\ensuremath{\textnormal{p}K_{\textnormal{L}}}}
+\newcommand{\dd}[3][]{\ensuremath{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
+\renewcommand{\pH}{\ensuremath{\mathrm{pH}}}
+\renewcommand{\pOH}{\ensuremath{\mathrm{pOH}}}
+\newcommand{\pKs}{\ensuremath{\mathrm{p}K_{\mathrm{S}}}}
+\renewcommand{\pKb}{\ensuremath{\mathrm{p}K_{\mathrm{B}}}}
+\newcommand{\pKw}{\ensuremath{\mathrm{p}K_{\mathrm{W}}}}
+\newcommand{\pKl}{\ensuremath{\mathrm{p}K_{\mathrm{L}}}}
 
 
 %Serienbrief
@@ -507,12 +512,44 @@
 \pagestyle{scrheadings}
 \clearpairofpagestyles
 
-\newdimen\spaceleft % for remaining height of page.
+%Initialisierung der Variablen, damit beim Kompilieren von subfiles mit c1 keine Fehlermeldungen entstehen
+\opt{c1}{
+\def\suscode{Dummy}
+\def\susbl{Dummy}
+\def\susfirstname{Dummy}
+\def\suslastname{Dummy}
+}
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
 \DeclareOption{plainpaper}{
-  \opt{icho}{
+
+\opt{icho}{
+ \opt{s0}{
+  \setlength{\textwidth}{168mm}%
+  \setlength{\textheight}{249mm}%
+  \setlength{\oddsidemargin}{-3mm}%
+  \setlength{\evensidemargin}{-3mm}%
+  \setlength{\topmargin}{-58.35pt}%
+  \setlength{\headheight}{12pt}%
+  \setlength{\headsep}{40pt}%
+  \setlength{\footskip}{57pt}%
+  \setlength{\footheight}{12pt}%
+  \ihead[]{\normalfont{\textbf{\textcolor{white}{
+        \opt{rd1}{IChO 1. Runde \cyear}
+        \opt{rd2}{IChO 2. Runde \cyear}
+        \opt{rd3}{IChO 3. Runde \cyear}
+        \opt{rd4}{IChO 4. Runde \cyear}
+        }}}}%
+  \chead[]{\hspace*{-2cm}\normalfont{\textbf{\textcolor{white}{
+        \opt{rd2}{Klausur\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
+        \opt{rd3}{Klausur \opt{ex1}{1}\opt{ex2}{2}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
+        \opt{rd4}{\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
+        }}}}%
+  \ohead[]{\parbox{0.33\textwidth}{\normalfont{\textbf{\textcolor{white}{\vspace*{2pt}Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}}}}}
+  \ofoot[]{\normalfont{\textbf{\textcolor{white}{\thepage~/ \pageref{TotPages}}}}}%
+ }
+ \opt{s1}{\opt{rd2}{ %altes Design beibehalten, muss unter Beachtung der Maschinenlesbarkeit angepasst werden
     \setlength{\textwidth}{168mm}%
     \setlength{\textheight}{238mm}%
     \setlength{\oddsidemargin}{-3mm}%
@@ -521,19 +558,15 @@
     \setlength{\headheight}{48pt}%
     \setlength{\headsep}{12pt}%
     \setlength{\footheight}{40pt}%
-    \addtokomafont{headsepline}{\color{ichodark}}
+    \addtokomafont{headsepline}{\color{ichoblue}}
     \KOMAoptions{headsepline=1pt:\textwidth}
     \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{IChO_2011_Logo_newblue.eps}}\vspace*{1.5mm}}%
-    \chead[]{\large \parbox{0.33\textwidth}{
-      \centering
-      \opt{rd1}{\textbf{IChO 1. Runde \cyear}}
-      \opt{rd2}{\textbf{IChO 2. Runde \cyear}}
-      \opt{rd3}{\textbf{IChO 3. Runde \cyear \\ Klausur \opt{ex1}{1}\opt{ex2}{2}}}
-      \opt{rd4}{\textbf{IChO 4. Runde \cyear \\ \opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}}}
-    }}%
-    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
+    \chead[]{\large \parbox{0.33\textwidth}{\centering\textbf{IChO 2. Runde \cyear}}}%
+    \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\hfill\qrcoderdzwei}}%
     \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
-    \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
+    \ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}
+    \ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}%
+   }}
   }
 
   \opt{cds}{
@@ -552,10 +585,10 @@
     \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=18mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
     \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{
         \centering
-        \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 1.Runde Klasse \klasse}}}
-        \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 2. Runde \bundesland{}\\ Klasse \klasse}}}
-        \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ Aufgabenblatt\\ 3. Runde Klasse \klasse}}}
-        \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\\ 4. Runde Klasse \klasse}}}
+        \opt{rd1}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ \opt{0}{Aufgabenblatt}\opt{1}{L"osung}\opt{2}{Bewertung}\\ 1.Runde Klasse \klasse}}}
+        \opt{rd2}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ \opt{0}{Aufgabenblatt}\opt{1}{L"osung}\opt{2}{Bewertung}\\ 2. Runde \bundesland{}\\ Klasse \klasse}}}
+        \opt{rd3}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\ \opt{0}{Aufgabenblatt}\opt{1}{L"osung}\opt{2}{Bewertung}\\ 3. Runde Klasse \klasse}}}
+        \opt{rd4}{\normalfont{\textbf{\glqq{}Chemie -- die stimmt!\grqq{}  \the\numexpr \cyear - 1 \relax /\cyear\\\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\opt{1}{ -- L"osung}\opt{2}{ -- Bewertung}\\ 4. Runde Klasse \klasse}}}
     } \vspace*{4mm}}%
     \ohead[]{\setstretch{1.5} \normalsize \parbox{0.2\textwidth}{\opt{rd2,rd3,rd4}{\begin{flushright}\framebox[2.5cm]{\bfseries \the\numexpr \cyear - 2000 \relax \klasse -\opt{c1}{\suscode}\hfill}\end{flushright}}}}%
     \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
@@ -564,40 +597,25 @@
 
 \ProcessOptions\relax
 
-\newcommand{\plainpaperoption}{plainpaper_Cds}  %WOFUER? das hier und das auskommentierte noch nötig?
-
-% \ifx\paperoption\plainpaperoption
-%   % for solutions
-%   \ifdefined\solutions
-%     \chead{\qquad\ifdefined\runde \runde{} - \fi\klausur{} - Musterlösung \comm{- \todayshort}}
-%   \else
-%   % for tasks
-%     \chead{\qquad\ifdefined\runde \runde{} - \fi\klausur{} \comm{- \todayshort}}
-%   \fi
-% \else
-%   \rohead{\ifdefined\runde
-%             \begin{minipage}[c]{12cm}
-%             \begin{flushright}
-%                {\usefont{T1}{cmss}{bx}{it} \runde{}\\
-%                              \rundeinst{}, \klausurdate{}}
-%             \end{flushright}
-%             \end{minipage}
-%             \hspace{.2cm}
-%             \rundeinstlogo{}
-%             \vspace{6pt}
-%           \fi
-%          }
-%   \lohead{\comm{{\usefont{T1}{cmss}{bx}{it}Stand: \todayshort}}}
-% \fi
+%Cooperate Design IChO
+\opt{icho}{
+\usepackage{background}
+\backgroundsetup{angle = 0, opacity = \opt{s0}{1.0}\opt{s1}{0}, scale = 1,
+   contents = {\includegraphics[width = \paperwidth]{IChO_Grafik_Kopf_Fuss_kurz.pdf}}}
+}
 
 %  Colors
 % ===================
 \definecolor{dgray}{rgb}{0.8,0.8,0.8}    % dark grey
 \definecolor{mgray}{rgb}{0.85,0.85,0.85} % medium grey
 \definecolor{lgray}{rgb}{0.9,0.9,0.9}    % light grey
-\definecolor{ichodark}{RGB}{0, 110, 168}
-\definecolor{ichobright}{RGB}{0, 183, 255}
-% \definecolor{taskblue}{RGB}{0,64,130}
+\definecolor{ScOtextgrey}{RGB}{74,93,111}
+\definecolor{ichoblue}{RGB}{0, 110, 168}
+\definecolor{ichohighbrightblue}{RGB}{0, 183, 255}
+\definecolor{ichobrightblue}{RGB}{7,126,189}
+\definecolor{ichodarkblue}{RGB}{3,81,118}
+\definecolor{ScOdarkblue}{RGB}{0,38,85}
+\definecolor{ScObrightblue}{RGB}{25,75,245}
 \definecolor{cdscolor}{RGB}{157, 45, 114}
 
 %  Labelling in lists
@@ -611,8 +629,8 @@
 % ====================
 %\numberwithin{equation}{section}
 
-\addtokomafont{section}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
-\addtokomafont{subsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{section}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
+\addtokomafont{subsection}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \addtokomafont{subsubsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \setcapindent{0em} % no indentation in captions
 
@@ -660,7 +678,7 @@
 
 %Boxen fuer Formelsammlung
 \newcommand{\formulaboxframecolor}{black}
-\opt{icho}{\renewcommand{\formulaboxframecolor}{ichodark}}
+\opt{icho}{\renewcommand{\formulaboxframecolor}{ichoblue}}
 \opt{cds}{\renewcommand{\formulaboxframecolor}{cdscolor}}
 \newtcolorbox{formulabox}[1][]{
   colback=white,
