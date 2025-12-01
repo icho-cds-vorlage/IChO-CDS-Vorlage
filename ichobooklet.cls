@@ -6,9 +6,9 @@
 % versions
 % ==============
 \ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
-  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb, s\scannable]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \wettbewerb, s\scannable]{optional}
 \else
-  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb, s\scannable]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \wettbewerb, s\scannable]{optional}
 \fi
 
 %  identifications
@@ -631,7 +631,7 @@
 
 \addtokomafont{section}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
 \addtokomafont{subsection}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
-\addtokomafont{subsubsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{subsubsection}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \setcapindent{0em} % no indentation in captions
 
 \newcommand{\tasksection}[2][]{        %WOFUER? Alles von hier bis zu den label-countern irgendwo verwendet? Irgendwo bei ICHO oder CDS sinnvoll nutzbar?
