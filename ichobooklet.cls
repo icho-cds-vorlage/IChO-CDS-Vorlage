@@ -224,22 +224,21 @@
 \vfuzz=0.2cm
 %\hbadness=10000
 
-
-% Antwortkasten
+% Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
 \newcommand{\kasten}[3]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
   \punkteausgabe
-} %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
+} %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 
-%letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
+%Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 \newcommand{\selfkasten}[2]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
     #2
   }}
   \punkteausgabe
-} %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
+} 
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
 % ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
@@ -348,7 +347,7 @@
     \fi
   \fi
 }
-\newcommand{\punkte}[1]{%
+\newcommand{\punkte}[1]{%kleinstes moegliches Inkrement 0.05 wegen Faktor 20
   \spacecontrol\opt{2}{\textnormal{\textcolor{red}{~(\SI{#1}{}\,P.)}}}%
   \xintifInt{\xintFloatMul{#1}{20}}{\addtocounter{multeilaufpunkt}{\xintNum{\xintFloatMul{#1}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
 } % Im Text Leerzeichen davor nicht n\"otig, danach aber schon (falls nicht ein Satzzeichen kommt); nur Zahl eintragen, mit Punkt als Dezimaltrennzeichen
