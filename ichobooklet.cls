@@ -478,13 +478,13 @@
 %Others
 \newcommand{\lstandardstate}{^{\text{\normalsize\standardstate}}}
 \newcommand{\strich}{{\small{}$^\prime$}}
-\newcommand{\dd}[3][]{\ensuremath{\frac{\textnormal{d}^{#1} #2}{\textnormal{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
-\renewcommand{\pH}{\ensuremath{\textnormal{pH}}}
-\renewcommand{\pOH}{\ensuremath{\textnormal{pOH}}}
-\newcommand{\pKs}{\ensuremath{\textnormal{p}K_{\textnormal{S}}}}
-\renewcommand{\pKb}{\ensuremath{\textnormal{p}K_{\textnormal{B}}}}
-\newcommand{\pKw}{\ensuremath{\textnormal{p}K_{\textnormal{W}}}}
-\newcommand{\pKl}{\ensuremath{\textnormal{p}K_{\textnormal{L}}}}
+\newcommand{\dd}[3][]{\ensuremath{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}} %vereinfachtes schreiben von Ableitungen mit \dd[2]{c_i}{t}
+\renewcommand{\pH}{\ensuremath{\mathrm{pH}}}
+\renewcommand{\pOH}{\ensuremath{\mathrm{pOH}}}
+\newcommand{\pKs}{\ensuremath{\mathrm{p}K_{\mathrm{S}}}}
+\renewcommand{\pKb}{\ensuremath{\mathrm{p}K_{\mathrm{B}}}}
+\newcommand{\pKw}{\ensuremath{\mathrm{p}K_{\mathrm{W}}}}
+\newcommand{\pKl}{\ensuremath{\mathrm{p}K_{\mathrm{L}}}}
 
 
 %Serienbrief
