@@ -512,6 +512,14 @@
 \pagestyle{scrheadings}
 \clearpairofpagestyles
 
+%Initialisierung der Variablen, damit beim Kompilieren von subfiles mit c1 keine Fehlermeldungen entstehen
+\opt{c1}{
+\def\suscode{Dummy}
+\def\susbl{Dummy}
+\def\susfirstname{Dummy}
+\def\suslastname{Dummy}
+}
+
 % for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
 \DeclareOption{plainpaper}{
