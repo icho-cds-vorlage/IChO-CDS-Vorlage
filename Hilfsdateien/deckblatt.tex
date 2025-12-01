@@ -1,7 +1,11 @@
 \documentclass[./main.tex]{subfiles}
 \graphicspath{{\subfix{./Abbildungen/}}}
 \begin{document}
+
+\opt{icho}{
+
 \thispagestyle{empty}
+\vspace*{3cm}
 \begingroup\centering\bfseries
 \opt{icho}{\includegraphics[height=3cm]{IChO_2011_Logo_newblue.eps}\\}
 \opt{cds}{\includegraphics[height=3cm]{CDS_Logo_Map_verbessert.eps}\\}
@@ -28,5 +32,14 @@ Beginne erst, wenn das Startsignal gegeben wird.\\\bigbreak
 \medbreak
 {\Large\centering\bfseries Viel Erfolg!\\}
 
+\backgroundsetup{angle = 0, opacity = 1.0, scale = 1,
+   contents = {\includegraphics[width = \paperwidth]
+   {IChO_Grafik_Kopf_Fusszeile.pdf}}}
 \newpage
+\backgroundsetup{angle = 0, opacity = \opt{s0}{1.0}\opt{s1}{0}, scale = 1,
+   contents = {\includegraphics[width = \paperwidth]
+   {IChO_Grafik_Kopf_Fuss_kurz.pdf}}}
+   
+}
+
 \end{document}
