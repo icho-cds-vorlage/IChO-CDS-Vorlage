@@ -1,8 +1,8 @@
-\documentclass[../main.tex]{subfiles}
-\graphicspath{{\subfix{../Abbildungen/}}}
+\documentclass[./main.tex]{subfiles}
+\graphicspath{{\subfix{./Abbildungen/}}}
 
 \begin{document}
-\renewcommand{\tasktitle}{Titel\texorpdfstring{$^1$}{}}
+\renewcommand{\tasktitle}{Titel$^1$}
 \renewcommand{\taskpoints}{30} %Gesamtpunktzahl der Aufgabe
 \renewcommand{\taskweight}{17}
 \aufgabenanfang% Beginn der Aufgabe
@@ -55,7 +55,7 @@ Alternativ kann auch sortiert werden (zum Beispiel auch Molek\"ule nach ihrer Re
 
 
 Aus ChemDraw l\"asst sich eine .eps Datei exportieren und hier wie ein Bild Einf\"ugen.
-Mit ocscale (default:  kann die Gr\"oße aller Abbildungen gleich skaliert werden, wenn sie im Chemdraw auch gleich groß sind:
+Mit \ocscale kann die Gr\"oße aller Abbildungen gleich skaliert werden, wenn sie im Chemdraw auch gleich groß sind:
 \renewcommand{\ocscale}{0.95}
 \begin{scheme}[H]
     \centering
@@ -112,14 +112,11 @@ Reaktion erster Ordnung: \ch{A -> B}\punkte{1}
 Hier wurde Punkteausgabe benutzt, da die Aufgabe keine Form benutzt, die die Punkte bereits selbst ausgibt.
 
 \teilaufgabe{\operator{Einige Leute} wollen den SuS bereits einen Text in den Antwortkasten schreiben.}{Um dies flexibel zu erm\"oglichen, kann man \textbackslash selfkasten nutzen.}
-\selfkasten{7cm}{
+\selfkasten{5cm}{
     \vspace{5pt}
     \setstretch{1.3}
-    In diesem L\"uckentext werden L\"ucken mittels \opt{0}{\_\_\_\_\_\_\_\_\_\_\_   }\sol{\underline{\textbackslash opt\{0\} und \textbackslash sol}}\opt{2}{\punkte{2}} dargestellt. Um die L\"ucken des Textes zu sehen, kannst du im main.tex \textbackslash solution auf \opt{0}{\_\_}\sol{\underline{0}}\opt{2}{\punkte{1}} setzen.
-    
-    Hier wird noch die Punktzahl der Teilaufgabe halbiert. \punktehalbieren Zum Debuggen k\"onnen wir uns den Z\"ahler ansehen, der immer das 20-fache der Punktzahl speichert und hier nach der Halbierung korrekterweise \themulteilaufpunkt{} enth\"alt.
-    
-    Dies ist in diesem Fall unsinnig, soll aber diese M\"oglichkeit aufzeigen. In seltenen F\"allen (wenn eine Umgebung genutzt wird, die den Code zur korrekten Darstellung mehrfach ausf\"uhren muss), werden Punkte mehrfach gez\"ahlt, dann hilft dieser Befehl. Als Alternative werden die Punkte manuell auf den korrekten Wert gesetzt (richtig rechnen!), wobei das 20-fache der Punktzahl eingetragen wird: \setcounter{multeilaufpunkt}{60}
+    In diesem L\"uckentext werden L\"ucken mittels \opt{0}{\_\_\_\_\_\_\_\_\_\_\_   }\sol{\underline{\textbackslash opt\{0\} und \textbackslash sol}}\opt{2}{\punkte{2}} dargestellt. Um die L\"ucken des Textes zu sehen, kannst du im main.tex \textbackslash solution auf \opt{0}{\_\_}\sol{\underline{0}}\opt{2}{\punkte{1}} setzen.\par
+    Hier wird noch die Punktzahl der Teilaufgabe halbiert \punktehalbieren
 }
 
 Formeln im Text k\"onnen mit align und labeln erstellt werden, um verlinkt zu werden z.B. Gleichung \ref{G:test-Gl}:
@@ -180,8 +177,7 @@ Zwei Tabellen voller Daten:
         $C_{p, \mathrm{m}}$ / $\si{\joule\per\mole\per\kelvin}$ & 35,31 & 33,58 & 29,14 & 28,82\\\bottomrule
     \end{tabular}
 \end{table}
-
-Beim Betrachten der fertigen Aufgabe stellen wir fest, dass die oben angegebene Punktzahl angepasst werden muss, da die bei den Teilaufgaben in Summe vergebene Punktzahl abweicht, worauf eine Fehlermeldung aufmerksam macht.  
-
+%\newpage HalloHalloHalloHalloHalloHalloHalloHalloHalloHalloHalloHalloHallo HalloHalloHalloHalloHalloHalloHalloHalloHallo
+\solutioni{200pt}{a\\b\\c\\d\\e\\f\\g\\h\\i\\j\\k\\l\\m\\n\\o\\p}{A\\P}
 \aufgabenende
 \end{document}

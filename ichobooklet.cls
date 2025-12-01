@@ -227,6 +227,77 @@
   \punkteausgabe
 } %Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt; bei mehr als einer Nachkommastelle Fehlermeldung)
 
+\usepackage{calc}
+\newlength{\someheighti}
+\newlength{\boxheighti}
+\newlength{\remainingheighti}
+\newlength{\arrowheighti}
+\newlength{\someheightii}
+\setlength{\arrowheighti}{34pt}%
+\usepackage{framed}
+\usepackage{lipsum}
+\newlength{\remainingpage}
+\newsavebox{\measureboxi}
+\newsavebox{\measureboxii}
+
+
+\newcommand{\solutioni}[3]{%
+    % Inhalt in Box messen
+    \sbox{\measureboxi}{\parbox{\linewidth}{#2}}%
+    \setlength{\someheighti}{\ht\measureboxi+\dp\measureboxi}%
+    \sbox{\measureboxii}{\parbox{\linewidth}{#3}}%
+    \setlength{\someheightii}{\ht\measureboxii+\dp\measureboxii}%
+    \setlength{\boxheighti}{#1}%
+    % Verbleibender Platz auf der aktuellen Seite
+    \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}
+    
+    % Pfeil rechts im Rand, wenn Box auf nächste Seite umbricht
+    \ifdim\remainingpage<\boxheighti
+        \noindent\rlap{\hspace*{\linewidth+0.3cm}\ch{n>}}\vspace{-\arrowheighti}%
+    \else
+        \ifdim\remainingpage<\someheighti
+            \noindent\rlap{\hspace*{\linewidth+0.3cm}\ch{n>}}\vspace{-\arrowheighti}%
+        \fi
+    \fi
+    % Box setzen
+    \opt{1,2}{%
+        {\color{black}%
+        \begin{framed}%
+            #2%
+            % Füllhöhe, falls Box größer als Inhalt
+            \ifdim\boxheighti>\someheighti
+                \setlength{\remainingheighti}{\boxheighti-\someheighti}%
+                \\\vspace*{\remainingpage-\someheighti-\arrowheighti-18pt}%
+                \\\vspace*{\boxheighti-\remainingpage}%
+            \else
+                % Warnung am Ende innerhalb der Box
+                {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
+            \fi
+        \end{framed}}\punkteausgabe%
+    }%
+    \opt{0}{%
+        {\color{black}%
+        \begin{framed}%
+            #3 \ %
+            % Füllhöhe, falls Box größer als Inhalt
+            \ifdim\boxheighti>\someheightii
+                \setlength{\remainingheighti}{\boxheighti-\someheightii}%
+                \\\vspace*{\remainingpage-\someheightii-\arrowheighti-18pt}%
+                \\\vspace*{\boxheighti-\remainingpage}%
+            \else
+                % Warnung am Ende innerhalb der Box
+                {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
+            \fi
+        \end{framed}}%
+    }%
+    \the\remainingpage\\
+    \the\someheighti\\
+    \the\boxheighti\\
+    \the\someheightii\\
+}
+
+
+
 %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 \newcommand{\selfkasten}[2]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
@@ -312,7 +383,8 @@
 %umbrechbarer Antwortkasten
 \newcommand{\FPtruncate}[2]{\FPeval\truncatehelpone{round(#2:0)}\FPsub{\truncatehelptwo}{#2}{0.5}\FPeval\truncatehelpthree{round(truncatehelptwo:0)}\ifthenelse{\equal{\truncatehelpone}{\truncatehelpthree}}{\FPeval{#1}{\truncatehelpone}}{\FPeval{#1}{\truncatehelpthree}}} %Funktion fuer Abschneiden von Nachkommastellen (1. Argument: Zielvariable; 2. Argument: Ausgangswert oder Variable)
 \newcommand{\calculateLinesToFill}[2]{%Leerzeilen, bis Kasten die gewuenschte Groesse erreicht (1. Argument: Groesse, 2. Argument: Inhalt)
-  \settototalheight{\contentheight}{\parbox{\linewidth}{#2}} % Measure height of the content; doppeltes Aufrufen des Textes verdoppelt gez\"ahlte Punktzahl %Punktzahl korrigieren und wieder global machen
+  \settototalheight{\contentheight}{\parbox{\linewidth}{#2}} 
+  % Measure height of the content; doppeltes Aufrufen des Textes verdoppelt gez\"ahlte Punktzahl %Punktzahl korrigieren und wieder global machen
   \setlength{\targetheight}{#1}
   \setlength{\remainingheight}{\targetheight - \contentheight} % Calculate remaining height
   \FPdiv{\lines}{\csname rem@pt\expandafter\endcsname\the\dimexpr\remainingheight}{\csname rem@pt\expandafter\endcsname\the\dimexpr\baselineskip} % Calculate number of lines needed; dazu zuerst Einheit entfernen
@@ -330,8 +402,8 @@
   \marginpar{\vspace*{1mm}\ch{n>}}\vspace*{-1mm}\begin{tcolorbox}[colback=white, colframe=black, sharp corners, boxrule=0.4pt, breakable, top=0.5pt, left=0.5pt, right=0.5pt, bottom=0.5pt, use color stack] %ohne color stack ist erster Absatz nach Umbruch schwarz, unabhaengig von textcolor
     \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
   \end{tcolorbox}
-  \setcounter{multeilaufpunkt}{\xintPFloat{\themulteilaufpunkt/2}}
-  \punkteausgabe
+    \setcounter{multeilaufpunkt}{\xintPFloat{\themulteilaufpunkt/2}}
+    \punkteausgabe
 }
 
 %Teilaufgaben und deren Punkteberechnung
@@ -372,7 +444,7 @@
 }
 
 %Beginn und Ende
-\newcommand{\aufgabenanfang}{\begingroup\section{\texorpdfstring{\tasktitle \hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
+\newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle\texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{}\ Punkte}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
 \newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
 
@@ -508,6 +580,14 @@
 \clearpairofpagestyles
 
 \newdimen\spaceleft % for remaining height of page.
+
+%Initialisierung der Variablen, damit beim Kompilieren von subfiles mit c1 keine Fehlermeldungen entstehen
+\opt{c1}{
+\def\suscode{Dummy}
+\def\susbl{Dummy}
+\def\susfirstname{Dummy}
+\def\suslastname{Dummy}
+}
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
@@ -1196,7 +1276,6 @@
 \newcommand{\ockastenok}[2]{\opt{1,2}{\ockasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\ockasten{#1}{#2}}{}}}}
 \NewDocumentCommand{\kastenarrayok}{ O{} m O{0cm} O{t} m m }{\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kastenarray[#1]{#2}[#3][#4]{#5}{#6}}\opt{1,2}{\kastenarray[#1]{#2}[#3][#4]{#5}{#6}}{}}}}
 \NewDocumentCommand{\kastenarraycustomok}{ O{} m O{0cm} O{t} m }{\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kastenarraycustom[#1]{#2}[#3][#4]{#5}}\opt{1,2}{\kastenarraycustom[#1]{#2}[#3][#4]{#5}}{}}}}
-
 
 %   \newcommand{\ipho}[2]{\href{http://ipho.org/problems-and-solutions.html}{Internationale PhysikOlympiade} #1, Aufgabe #2}
 %   \newcommand{\apho}[2]{\href{http://apho.phy.ntnu.edu.tw/papho2010.html}{APhO} #1, Aufgabe #2}
