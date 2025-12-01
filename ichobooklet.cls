@@ -6,9 +6,9 @@
 % versions
 % ==============
 \ifnum\ifdefined\klasse 0\else 1\fi\ifdefined\bundesland 0\else1\fi=0
-  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \bewerb, s\scannable]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \klasse, \bundesland, \wettbewerb, s\scannable]{optional}
 \else
-  \usepackage[\solution,rd\round,ex\exam,c\code, \bewerb, s\scannable]{optional}
+  \usepackage[\solution,rd\round,ex\exam,c\code, \wettbewerb, s\scannable]{optional}
 \fi
 
 %  identifications
@@ -239,6 +239,74 @@
   }}
   \punkteausgabe
 } 
+
+\newlength{\someheighti}
+\newlength{\boxheighti}
+\newlength{\remainingheighti}
+\newlength{\arrowheighti}
+\newlength{\someheightii}
+\setlength{\arrowheighti}{34pt}%
+\usepackage{framed}
+\usepackage{lipsum}
+\newlength{\remainingpage}
+\newsavebox{\measureboxi}
+\newsavebox{\measureboxii}
+
+
+\newcommand{\solutioni}[3]{%
+    % Inhalt in Box messen
+    \sbox{\measureboxi}{\parbox{\linewidth}{#2}}%
+    \setlength{\someheighti}{\ht\measureboxi+\dp\measureboxi}%
+    \sbox{\measureboxii}{\parbox{\linewidth}{#3}}%
+    \setlength{\someheightii}{\ht\measureboxii+\dp\measureboxii}%
+    \setlength{\boxheighti}{#1}%
+    % Verbleibender Platz auf der aktuellen Seite
+    \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}
+    
+    % Pfeil rechts im Rand, wenn Box auf nächste Seite umbricht
+    \ifdim\remainingpage<\boxheighti
+        \noindent\rlap{\hspace*{\linewidth+0.3cm}\ch{n>}}\vspace{-\arrowheighti}%
+    \else
+        \ifdim\remainingpage<\someheighti
+            \noindent\rlap{\hspace*{\linewidth+0.3cm}\ch{n>}}\vspace{-\arrowheighti}%
+        \fi
+    \fi
+    % Box setzen
+    \opt{1,2}{%
+        {\color{black}%
+        \begin{framed}%
+            #2%
+            % Füllhöhe, falls Box größer als Inhalt
+            \ifdim\boxheighti>\someheighti
+                \setlength{\remainingheighti}{\boxheighti-\someheighti}%
+                \\\vspace*{\remainingpage-\someheighti-\arrowheighti-18pt}%
+                \\\vspace*{\boxheighti-\remainingpage}%
+            \else
+                % Warnung am Ende innerhalb der Box
+                {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
+            \fi
+        \end{framed}}\punkteausgabe%
+    }%
+    \opt{0}{%
+        {\color{black}%
+        \begin{framed}%
+            #3 \ %
+            % Füllhöhe, falls Box größer als Inhalt
+            \ifdim\boxheighti>\someheightii
+                \setlength{\remainingheighti}{\boxheighti-\someheightii}%
+                \\\vspace*{\remainingpage-\someheightii-\arrowheighti-18pt}%
+                \\\vspace*{\boxheighti-\remainingpage}%
+            \else
+                % Warnung am Ende innerhalb der Box
+                {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
+            \fi
+        \end{framed}}%
+    }%
+    \the\remainingpage\\
+    \the\someheighti\\
+    \the\boxheighti\\
+    \the\someheightii\\
+}
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
 % ACHTUNG Punkte für Inhalt des Kastens müssen einzeln gesetzt werden!
@@ -522,10 +590,9 @@
 
 % for use on plain paper; not different paper styles to avoid more switches then necessary
 \def\qrcoderdzwei{\qrcode[height=1.5cm,level=Q]{\cyear, Runde\round, \opt{c0}{irgendwer}\opt{c1}{\suscode}, \opt{c0}{irgendwo}\opt{c1}{\susbl}, S.\thepage}}
-\DeclareOption{plainpaper}{
+\DeclareOption{plainpaper}{%
 
 \opt{icho}{
- \opt{s0}{
   \setlength{\textwidth}{168mm}%
   \setlength{\textheight}{249mm}%
   \setlength{\oddsidemargin}{-3mm}%
@@ -548,7 +615,7 @@
         }}}}%
   \ohead[]{\parbox{0.33\textwidth}{\normalfont{\textbf{\textcolor{white}{\vspace*{2pt}Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}}}}}
   \ofoot[]{\normalfont{\textbf{\textcolor{white}{\thepage~/ \pageref{TotPages}}}}}%
- }
+ 
  \opt{s1}{\opt{rd2}{ %altes Design beibehalten, muss unter Beachtung der Maschinenlesbarkeit angepasst werden
     \setlength{\textwidth}{168mm}%
     \setlength{\textheight}{238mm}%
@@ -631,7 +698,7 @@
 
 \addtokomafont{section}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
 \addtokomafont{subsection}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
-\addtokomafont{subsubsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{subsubsection}{\opt{icho}{\color{ichoblue}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \setcapindent{0em} % no indentation in captions
 
 \newcommand{\tasksection}[2][]{        %WOFUER? Alles von hier bis zu den label-countern irgendwo verwendet? Irgendwo bei ICHO oder CDS sinnvoll nutzbar?
