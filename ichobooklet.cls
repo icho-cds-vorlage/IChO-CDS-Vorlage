@@ -536,6 +536,27 @@
     \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
   }
 
+  \opt{vlw}{
+    \setlength{\textwidth}{168mm}%
+    \setlength{\textheight}{238mm}%
+    \setlength{\oddsidemargin}{-3mm}%
+    \setlength{\evensidemargin}{-3mm}%
+    \setlength{\topmargin}{-17mm}%
+    \setlength{\headheight}{48pt}%
+    \setlength{\headsep}{12pt}%
+    \setlength{\footheight}{40pt}%
+    \addtokomafont{headsepline}{\color{fchocolor}}
+    \KOMAoptions{headsepline=1pt:\textwidth}
+    \ihead[]{\parbox{0.3\textwidth}{\includegraphics[height=15mm]{FChO_Logo.png}}\vspace*{1.5mm}}%
+    \chead[]{\large \parbox{0.5\textwidth}{
+      \centering
+      \textbf{Teamklausur Vierländerwettbewerb \cyear}
+    }}%
+    % \ohead[]{\setstretch{1.5} \normalsize \parbox{0.33\textwidth}{\opt{rd3,rd4}{Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}\opt{rd2}{\hfill\qrcoderdzwei}}}%
+    \cfoot[]{\vspace{-4\baselineskip}\thepage~/ \pageref{TotPages}}%
+    \opt{rd2}{\ifoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}\ofoot[]{\vspace{-4\baselineskip}\qrcoderdzwei}}%
+  }
+
   \opt{cds}{
     \setlength{\textwidth}{168mm}%
     \setlength{\textheight}{238mm}%
@@ -599,6 +620,7 @@
 \definecolor{ichobright}{RGB}{0, 183, 255}
 % \definecolor{taskblue}{RGB}{0,64,130}
 \definecolor{cdscolor}{RGB}{157, 45, 114}
+\definecolor{fchocolor}{RGB}{132, 68, 102}
 
 %  Labelling in lists
 % ====================
@@ -611,9 +633,9 @@
 % ====================
 %\numberwithin{equation}{section}
 
-\addtokomafont{section}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
-\addtokomafont{subsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
-\addtokomafont{subsubsection}{\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{section}{\opt{vlw}{\color{fchocolor}}\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\large\fontseries{b}}
+\addtokomafont{subsection}{\opt{vlw}{\color{fchocolor}}\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
+\addtokomafont{subsubsection}{\opt{vlw}{\color{fchocolor}}\opt{icho}{\color{ichodark}}\opt{cds}{\color{cdscolor}}\normalsize\fontseries{b}}
 \setcapindent{0em} % no indentation in captions
 
 \newcommand{\tasksection}[2][]{        %WOFUER? Alles von hier bis zu den label-countern irgendwo verwendet? Irgendwo bei ICHO oder CDS sinnvoll nutzbar?
@@ -662,6 +684,7 @@
 \newcommand{\formulaboxframecolor}{black}
 \opt{icho}{\renewcommand{\formulaboxframecolor}{ichodark}}
 \opt{cds}{\renewcommand{\formulaboxframecolor}{cdscolor}}
+\opt{vlw}{\renewcommand{\formulaboxframecolor}{fchocolor}}
 \newtcolorbox{formulabox}[1][]{
   colback=white,
   colframe=\formulaboxframecolor,
