@@ -37,7 +37,6 @@
     \pgftransformreset\pgftransformxshift{\PNx in}\pgftransformyshift{-\PNy in}
 }
 
-\newread\linereader
 \def\foreachline#1#2{\openin\linereader=#1\nextline#2}
 \def\nextline#1{\read\linereader to \line\ifeof\linereader\closein\linereader\else\expandafter#1\line\end\expandafter\nextline\expandafter#1\fi}
 \def\element#1 #2 #3 #4\end{
@@ -58,5 +57,5 @@
         \end{tikzpicture}
     }}
 \end{center}
-\newpage
+\clearpage
 \end{document}

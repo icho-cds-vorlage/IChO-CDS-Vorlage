@@ -245,12 +245,16 @@
 \newlength{\remainingheighti}
 \newlength{\arrowheighti}
 \newlength{\someheightii}
+\newlength{\zeropti}
+\newlength{\linebreaki}
+\newlength{\vspacei}
 \setlength{\arrowheighti}{34pt}%
 \usepackage{framed}
 \usepackage{lipsum}
 \newlength{\remainingpage}
 \newsavebox{\measureboxi}
 \newsavebox{\measureboxii}
+\newsavebox{\measureboxiii}
 
 
 \newcommand{\solutioni}[3]{%
@@ -259,6 +263,8 @@
     \setlength{\someheighti}{\ht\measureboxi+\dp\measureboxi}%
     \sbox{\measureboxii}{\parbox{\linewidth}{#3}}%
     \setlength{\someheightii}{\ht\measureboxii+\dp\measureboxii}%
+    \sbox{\measureboxiii}{\parbox{\linewidth}{\ \\}}%
+    \setlength{\linebreaki}{\ht\measureboxiii+\dp\measureboxiii}%
     \setlength{\boxheighti}{#1}%
     % Verbleibender Platz auf der aktuellen Seite
     \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}
@@ -279,8 +285,15 @@
             % Füllhöhe, falls Box größer als Inhalt
             \ifdim\boxheighti>\someheighti
                 \setlength{\remainingheighti}{\boxheighti-\someheighti}%
-                \\\vspace*{\remainingpage-\someheighti-\arrowheighti-18pt}%
-                \\\vspace*{\boxheighti-\remainingpage}%
+                \setlength{\vspacei}{\remainingpage-\someheighti-\arrowheighti-18pt}%
+                \setlength{\zeropti}{0pt}
+                \the\vspacei\\
+                \ifdim\vspacei>\zeropti
+                    \\\vspace*{\vspacei}%
+                \else
+                    \\\vspace*{0pt}% 
+                \fi
+                \\\vspace*{\boxheighti-\remainingpage+\arrowheighti+18pt-\linebreaki}
             \else
                 % Warnung am Ende innerhalb der Box
                 {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
@@ -306,6 +319,9 @@
     \the\someheighti\\
     \the\boxheighti\\
     \the\someheightii\\
+    \the\linebreaki\\
+    \the\vspacei\\
+    \the\arrowheighti\\
 }
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
@@ -447,7 +463,7 @@
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
-\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\clearpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{
@@ -564,6 +580,9 @@
 }
 \newif\ifmore \moretrue
 
+%Datei lesen fuer PSE; darf nicht in Loop sein
+\newread\linereader
+
 %  Laengenformatierungen / Header / Footer
 % =========================================
 \usepackage{setspace}
@@ -609,8 +628,7 @@
         \opt{rd4}{IChO 4. Runde \cyear}
         }}}}%
   \chead[]{\hspace*{-2cm}\normalfont{\textbf{\textcolor{white}{
-        \opt{rd2}{Klausur\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
-        \opt{rd3}{Klausur \opt{ex1}{1}\opt{ex2}{2}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
+        \opt{rd2,rd3}{Klausur\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
         \opt{rd4}{\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
         }}}}%
   \ohead[]{\parbox{0.33\textwidth}{\normalfont{\textbf{\textcolor{white}{\vspace*{2pt}Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}}}}}
@@ -684,6 +702,7 @@
 \definecolor{ScOdarkblue}{RGB}{0,38,85}
 \definecolor{ScObrightblue}{RGB}{25,75,245}
 \definecolor{cdscolor}{RGB}{157, 45, 114}
+\definecolor{fchocolor}{RGB}{157, 66, 117}
 
 %  Labelling in lists
 % ====================
