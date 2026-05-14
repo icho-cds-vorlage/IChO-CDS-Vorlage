@@ -47,6 +47,7 @@
 \usepackage{picinpar,wrapfig}
 \usepackage{epstopdf}
 \usepackage{xcolor}
+\usepackage{wallpaper}
 
 % \usepackage{framed}
 \usepackage{mdframed}
@@ -64,8 +65,7 @@
 \usepackage{tabularray}              % more options with other table type; supports directly the functions of array, longtable, multirow, makecell, tabularx and colortbl
 \usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
-\usepackage{wallpaper}
-\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
+%\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
 \usepackage{ifthen}                  % ifthenelse used for markings
 \usepackage{xspace}                  % for blank space at end of macros
 \usepackage{icomma,siunitx}
@@ -1261,8 +1261,6 @@
 
 \newcommand{\leadingzero}[1]{\ifnum #1<10 0\the#1\else\the#1\fi}
 \newcommand{\todayshort}{\leadingzero{\day}.\leadingzero{\month}.\the\year}
-\newcommand{\comm}[1]{\textcolor{red}{#1}}
-\newcommand{\corr}[1]{\textcolor{red}{#1}}
 \newcommand{\hide}[1]{}
 
 \newcommand{\authorcom}[1]{\todo[color=green!40,author=Autor, inline]{#1}}
