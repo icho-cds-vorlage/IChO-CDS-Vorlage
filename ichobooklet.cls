@@ -48,6 +48,7 @@
 \usepackage{epstopdf}
 \usepackage{xcolor}
 \usepackage{wallpaper}
+\usepackage{needspace}
 
 % \usepackage{framed}
 \usepackage{mdframed}
@@ -112,7 +113,6 @@
 \usepackage{pgffor} % Iteration fuer umbrechbaren Antwortkasten
 \usepackage{expl3} %OC Kasten
 \usepackage{xparse}
-\usepackage{needspace} % Mindestplatz vor Kasten
 \usepackage{stringstrings} % MC fix
 
 % Chemistry
@@ -225,9 +225,28 @@
 \vfuzz=0.2cm
 %\hbadness=10000
 
+% #1 height, #2 text (solution), #3 text (exam version)
+\newcommand{\kasten}[3]{%
+  \par
+  \setlength{\boxheighti}{#1}%
+  % fbox/parbox overhead (frame + sep) plus a small safety margin
+  \addtolength{\boxheighti}{12pt}%
+  \ifdim\pagegoal=\maxdimen
+    \setlength{\remainingpage}{\textheight}% empty page: \pagegoal is not set yet
+  \else
+    \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}%
+  \fi
+  \ifdim\remainingpage<\boxheighti
+    \umbruchkasten{#1}{#2}{#3}{0pt}{0pt}{0pt}
+  \else
+    \festkasten{#1}{#2}{#3}%
+  \fi
+}
+
+
 % Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
 \newlength{\kastenueberstand} % Antwortkaesten ragen so weit nach links und rechts ueber den Text hinaus (in teilaufgabekasten: 1mm)
-\newcommand{\kasten}[3]{
+\newcommand{\festkasten}[3]{
   \ifdim\kastenueberstand>0pt\hspace*{-\kastenueberstand}\fi
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt+2\kastenueberstand}{
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
@@ -421,7 +440,7 @@
 }
 \newcommand{\umbruchkasten}[6]{%
   \marginpar{\vspace*{1mm}\ch{n>}}\vspace*{-1mm}\begin{tcolorbox}[colback=white, colframe=black, sharp corners, boxrule=0.4pt, breakable, top=0.5pt, left=0.5pt, right=0.5pt, bottom=0.5pt, use color stack] %ohne color stack ist erster Absatz nach Umbruch schwarz, unabhaengig von textcolor
-    \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
+    \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \festkasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
   \end{tcolorbox}
   \setcounter{multeilaufpunkt}{\xintPFloat{\themulteilaufpunkt/2}}
   \punkteausgabe
@@ -445,15 +464,26 @@
 \newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
-\makeatother
 \newcounter{teilaufgabennr} % Zaehler fuer a), b), ...; global, damit er ueber die Kasten hinweg weiterzaehlt
 \newcommand{\teilaufgabenlabel}{\alphalphfmt{teilaufgabennr})}
-\newcommand{\teilaufgabe}[2]{\stepcounter{teilaufgabennr}\begin{enumerate}[label={\teilaufgabenlabel}]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\makeatletter
+\newcommand{\teilaufgabe}[2]{%
+  \stepcounter{teilaufgabennr}%
+  \begin{enumerate}[label={\teilaufgabenlabel}]
+     \item {\interlinepenalty=10000 \clubpenalty=10000 \widowpenalty=10000 #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\par\nobreak}
+    \par\nobreak
+    \@endparpenalty=10000
+  \end{enumerate}
+  \@endparpenalty=-\@lowpenalty
+  \nobreak
+} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\makeatother
 \newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{
+  \Needspace{3\baselineskip}
   \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
@@ -495,6 +525,7 @@
   \IfBooleanTF{#1}{\begin{tcolorbox}[teilkasten verbunden]}{\begin{tcolorbox}[teilkasten]}
   \renewcommand{\punkteausgabe}{\teilstreifenpunkte\par\vspace{\dimexpr\bigskipamount\relax}}% starrer Abstand (ohne Dehnung), damit verbundene Kaesten exakt anschliessen
   \renewcommand{\punkteausgabeNoBreak}{\teilstreifenpunkte\par}%
+  \renewcommand{\kasten}[3]{\festkasten{##1}{##2}{##3}}% in einem Kasten immer fester Kasten (umbrechbare Kaesten koennen nicht in umbrechbaren stehen)
   \setlength{\kastenueberstand}{1mm}% Antwortkaesten ragen um boxsep ueber den Text hinaus: 4pt Abstand zum aeusseren Rahmen (wie bei den Unteraufgaben)
   \teilaufgabe{#3}{#4}%
 }{\end{tcolorbox}}
@@ -1403,7 +1434,7 @@
 
 
 %Befehle um Kastenausgabe in Schuelerversion zu unterlassen
-\newcommand{\kastenok}[3]{\opt{1,2}{\kasten{#1}{#2}{#3}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kasten{#1}{#2}{#3}}{}}}}
+\newcommand{\kastenok}[3]{\opt{1,2}{\festkasten{#1}{#2}{#3}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\festkasten{#1}{#2}{#3}}{}}}}
 \newcommand{\selfkastenok}[2]{\opt{1,2}{\selfkasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\selfkasten{#1}{#2}}{}}}}
 \newcommand{\umbruchkastenok}[6]{\opt{1,2}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}{}}}}
 \newcommand{\ockastenok}[2]{\opt{1,2}{\ockasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\ockasten{#1}{#2}}{}}}}
