@@ -83,7 +83,7 @@ F\"ur \textbf{Spezialw\"unsche} wird empfohlen, den entsprechenden Abschnitt der
     
     \item F\"ur \textbf{Aufz\"ahlungen} \hypertarget{beginenumerate}{\textit{\textbackslash begin\{enumerate\}[i)]}}
     \item \textbf{Standardzustand} in Mathe-Umgebung mit \textit{\hypertarget{lstandardstate}{\textbackslash lstandardstate}}
-    \item \textbf{Aufgabenstellung} mit \textit{\textbackslash teilaufgabe\{\}\{\}}, wobei das 1. Argument die Aufgabenstellung und das 2. Element der Hinweis ist (falls es keinen Hinweis gibt, leer lassen)
+    \item \textbf{Aufgabenstellung} mit \textit{\hypertarget{teilaufgabe}{\textbackslash teilaufgabe\{\}\{\}}}, wobei das 1. Argument die Aufgabenstellung und das 2. Element der Hinweis ist (falls es keinen Hinweis gibt, leer lassen). Die Teilaufgaben werden automatisch mit a), b), ... durchnummeriert (danach aa), ab), ...). Zur Darstellung in einem gro\ss{}en Kasten siehe Abschnitt \ref{sec:teilkasten}.
     \item \hypertarget{textnormal}{} \textbf{Innerhalb der Aufgabenstellung} einer Teilaufgabe m\"ussen \textit{\textbackslash ch} und \textit{\textbackslash SI} in \textit{\textbackslash textnormal\{\}} gesetzt werden (diese bricht die Kursivschrift der Aufgabenstellung)
     \item Vor und nach der \textbf{Teilaufgabe} wird der \textbf{Zeilenabstand} i.d.R. NICHT durch Leerzeilen im Quelltext vergr\"o\ss{}ert
     \item \textbf{Operatoren} mit \textit{\hypertarget{operator}{\textbackslash operator\{\}}} kenntlich machen.
@@ -128,12 +128,46 @@ F\"ur \textbf{Spezialw\"unsche} wird empfohlen, den entsprechenden Abschnitt der
 \begin{itemize}
     \item Wird \textbf{kein vordefiniertes Antwortk\"astchen} verwendet, muss zwischen den drei Varianten (SuS, L\"osung ohne Punkte und L\"osung) mit \textit{\textbackslash opt\{X\}\{Inhalt\}} unterschieden werden, wobei X = 0, 1 oder 2. F\"ur die L\"osung (Versionen 1 und 2) gibt es \hypertarget{sol}{\textit{\textbackslash sol\{\}}}
     \item \textbf{Standard-Antwortk\"asten} mit \textit{\hypertarget{kasten}{\textbackslash kasten\{\}\{\}\{\}}}, wobei das erste Argument die H\"ohe, das 2. die Musterl\"osung und das 3. ein evtl. in der Klausur vorhandener Kasteninhalt ist.
-    \item \textbf{Substrukturierte Aufgaben} (Teilaufgabe mit Unterteilen i., ii., ...): \textit{\textbackslash begin\{unteraufgaben\}} \textit{\hypertarget{unteraufgabe}{\textbackslash unteraufgabe[Weiter mit]\{H\"ohe\}\{Aufgabenstellung\}\{Punkte\}\{Musterl\"osung\}}} ... \textit{\textbackslash end\{unteraufgaben\}}. Jeder Unterteil ist ein eigener Kasten mit eigener Aufgabenstellung, der b\"undig an den vorherigen anschlie\ss{}t. Das optionale Argument erzeugt am Kastenende die Zeile \glqq Weiter mit:\grqq{} (z.B. Folgewerte f\"ur die weitere Rechnung). Die Musterl\"osung erscheint nur in den Varianten 1 und 2. Die Punkte werden automatisch zur Aufgabensumme addiert (kein \textit{\textbackslash punkte} und kein \textit{\textbackslash punkteausgabe} n\"otig). Die Kasten werden nicht umgebrochen.
     \item Normale Antwortk\"asten werden nicht am Seitenende \textbf{umgebrochen}. Soll dies bei \textbf{langen K\"asten} geschehen, steht \hypertarget{umbruchkasten}{\textit{\textbackslash umbruchkasten\{\}\{\}\{\}\{\}\{\}\{\}}} bereit. Die ersten 3 Argumente sind analog \textit{\textbackslash kasten}, die weiteren drei sollten erstmal auf \textit{0pt} gesetzt werden. Diese dienen dazu, die Kastenl\"ange in den drei Klausurvarianten durch zus\"atzliche Verl\"angerung angleichen zu k\"onnen, falls n\"otig (4. Argument f\"ur Variante 0, 5. f\"ur 1, 6. f\"ur 2). Die automatische L\"angenanpassung macht Fehler im Millimeterbereich, solange am Seitenumbruch Text steht. Wenn durch andere Objekte der Kasten auf der Vorseite nicht bis zum Seitenrand mit Inhalt gef\"ullt werden kann, treten gr\"o\ss{}ere Fehler auf, die beim finalen Layouten korrigiert werden sollten, falls sich dadurch Inhalte verschieben. Es treten Fehlermeldungen \textit{unexpected alignement} auf, die anscheinend ignorierbar sind, jedoch ist dem Autor die Ursache bisher nicht klar.
     %\item \hypertarget{kastenarray}{} \textcolor{red}{Punkteausgabe ist noch unstable.}\\ Typische \textbf{OC-K\"asten} werden mit dem Befehl \textit{\textbackslash{}kastenarray[Breite]\{Hoehe\}[Abstand][tight]\{label1, label2,...\}\{Inhalt1,Inhalt2,...\}} erhalten, wobei ein Befehl jeweils eine Zeile K\"asten erstellt. Alle K\"asten einer Zeile weisen die gleiche Breite auf. Die Verbindungsnummern und die Musterl\"osungen werden als label bzw. Inhalt angegeben, wobei die Anzahl der kommagetrennten Angaben \"uber die Anzahl der K\"asten in der Zeile entscheidet. Wird das erste optionale Argument \textit[Breite] weggelassen, wird die Breite aller K\"asten zusammen auf die Zeilenbreite gesetzt; ansonsten gibt dieses Argument die Breite jedes Einzelkastens an. \textit{Hoehe} gibt die H\"ohe der K\"asten an, \textit{Abstand} den horizontalen Abstand von den Einzelk\"asten (wenn leer: default 0cm). \textit{tight} kennt die Werte \textit{f} (default) und \textit{t}, wobei \textit{f} vertikalen Abstand nach dem Kasten einf\"ugt (nutzen, wenn danach Text kommt), w\"ahrend \textit{t} den l\"uckenlosen Anschluss des n\"achsten Kastens erlaubt. Nach jedem \textit{\textbackslash{}kastenarray}-Befehl sollte eine Leerzeile gelassen werden, um Kompilierungsfehler zu vermeiden. Ein Befehl kann dann beispielsweise so aussehen: \textit{\textbackslash{}kastenarray[3cm]\{4cm\}[0cm][]\{C\textbackslash{}punkte\{1\},D\textbackslash{}punkte\{1.5\},S\textbackslash{}punkte\{2\}\}\{\textbackslash{}includegraphics [scale=\textbackslash{}ocscale]\{C.eps\}, \textbackslash{}includegraphics[scale=\textbackslash{}ocscale]\{C.eps\},\textbackslash{}includegraphics[scale=\textbackslash{}ocscale]\{C. eps\}\}}
     \item Für die Implementierung mehrerer Strukturformeln als Antwort für eine Teilaufgabe bieten sich sogenannte \textbf{OC-K\"asten} an. Nachfolgend ist die einzig momentan funktionierende Implementation von OC-K\"asten beschrieben, die auch nicht gleich breite K\"asten in einer Zeile bereitstellt. Sie ist hard gecoded und ist daher die aktuelle R\"uckfallebene sein, da obiger Befehl mit speziellen Inhalten nicht kompatibel ist. \hypertarget{oc}{} \hypertarget{ocanfang}{} \hypertarget{ocende}{} \hypertarget{ochilf}{} \hypertarget{ockasten}{}\\
     \textit{\textbackslash ocanfang \\\textbackslash oc\{\}\{\}\{\} \\\textbackslash oc\{\}\{\}\{\} \\...\\\textbackslash ockasten\{\}\{\}\\\textbackslash ockasten\{\}\{\}\\...\\\textbackslash ocende}\\
     Dabei enthalten die \textit{\textbackslash oc}-Befehle im 1. Argument die Nummer der Verbindung, im 2. Argument die Musterl\"osung (Punkte k\"onnen wahlweise in beiden Argumenten wie gewohnt mit \textit{\textbackslash punkte} eingef\"ugt werden) und im 3. Argument einen Inhalt f\"ur die Sch\"ulervariante (abgesehen von der Verbindungszahl). Es k\"onnen maximal 20 Inhalte definiert werden, die dann in selber Reihenfolge in den Teilk\"asten ausgegeben werden (bei jeder Teilaufgabe wird von vorne gez\"ahlt und innerhalb der Teilaufgabe wird zeilenweise gez\"ahlt). Jede Zeile wird mit \textit{\textbackslash ockasten} erstellt, wobei das 1. Argument das Breitenverh\"altnis der Teilk\"astchen angibt (es gibt derzeit: 1, 11, 12, 21, 111, 112, 121, 211, 1111; erweiterbar!) und das 2. Argument die H\"ohe der Teilk\"asten in dieser Zeile. Seitenumbr\"uche zwischen zwei Zeilen werden durch \textit{\hypertarget{ocumbruch}{\textbackslash ocumbruch}} gesetzt. \\Wichtig: Anders als bei \textit{\textbackslash kasten} wird bei \textit{\textbackslash ockasten} die H\"ohe ohne Einheit angegeben (es sind cm).
+\end{itemize}
+
+\subsection{Teilaufgaben in Kästen und substrukturierte Aufgaben}\label{sec:teilkasten}
+\subsubsection{Teilaufgabe im großen Kasten}
+Mit der Umgebung
+\begin{center}
+\textit{\hypertarget{teilaufgabekasten}{\textbackslash begin\{teilaufgabekasten\}*[Mindestplatz]\{Aufgabenstellung\}\{Hinweis\}} \dots{} \textbackslash end\{teilaufgabekasten\}}
+\end{center}
+wird eine komplette Teilaufgabe (Aufgabenstellung, Antwortkästen, Tabellen, MC \dots) in einen großen, umbrechbaren Kasten gesetzt. Die Argumente Aufgabenstellung und Hinweis entsprechen \textit{\textbackslash teilaufgabe}.
+\begin{itemize}
+    \item Am rechten Rand befindet sich ein 1\,cm breiter, abgetrennter Streifen (Breite: \textit{\textbackslash teilstreifenbreite}). In der Betreuerversion (\textit{\textbackslash solution} = 2) stehen dort die Punkte; sie werden weiterhin zur Aufgabensumme addiert.
+    \item Die Nummerierung a), b), \dots{} l\"auft ohne Unterbrechung weiter, egal ob \textit{\textbackslash teilaufgabe} oder \textit{teilaufgabekasten} verwendet wird.
+    \item Text zwischen zwei Teilaufgaben steht \textbf{au\ss{}erhalb} der Umgebung (nach \textit{\textbackslash end\{teilaufgabekasten\}}).
+    \item \textbf{Verbundene Kasten:} Mit dem Stern (\textit{\textbackslash begin\{teilaufgabekasten\}*\{\}\{\}}) schlie\ss{}t der Kasten ohne Abstand und mit gemeinsamer Linie direkt an den vorherigen Kasten an. Der vorherige Kasten muss unmittelbar davor enden (kein Text dazwischen, kein Leerabsatz im Quelltext n\"otig). Beim Stern entf\"allt das Mindestplatz-Argument (es wird nicht beachtet).
+    \item Das optionale Argument \textit{Mindestplatz} (Standard: 6 Zeilen) gibt an, wie viel Platz auf der Seite mindestens verf\"ugbar sein muss, damit der Kasten dort beginnt. Es verhindert, dass nur die \"Uberschrift am Seitenende steht. Bei gro\ss{}en ersten Elementen (z.\,B. ein 10\,cm hoher Antwortkasten) einen gr\"o\ss{}eren Wert angeben, z.\,B. \textit{[10cm]}.
+    \item Der Kasten wird am Seitenende automatisch geschlossen und auf der n\"achsten Seite wieder ge\"offnet. Einen Umbruch innerhalb des Kastens erzwingt man mit \textit{\textbackslash tcbbreak} (nicht mit \textit{\textbackslash newpage}).
+    \item Die Teilaufgabe sollte mit einem Element enden, das \textit{\textbackslash punkteausgabe} aufruft (Antwortkasten, MC, \dots); sonst steht der letzte Text zu nah am unteren Rand.
+    \item \textbf{Einschr\"ankungen:} Innerhalb des Kastens funktionieren \textit{\textbackslash marginpar} und Floats mit Platzierungsoption nicht (Abbildungen und Tabellen mit \textit{[H]} setzen); auch \textit{\textbackslash newpage} und \textit{\textbackslash clearpage} funktionieren dort nicht.
+\end{itemize}
+
+\subsubsection{Substrukturierte Aufgaben}
+F\"ur Teilaufgaben, die in mehrere Unterteile i., ii., \dots{} mit jeweils eigener Aufgabenstellung, Punktzahl und Musterl\"osung gegliedert sind:
+\begin{center}
+\textit{\hypertarget{unteraufgaben}{\textbackslash begin\{unteraufgaben\}[Mindestplatz]\{Aufgabenstellung\}\{Hinweis\}}\\
+\hypertarget{unteraufgabe}{\textbackslash unteraufgabe[H\"ohe]\{Aufgabenstellung\}\{Musterl\"osung\}}\\
+\textbackslash unteraufgabe\{\dots\}\{\dots\}\\
+\textbackslash end\{unteraufgaben\}}
+\end{center}
+\begin{itemize}
+    \item \textit{unteraufgaben} enth\"alt selbst die \"Uberschrift der Teilaufgabe (Argumente wie bei \textit{teilaufgabekasten}) und darf \textbf{nicht} in eine \textit{teilaufgabekasten}-Umgebung geschachtelt werden (umbrechbare Kasten k\"onnen nicht ineinander stehen).
+    \item Jeder Unterteil ist ein eigener, umbrechbarer Kasten mit Abstand (4\,pt) zum \"au\ss{}eren Rahmen; die Punkte des Unterteils stehen in der Betreuerversion im Streifen. Der Rahmen au\ss{}en wird durch das Aneinandersetzen der Kasten erzeugt.
+    \item \textit{H\"ohe} (optional, Standard: 3\,cm) ist die Mindesth\"ohe des Unterteils; der freie Platz bis dahin wird mit Leerraum f\"ur die Antwort gef\"ullt. Dieser Leerraum bleibt bei einem Seitenumbruch zu gro\ss{}en Teilen erhalten, kann aber etwas k\"urzer ausfallen.
+    \item Die Musterl\"osung erscheint nur in den Varianten 1 und 2. Die Punkte werden wie \"uberall mit \textit{\textbackslash punkte\{\}} in Aufgabenstellung oder Musterl\"osung gesetzt; ihre Summe steht in der Betreuerversion im Streifen und wird zur Aufgabensumme addiert (kein \textit{\textbackslash punkteausgabe} n\"otig).
+    \item \textbf{Seitenumbr\"uche}: Passt der Anfang des n\"achsten Unterteils (Schwellwert \textit{\textbackslash untermindest}, Standard 5 Zeilen) nicht mehr auf die Seite, wird automatisch umgebrochen, der \"au\ss{}ere Rahmen unten geschlossen und oben wieder ge\"offnet. Mit \textit{\hypertarget{unterumbruch}{\textbackslash unterumbruch}} zwischen zwei Unterteilen l\"asst sich ein Umbruch erzwingen. Auch innerhalb eines Unterteils darf umgebrochen werden.
+    \item Das optionale Argument \textit{Mindestplatz} (Standard: 8 Zeilen) funktioniert wie bei \textit{teilaufgabekasten}.
 \end{itemize}
 
 \subsection{Multiple-Choice Aufgaben}
@@ -227,10 +261,15 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{solution}{\textbackslash{}solution}&Einstellen der Version, welche kompiliert werden soll\\\hline
     \hyperlink{ss}{\textbackslash{}ss\{\}}&Erzeugt \ss{} in korrekter Formatierung\\\hline
     \hyperlink{strich}{\textbackslash{}strich}&Erzeugt einen Strich in einer Strukturformel\\\hline
+    \hyperlink{teilaufgabe}{\textbackslash{}teilaufgabe}&Beginn einer Teilaufgabe (a), b), \dots)\\\hline
+    \hyperlink{teilaufgabekasten}{\textbackslash begin\{teilaufgabekasten\}}&Teilaufgabe in einem gro\ss{}en, umbrechbaren Kasten mit Streifen am rechten Rand\\\hline
     \hyperlink{textnormal}{\textbackslash{}textnormal}&Schreibt den Text normal, d.\,h. nicht kursiv (auch in Mathe-Modus in Flie\ss{}text-Schriftart)\\\hline
     \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapit\"alchen\\\hline
     \hyperlink{toprule}{\textbackslash{}toprule}&Zeichnet die oberste Linie einer Tabelle\\\hline
     \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}&Erzeugt einen Kasten mit Umbruch\\\hline
+    \hyperlink{unteraufgabe}{\textbackslash{}unteraufgabe}&Unterteil (i., ii., \dots) einer substrukturierten Aufgabe\\\hline
+    \hyperlink{unteraufgaben}{\textbackslash begin\{unteraufgaben\}}&Substrukturierte Teilaufgabe mit \"Uberschrift und Unterteilen\\\hline
+    \hyperlink{unterumbruch}{\textbackslash{}unterumbruch}&Erzwingt einen Seitenumbruch zwischen zwei Unterteilen\\\hline
     \hyperlink{vspace}{\textbackslash vspace$^*$}&Erzeugt oder verringert vertikalen Abstand\\\hline
     \hyperlink{a}{\textbackslash{}\grqq{}a}&Erzeugt ein \"a in korrekter Formatierung\\\hline
     \hyperlink{o}{\textbackslash{}\grqq{}o}&Erzeugt ein \"o in korrekter Formatierung\\\hline

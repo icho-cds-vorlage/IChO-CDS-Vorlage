@@ -12,7 +12,7 @@ Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausur
 Dies ist ein Beispiel f\"ur einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde \"ublich ist.\\
 \textit{F\"ur kursive Hervorhebung kann dies genutzt werden}. \textbf{F\"ur fette Hervorhebung dies}.
 
-\teilaufgabe{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugef\"ugt werden}
+\begin{teilaufgabekasten}{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugef\"ugt werden}
 \kasten{2.5cm}{
     Hiermit l\"asst sich ein Kasten erstellen zur Bearbeitung der Aufgabe.
     Die L\"ange des Kastens wird im Ersten Argument angegeben.
@@ -20,6 +20,7 @@ Dies ist ein Beispiel f\"ur einen Einleitungstext zu einer Aufgabe. Es gibt zude
     Musterl\"osung bzw Bewertungshinweise werden mit dem Command \textbackslash kommentar \{Hier direkt notiert\}:\\ %Zeilenumbruch
     \kommentar{Dies ist eine Musterl\"osung}\punkte{1}
 }{Nur dieser Text erscheint in der Sch\"ulerversion}
+\end{teilaufgabekasten}
 
 Die folgenden Abschnitte enthalten einige Beispiel-Teilaufgaben. Die Aufgabenteile b) und c) dienen als Beispiele f\"ur Multiple-Choice-Aufgaben. 
 \teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichkeiten hier richtig sind.}{Die Reihenfolge der richtigen Antworten wir in dem \textbackslash MC Command im 6.ten Argument mit einer Zeichenkette bspw.: oxoox, ausgedr\"uckt die f\"ur die richtigen Antworten je ein x notiert}
@@ -27,6 +28,7 @@ Vor dem MC command folgt mit \textbackslash punkte wieder die Punktzahl\punkte{2
 \MC{A}{B}{C}{D}{E}{oxoox}
 Bevorzugt wird eine richtig/falsch Auswahl, da hier ein falsch Ankreuzen auch bepunktet werden kann.\par % falls vor einem MC-Kasten noch Text stehen soll, muss an diesen ein \par angef\"ugt werden!
 \MCrf{A}{B}{C}{D}{E}{oxoox}
+
 \teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichekeiten hier richtig sind.\punkte{1}}{}
 \MCvAnfang
 \MCv{x}{Eine richtige L\"osung}
@@ -181,12 +183,38 @@ Zwei Tabellen voller Daten:
     \end{tabular}
 \end{table}
 
-\teilaufgabe{\operator{Vervollst\"andige} entsprechend den Anweisungen.}{Substrukturierte Aufgabe mit \textbackslash unteraufgabe: Aufgabenstellung, Punkte und Musterl\"osung je Unterteil.}
-\begin{unteraufgaben}
-\unteraufgabe{5cm}{\operator{Zeige}, dass im Gleichgewichtszustand gilt: $K = p_{\ch{NO2}}/p^0$}{2}{Herleitung \kommentar{2P}}
-\unteraufgabe[$p_{\ch{NO2}} = \SI{0,25}{\bar}$]{3cm}{\operator{Berechne} den Partialdruck im Gleichgewicht.}{2}{Rechnung}
-\unteraufgabe{2cm}{\operator{Berechne} die Absorption.}{1}{Ergebnis}
+\begin{unteraufgaben}{\operator{Vervollst\"andige} entsprechend den Anweisungen. Stickstoffdioxid steht im Gleichgewicht mit Distickstofftetroxid: \ch{2 NO2 <=> N2O4}. Der Gesamtdruck betr\"agt bei beiden Temperaturen $p=\SI{1,00}{\bar}$. Die Gleichgewichtskonstante $K=\frac{p_{\ch{N2O4}}\cdot p^0}{p_{\ch{NO2}}^2}$ hat bei $T_1$ den Wert $12{,}0$ und bei $T_2=\SI{350}{\kelvin}$ den Wert $1{,}49$.}{Dies ist ein Beispiel f\"ur eine substrukturierte Aufgabe: Jeder Unterteil hat eine eigene Aufgabenstellung, Punktzahl und Musterl\"osung.}
+\unteraufgabe[5cm]{\operator{Zeige}, dass im Gleichgewichtszustand folgende Gleichung gilt:
+\begin{equation*}
+    0 = K\cdot p_{\ch{NO2}}^2 + p_{\ch{NO2}}\cdot p^0 - p\cdot p^0
+\end{equation*}\textit{\underline{Hinweis:}} $p^0$ ist der Referenzdruck; siehe dazu die Formelsammlung.}{%
+    Aus der Gleichgewichtskonstante folgt $p_{\ch{N2O4}} = K\cdot p_{\ch{NO2}}^2 / p^0$.\punkte{1}\\
+    Der Gesamtdruck ist $p = p_{\ch{NO2}} + p_{\ch{N2O4}} = p_{\ch{NO2}} + K\cdot p_{\ch{NO2}}^2 / p^0$. Multiplikation mit $p^0$ und Umstellen liefert die Gleichung.\punkte{1}}
+\unteraufgabe[4cm]{\operator{Berechne} jeweils den Partialdruck $p_{\ch{NO2},1}$ und $p_{\ch{NO2},2}$ im Gleichgewichtszustand bei $T_1$ und $T_2$.}{%
+    L\"osen der quadratischen Gleichung mit $p^0=\SI{1}{\bar}$: $p_{\ch{NO2}} = \dfrac{-p^0+\sqrt{(p^0)^2+4Kpp^0}}{2K}$\punkte{1}\\
+    $p_{\ch{NO2},1} = \SI{0,25}{\bar}$, $p_{\ch{NO2},2} = \SI{0,55}{\bar}$ \kommentar{(Folgefehler werden ber\"ucksichtigt)}\punkte{1}}
+\unteraufgabe{\operator{Berechne} die Absorption $A_2$ bei der Temperatur $T_2$ f\"ur eine K\"uvette der L\"ange $l=\SI{1,0}{\centi\metre}$. Nur \ch{NO2} absorbiert, mit $\varepsilon=\SI{20}{\litre\per\mole\per\centi\metre}$.}{%
+    $c = \dfrac{p_{\ch{NO2},2}}{RT_2} = \dfrac{\SI{55000}{\pascal}}{\SI{8,314}{\joule\per\mole\per\kelvin}\cdot\SI{350}{\kelvin}} = \SI{0,0189}{\mole\per\litre}$\punkte{0.5}, \quad $A_2 = \varepsilon\, c\, l \approx 0{,}38$\punkte{0.5}}
 \end{unteraufgaben}
+
+Vier Teilaufgaben im Kasten, die direkt aneinander anschlie\ss{}en (Stern bei \textbackslash begin\{teilaufgabekasten\}*):
+\begin{teilaufgabekasten}{\operator{Nenne} die Summenformel von Wasser.}{Dies ist der erste Kasten.}
+\kasten{1.5cm}{\ch{H2O}\punkte{1}}{}
+\end{teilaufgabekasten}
+\begin{teilaufgabekasten}*{\operator{Nenne} die Summenformel von Kohlenstoffdioxid.}{Dieser Kasten schlie\ss{}t mit dem Stern direkt an den vorherigen an.}
+\kasten{1.5cm}{\ch{CO2}\punkte{1}}{}
+\end{teilaufgabekasten}
+\begin{teilaufgabekasten}*{\operator{Kreuze an}, welche Aussagen richtig sind.\punkte{2}}{Auch Multiple-Choice-Aufgaben lassen sich im verbundenen Kasten setzen.}
+\MC{A}{B}{C}{D}{E}{xooxo}
+\end{teilaufgabekasten}
+\begin{teilaufgabekasten}*{\operator{Kreuze an}, welche Antwortm\"oglichkeit richtig ist.\punkte{1}}{Hier steht die vertikale Variante der Multiple-Choice-Aufgabe.}
+\MCvAnfang
+\MCv{o}{Eine falsche L\"osung}
+\MCv{x}{Eine richtige L\"osung}
+\MCv{o}{Eine falsche L\"osung}
+\MCv{o}{Eine falsche L\"osung}
+\MCvEnde
+\end{teilaufgabekasten}
 
 Beim Betrachten der fertigen Aufgabe stellen wir fest, dass die oben angegebene Punktzahl angepasst werden muss, da die bei den Teilaufgaben in Summe vergebene Punktzahl abweicht, worauf eine Fehlermeldung aufmerksam macht.  
 

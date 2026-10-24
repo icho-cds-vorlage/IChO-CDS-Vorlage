@@ -112,6 +112,7 @@
 \usepackage{pgffor} % Iteration fuer umbrechbaren Antwortkasten
 \usepackage{expl3} %OC Kasten
 \usepackage{xparse}
+\usepackage{needspace} % Mindestplatz vor Kasten
 \usepackage{stringstrings} % MC fix
 
 % Chemistry
@@ -225,8 +226,10 @@
 %\hbadness=10000
 
 % Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
+\newlength{\kastenueberstand} % Antwortkaesten ragen so weit nach links und rechts ueber den Text hinaus (in teilaufgabekasten: 1mm)
 \newcommand{\kasten}[3]{
-  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
+  \ifdim\kastenueberstand>0pt\hspace*{-\kastenueberstand}\fi
+  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt+2\kastenueberstand}{
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
   \punkteausgabe
@@ -234,7 +237,8 @@
 
 %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
 \newcommand{\selfkasten}[2]{
-  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
+  \ifdim\kastenueberstand>0pt\hspace*{-\kastenueberstand}\fi
+  \fbox{\parbox[b][#1][t]{\linewidth-6.8pt+2\kastenueberstand}{
     #2
   }}
   \punkteausgabe
@@ -442,7 +446,9 @@
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
 \makeatother
-\newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\newcounter{teilaufgabennr} % Zaehler fuer a), b), ...; global, damit er ueber die Kasten hinweg weiterzaehlt
+\newcommand{\teilaufgabenlabel}{\alphalphfmt{teilaufgabennr})}
+\newcommand{\teilaufgabe}[2]{\stepcounter{teilaufgabennr}\begin{enumerate}[label={\teilaufgabenlabel}]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
@@ -460,34 +466,113 @@
   \par
 }
 
-%Substrukturierte Aufgaben: Teilaufgabe mit aneinander anschliessenden Kaesten i., ii., ... mit eigener Aufgabenstellung
+% Grosser, umbrechbarer Kasten um eine komplette Teilaufgabe mit abgetrenntem Streifen (1cm) am rechten Rand
+% In der Betreuerversion werden die Punkte (statt per marginpar, das in Kaesten nicht funktioniert) im Streifen ausgegeben
+\newlength{\teilstreifenbreite}
+\newlength{\teilverbindung} % empirische Korrektur, damit verbundene Kaesten (Stern) exakt an der gemeinsamen Linie anschliessen
+\setlength{\teilverbindung}{6.5pt}
+\setlength{\teilstreifenbreite}{1cm}
+\newcommand{\teilstreifenpunkte}{%
+  \opt{2}{\par\nointerlineskip\vbox to 0pt{\vss\hbox to 0pt{\hspace*{\linewidth+4pt+3mm}\textnormal{\textcolor{red}{\small\SI{\xintPFloat{\themulteilaufpunkt/20}}{}\,P.}}\hss}}}% Punkte unabhaengig von der horizontalen Position am Ende des letzten Elements (Kasten, MC-Tabelle, ...) in den Streifen setzen
+  \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}%
+  \setcounter{multeilaufpunkt}{0}%
+}
+% Rahmen wird in overlay fuer jedes Teilstueck selbst gezeichnet, damit der Kasten an jedem Seitenumbruch geschlossen ist
+% teilkasten: im letzten Teilstueck wird der untere Rand um \bigskipamount nach oben gezogen, um den Abstand am Ende von \punkteausgabe auszugleichen (Kasten endet i.d.R. mit einer Punkteausgabe)
+\tcbset{
+  teilkasten basis/.style={enhanced, breakable, colback=white, frame hidden, sharp corners, boxrule=0pt, left=4pt, right=\teilstreifenbreite+4pt, top=4pt, bottom=0.8pt, use color stack, before skip=\dimexpr0.5\baselineskip\relax, after skip=\dimexpr0.5\baselineskip\relax}, % bottom=0.8pt: zusammen mit boxsep (1mm) und Linienbreite ergibt das 4pt Abstand zwischen letztem Kasten und Rahmen
+  teilkasten/.style={teilkasten basis,
+    overlay first and middle={\draw[line width=0.4pt] (frame.south west) rectangle (frame.north east);
+      \draw[line width=0.4pt] ([xshift=-\teilstreifenbreite]frame.north east) -- ([xshift=-\teilstreifenbreite]frame.south east);},
+    overlay unbroken and last={\draw[line width=0.4pt] ([yshift=\bigskipamount]frame.south west) rectangle (frame.north east);
+      \draw[line width=0.4pt] ([xshift=-\teilstreifenbreite]frame.north east) -- ([xshift=-\teilstreifenbreite,yshift=\bigskipamount]frame.south east);}},
+  teilkasten verbunden/.style={teilkasten, before skip=0pt}
+}
+% Umgebung [Mindestplatz]{Text}{Hinweis}: wie \teilaufgabe{Text}{Hinweis}, aber die Teilaufgabe steht in einem grossen, umbrechbaren Kasten; Ende mit \end{teilaufgabekasten}
+\NewDocumentEnvironment{teilaufgabekasten}{s O{6\baselineskip} m m}{%
+  % Stern (*): Kasten schliesst direkt an den vorherigen Kasten an (kein Abstand, gemeinsame Linie); der vorherige Kasten muss unmittelbar davor enden
+  \IfBooleanTF{#1}{\nopagebreak\vspace{-\dimexpr\bigskipamount+0.5\baselineskip-\teilverbindung\relax}}{\Needspace{#2}}% Mindestplatz auf der Seite, damit der Kasten nicht nur mit der Ueberschrift am Seitenende beginnt (optionales Argument)
+  \IfBooleanTF{#1}{\begin{tcolorbox}[teilkasten verbunden]}{\begin{tcolorbox}[teilkasten]}
+  \renewcommand{\punkteausgabe}{\teilstreifenpunkte\par\vspace{\dimexpr\bigskipamount\relax}}% starrer Abstand (ohne Dehnung), damit verbundene Kaesten exakt anschliessen
+  \renewcommand{\punkteausgabeNoBreak}{\teilstreifenpunkte\par}%
+  \setlength{\kastenueberstand}{1mm}% Antwortkaesten ragen um boxsep ueber den Text hinaus: 4pt Abstand zum aeusseren Rahmen (wie bei den Unteraufgaben)
+  \teilaufgabe{#3}{#4}%
+}{\end{tcolorbox}}
+
+% Zeichenbefehle fuer substrukturierte Aufgaben: aeusserer Rahmen (durchgehend ueber mehrere aneinander gesetzte Kaesten) und innerer Rahmen je Unterteil (4pt Abstand)
+\newcommand{\ouverts}{\draw[line width=0.4pt] (frame.south west) -- (frame.north west) (frame.south east) -- (frame.north east) ([xshift=-\teilstreifenbreite]frame.south east) -- ([xshift=-\teilstreifenbreite]frame.north east);}
+\newcommand{\outop}{\draw[line width=0.4pt] (frame.north west) -- (frame.north east);}
+\newcommand{\oubottom}{\draw[line width=0.4pt] (frame.south west) -- (frame.south east);}
+\newcommand{\ouinner}{\draw[line width=0.4pt] ([xshift=4pt,yshift=-4pt]frame.north west) rectangle ([xshift=-\teilstreifenbreite-4pt,yshift=4pt]frame.south east);}
+\tcbset{
+  unter basis/.style={enhanced, breakable, colback=white, frame hidden, sharp corners, boxrule=0pt, before skip=0pt, after skip=0pt, use color stack},
+  unter kopf/.style={unter basis, left=8pt, right=\teilstreifenbreite+8pt, top=4pt, bottom=4pt,
+    overlay unbroken={\ouverts\outop}, overlay first={\ouverts\outop\oubottom}, overlay middle={\ouverts\outop\oubottom}, overlay last={\ouverts\outop}},
+  unter teil/.style={unter basis, left=8pt, right=\teilstreifenbreite+7pt, top=7pt, bottom=7pt,
+    overlay unbroken={\ouverts\ouinner}, overlay first={\ouverts\ouinner\oubottom}, overlay middle={\ouverts\outop\ouinner\oubottom}, overlay last={\ouverts\outop\ouinner}},
+  unter schluss/.style={unter basis, left=8pt, right=\teilstreifenbreite+8pt, top=0pt, bottom=0pt, boxsep=0pt,
+    overlay={\ouverts\oubottom}},
+  unter oeffnung/.style={unter basis, left=8pt, right=\teilstreifenbreite+8pt, top=0pt, bottom=0pt, boxsep=0pt,
+    overlay={\ouverts\outop}}
+}
+% Substrukturierte Teilaufgabe: Kasten mit Ueberschrift und darunter je ein umbrechbarer Kasten pro Unterteil (i., ii., ...)
+% Die Kaesten werden nicht ineinander verschachtelt (umbrechbare Kaesten koennen nicht in umbrechbaren Kaesten stehen), sondern direkt aneinander gesetzt
 \newcounter{unteraufgabe}
 \newlength{\unterlabelbreite}
 \setlength{\unterlabelbreite}{0.8cm}
+\newlength{\unterrest}
+\newlength{\unterstueck}
 \newlength{\untertextbreite}
+\newsavebox{\unterbox}
+% Leerraum in Stuecken von 1.5 Zeilen als unsichtbare Boxen (Glue am Seitenumbruch wuerde komplett verworfen, Boxen bleiben erhalten, der Unterteil behaelt so seine Hoehe)
+\newcommand{\unterleerbox}[1]{\par\nointerlineskip\hbox{\vrule height #1 depth 0pt width 0pt}}
+\newcommand{\unterplatz}{\setlength{\unterstueck}{1.5\baselineskip}%
+  \loop\ifdim\unterrest>\unterstueck\unterleerbox{\unterstueck}\addtolength{\unterrest}{-\unterstueck}\repeat
+  \ifdim\unterrest>0pt\unterleerbox{\unterrest}\fi\par}
+\newcommand{\unterpunktewert}{0} % Punkte des aktuellen Unterteils (20-faches), wird aus den \punkte im Unterteil bestimmt
+\newcommand{\unterteila}[2]{\noindent\hangindent=\unterlabelbreite\hangafter=1\opt{2}{\rlap{\hspace*{\dimexpr\linewidth+7pt+3mm\relax}\textnormal{\textcolor{red}{\small\SI{\xintPFloat{\unterpunktewert/20}}{}\,P.}}}}\hbox to \unterlabelbreite{\textit{\roman{unteraufgabe}.}\hfil}\ignorespaces #1\par
+  \opt{1,2}{\medskip #2\par}}
 
-% [optional: Text fuer "Weiter mit:" am Kastenende], 1: Hoehe, 2: Aufgabenstellung, 3: Punkte, 4: Musterloesung (nur Versionen 1 und 2)
-\NewDocumentCommand{\unteraufgabe}{o m m m m}{%
+% Aeusserer Rahmen ohne Hoehe: Abschluss (unterer Rand) bzw. Oeffnung (oberer Rand)
+\newcommand{\unterschluss}{\begin{tcolorbox}[unter schluss]\kern0pt\end{tcolorbox}}
+\newcommand{\unteroeffnung}{\begin{tcolorbox}[unter oeffnung]\kern0pt\end{tcolorbox}}
+% Seitenumbruch zwischen zwei Unterteilen: aeusseren Rahmen auf der alten Seite schliessen und auf der neuen oeffnen
+\newcommand{\unterumbruch}{\unterschluss\newpage\unteroeffnung}
+% Passt der Anfang des naechsten Unterteils (mind. \untermindest) nicht mehr auf die Seite, wird umgebrochen
+\newlength{\untermindest}
+\setlength{\untermindest}{5\baselineskip}
+% [Hoehe] (Mindesthoehe des Unterteils, Standard 3cm), 1: Aufgabenstellung, 2: Musterloesung (nur Versionen 1 und 2); Punkte wie ueberall mit \punkte{} in Aufgabenstellung oder Loesung
+% Der Inhalt wird zum Ausmessen (Hoehe, Punkte) einmal in eine Box gesetzt; die Punktzaehler werden danach zurueckgesetzt und beim eigentlichen Satz neu gezaehlt
+\NewDocumentCommand{\unteraufgabe}{O{3cm} m m}{%
   \stepcounter{unteraufgabe}%
-  \xintifInt{\xintFloatMul{#4}{20}}{\addtocounter{mulaufgabenpunkte}{\xintNum{\xintFloatMul{#4}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
-  \setlength{\untertextbreite}{\dimexpr\linewidth-6pt-2\fboxrule\relax}%
-  \par\nointerlineskip\noindent
-  \setlength{\fboxsep}{3pt}%
-  \fbox{\vbox to #2{\hsize=\untertextbreite\linewidth=\untertextbreite\parindent=0pt\relax
-    \noindent\hangindent=\unterlabelbreite\hangafter=1\hbox to \unterlabelbreite{\textit{\roman{unteraufgabe}.}\hfil}\ignorespaces #3\par
-    \opt{1,2}{\medskip #5\par}%
-    \vfill
-    \IfNoValueF{#1}{\noindent\hangindent=\unterlabelbreite\hangafter=1\hbox to \unterlabelbreite{\hfil}\textbf{Weiter mit:} #1\par}%
-    \nointerlineskip\hrule height 0pt}}%
-  \par\nointerlineskip\vspace{-\fboxrule}%
+  \edef\untersicherung{\themulteilaufpunkt}\renewcommand{\unterpunktewert}{0}%
+  \setlength{\untertextbreite}{\dimexpr\linewidth-\teilstreifenbreite-15pt\relax}%
+  \sbox{\unterbox}{\vbox{\hsize=\untertextbreite\linewidth=\untertextbreite\parindent=0pt\relax\unterteila{#2}{#3}}}%
+  \edef\unterpunktewert{\the\numexpr\value{multeilaufpunkt}-\untersicherung\relax}%
+  \setcounter{multeilaufpunkt}{\untersicherung}%
+  \setlength{\unterrest}{\dimexpr#1-\ht\unterbox-\dp\unterbox-14pt\relax}%
+  \ifdim\unterrest<0pt\setlength{\unterrest}{0pt}\fi
+  \par\ifdim\dimexpr\pagegoal-\pagetotal\relax<\untermindest\unterumbruch\fi
+  \begin{tcolorbox}[unter teil]
+    \unterteila{#2}{#3}%
+    \unterplatz
+  \end{tcolorbox}%
+  \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}\setcounter{multeilaufpunkt}{0}%
 }
 
-\newenvironment{unteraufgaben}{\setcounter{unteraufgabe}{0}\par\nopagebreak}{\par\bigskip}
+% Umgebung [Mindestplatz]{Text}{Hinweis}: Ueberschrift der Teilaufgabe im Kasten, darunter die Unterteile (\unteraufgabe)
+\NewDocumentEnvironment{unteraufgaben}{O{8\baselineskip} m m}{%
+  \setcounter{unteraufgabe}{0}%
+  \Needspace{#1}%
+  \begin{tcolorbox}[unter kopf]
+    \teilaufgabe{#2}{#3}%
+  \end{tcolorbox}%
+}{\unterschluss\par\bigskip}
 
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
-\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\clearpage}
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\setcounter{teilaufgabennr}{0}\restartlist{enumerate}\clearpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{
@@ -504,14 +589,16 @@
   \end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 
-\newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
-  \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
+\newlength{\mcw} % Breite der MC-/Sortiertabellen: Textbreite, in teilaufgabekasten wie die Antwortkaesten (inkl. Ueberstand)
+\newcommand{\mcsetup}{\setlength{\mcw}{\dimexpr\linewidth+2\kastenueberstand\relax}\ifdim\kastenueberstand>0pt\hspace*{-\kastenueberstand}\fi}
+\newcommand{\MC}[6]{{\mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+  \begin{tabular}{|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
   \end{tabular}}\punkteausgabe}
 \newcommand{\MCrf}[6]{{
-  \setlength{\tabcolsep}{0.004\textwidth}
-  \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
+  \mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+  \begin{tabular}{|C{0.06\mcw+3pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|}\hline
     & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
@@ -522,19 +609,19 @@
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
 \newcommand{\MCvAnfang}{
-  \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \renewcommand{\mctype}{0}\mcsetup\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
 }
 
 \newcommand{\MCvrfAnfang}{
-  \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \renewcommand{\mctype}{1}\mcsetup\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvUmbruch}{
-  \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \end{tabular}\newpage\mcsetup\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
 }
 
 \newcommand{\MCvrfUmbruch}{
-  \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \end{tabular}\newpage\mcsetup\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvEnde}{
@@ -552,8 +639,8 @@
 }
 %Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
 \newcommand{\MSort}[6]{{
-    \setlength{\tabcolsep}{0.004\textwidth}
-    \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
+    \mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+    \begin{tabular}{|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|}\hline
     #1                              & #2                              & #3                              & #4                              & #5                              \\\hline
     \opt{1,2}{\substring{#6}{1}{1}} & \opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}} & \opt{1,2}{\substring{#6}{4}{4}} & \opt{1,2}{\substring{#6}{5}{5}} \\\hline
     \end{tabular}
