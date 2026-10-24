@@ -49,6 +49,7 @@
 \usepackage{xcolor}
 \usepackage{wallpaper}
 \usepackage{needspace}
+\usepackage{environ} % Inhalt von Umgebungen sammeln (teilaufgabekasten)
 
 % \usepackage{framed}
 \usepackage{mdframed}
@@ -519,16 +520,46 @@
   teilkasten verbunden/.style={teilkasten, before skip=0pt}
 }
 % Umgebung [Mindestplatz]{Text}{Hinweis}: wie \teilaufgabe{Text}{Hinweis}, aber die Teilaufgabe steht in einem grossen, umbrechbaren Kasten; Ende mit \end{teilaufgabekasten}
-\NewDocumentEnvironment{teilaufgabekasten}{s O{6\baselineskip} m m}{%
-  % Stern (*): Kasten schliesst direkt an den vorherigen Kasten an (kein Abstand, gemeinsame Linie); der vorherige Kasten muss unmittelbar davor enden
-  \IfBooleanTF{#1}{\nopagebreak\vspace{-\dimexpr\bigskipamount+0.5\baselineskip-\teilverbindung\relax}}{\Needspace{#2}}% Mindestplatz auf der Seite, damit der Kasten nicht nur mit der Ueberschrift am Seitenende beginnt (optionales Argument)
-  \IfBooleanTF{#1}{\begin{tcolorbox}[teilkasten verbunden]}{\begin{tcolorbox}[teilkasten]}
+% Der Platzbedarf wird automatisch aus dem Inhalt bestimmt: Der Inhalt wird einmal in eine Box gesetzt (Zaehler werden danach zurueckgesetzt).
+% Ist der Kasten niedriger als \teilkastenmax, beginnt er nur dort, wo er komplett auf die Seite passt; sonst gilt der Mindestplatz (Standard 8 Zeilen)
+\makeatletter
+\newsavebox{\tkbox}
+\newlength{\tkbreite}
+\newlength{\tkhoehe}
+\newlength{\teilkastenmax}
+\setlength{\teilkastenmax}{0.6\textheight}
+\newcommand{\tkzaehler}{multeilaufpunkt,mulaufgabenpunkte,teilaufgabennr,equation,figure,table,scheme,footnote,mpfootnote}
+\newcommand{\tkspeichern}{\@for\tk@c:=\tkzaehler\do{\@ifundefined{c@\tk@c}{}{\expandafter\xdef\csname tksave@\tk@c\endcsname{\the\value{\tk@c}}}}}
+\newcommand{\tkzuruecksetzen}{\@for\tk@c:=\tkzaehler\do{\@ifundefined{c@\tk@c}{}{\setcounter{\tk@c}{\csname tksave@\tk@c\endcsname}}}}
+% Aenderungen von Befehlen innerhalb des Kastens (gilt beim Messen und beim Setzen)
+\newcommand{\tkredefs}{%
   \renewcommand{\punkteausgabe}{\teilstreifenpunkte\par\vspace{\dimexpr\bigskipamount\relax}}% starrer Abstand (ohne Dehnung), damit verbundene Kaesten exakt anschliessen
   \renewcommand{\punkteausgabeNoBreak}{\teilstreifenpunkte\par}%
   \renewcommand{\kasten}[3]{\festkasten{##1}{##2}{##3}}% in einem Kasten immer fester Kasten (umbrechbare Kaesten koennen nicht in umbrechbaren stehen)
   \setlength{\kastenueberstand}{1mm}% Antwortkaesten ragen um boxsep ueber den Text hinaus: 4pt Abstand zum aeusseren Rahmen (wie bei den Unteraufgaben)
-  \teilaufgabe{#3}{#4}%
-}{\end{tcolorbox}}
+}
+\newcommand{\tkverarbeiten}[1]{%
+  \tkspeichern
+  \setlength{\tkbreite}{\dimexpr\linewidth-\teilstreifenbreite-8pt-2mm\relax}%
+  \sbox{\tkbox}{\vbox{\hsize=\tkbreite\linewidth=\tkbreite\parindent=0pt\relax\tkredefs\teilaufgabe{\tkkopf}{\tkhinweis}#1\par}}%
+  \tkzuruecksetzen
+  \setlength{\tkhoehe}{\dimexpr\ht\tkbox+\dp\tkbox+16pt\relax}% Inhalt plus Abstaende im Kasten
+  \ifx\tkplatz\@empty
+    \ifdim\tkhoehe<\teilkastenmax\Needspace{\tkhoehe}\else\Needspace{8\baselineskip}\fi
+  \else
+    \Needspace{\tkplatz}% Mindestplatz explizit vorgegeben
+  \fi
+  \IfBooleanT{\tkstern}{\nopagebreak\vspace{-\dimexpr\bigskipamount+0.5\baselineskip-\teilverbindung\relax}}% Stern (*): Kasten schliesst direkt an den vorherigen Kasten an (kein Abstand, gemeinsame Linie); der vorherige Kasten muss unmittelbar davor enden
+  \IfBooleanTF{\tkstern}{\begin{tcolorbox}[teilkasten verbunden]}{\begin{tcolorbox}[teilkasten]}
+    \tkredefs
+    \teilaufgabe{\tkkopf}{\tkhinweis}#1%
+  \end{tcolorbox}%
+}
+\NewDocumentEnvironment{teilaufgabekasten}{s O{} m m}{%
+  \let\tkstern#1\def\tkplatz{#2}\def\tkkopf{#3}\def\tkhinweis{#4}%
+  \Collect@Body\tkverarbeiten
+}{}
+\makeatother
 
 % Zeichenbefehle fuer substrukturierte Aufgaben: aeusserer Rahmen (durchgehend ueber mehrere aneinander gesetzte Kaesten) und innerer Rahmen je Unterteil (4pt Abstand)
 \newcommand{\ouverts}{\draw[line width=0.4pt] (frame.south west) -- (frame.north west) (frame.south east) -- (frame.north east) ([xshift=-\teilstreifenbreite]frame.south east) -- ([xshift=-\teilstreifenbreite]frame.north east);}
