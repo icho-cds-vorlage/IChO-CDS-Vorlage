@@ -133,11 +133,13 @@ F\"ur \textbf{Spezialw\"unsche} wird empfohlen, den entsprechenden Abschnitt der
     \item Für die Implementierung mehrerer Strukturformeln als Antwort für eine Teilaufgabe bieten sich sogenannte \textbf{OC-K\"asten} an. Nachfolgend ist die einzig momentan funktionierende Implementation von OC-K\"asten beschrieben, die auch nicht gleich breite K\"asten in einer Zeile bereitstellt. Sie ist hard gecoded und ist daher die aktuelle R\"uckfallebene sein, da obiger Befehl mit speziellen Inhalten nicht kompatibel ist. \hypertarget{oc}{} \hypertarget{ocanfang}{} \hypertarget{ocende}{} \hypertarget{ochilf}{} \hypertarget{ockasten}{}\\
     \textit{\textbackslash ocanfang \\\textbackslash oc\{\}\{\}\{\} \\\textbackslash oc\{\}\{\}\{\} \\...\\\textbackslash ockasten\{\}\{\}\\\textbackslash ockasten\{\}\{\}\\...\\\textbackslash ocende}\\
     Dabei enthalten die \textit{\textbackslash oc}-Befehle im 1. Argument die Nummer der Verbindung, im 2. Argument die Musterl\"osung (Punkte k\"onnen wahlweise in beiden Argumenten wie gewohnt mit \textit{\textbackslash punkte} eingef\"ugt werden) und im 3. Argument einen Inhalt f\"ur die Sch\"ulervariante (abgesehen von der Verbindungszahl). Es k\"onnen maximal 20 Inhalte definiert werden, die dann in selber Reihenfolge in den Teilk\"asten ausgegeben werden (bei jeder Teilaufgabe wird von vorne gez\"ahlt und innerhalb der Teilaufgabe wird zeilenweise gez\"ahlt). Jede Zeile wird mit \textit{\textbackslash ockasten} erstellt, wobei das 1. Argument das Breitenverh\"altnis der Teilk\"astchen angibt (es gibt derzeit: 1, 11, 12, 21, 111, 112, 121, 211, 1111; erweiterbar!) und das 2. Argument die H\"ohe der Teilk\"asten in dieser Zeile. Seitenumbr\"uche zwischen zwei Zeilen werden durch \textit{\hypertarget{ocumbruch}{\textbackslash ocumbruch}} gesetzt. \\Wichtig: Anders als bei \textit{\textbackslash kasten} wird bei \textit{\textbackslash ockasten} die H\"ohe ohne Einheit angegeben (es sind cm).
+    \item \textbf{Kästen, die in der Schülerversion ausgeblendet werden können}: Zu den Kastenbefehlen gibt es Varianten mit der Endung \textit{ok}, die als Hülle um den jeweiligen Kastenbefehl funktionieren und dieselben Argumente erwarten: \textit{\hypertarget{kastenok}{\textbackslash kastenok\{\}\{\}\{\}}} (zu \textit{\textbackslash kasten}), \textit{\hypertarget{selfkastenok}{\textbackslash selfkastenok\{\}\{\}}} (zu \textit{\textbackslash selfkasten}), \textit{\hypertarget{umbruchkastenok}{\textbackslash umbruchkastenok\{\}\{\}\{\}\{\}\{\}\{\}}} (zu \textit{\textbackslash umbruchkasten}) und \textit{\hypertarget{ockastenok}{\textbackslash ockastenok\{\}\{\}}} (zu \textit{\textbackslash ockasten}). In den L\"osungsversionen (1 und 2) wird der Kasten immer ausgegeben. In der Sch\"ulerversion (0) h\"angt die Ausgabe von der Variable \textit{\textbackslash kastenanzeigen} ab: bei \textit{1} wird der Kasten angezeigt, bei \textit{0} wird er unterdr\"uckt. So lassen sich beispielsweise Kästen, die nur der Musterl\"osung dienen, in der Klausur weglassen, ohne den Quelltext zu ver\"andern. Entsprechende Hüllen existieren auch für \textit{\textbackslash kastenarray} und \textit{\textbackslash kastenarraycustom} (\textit{\textbackslash kastenarrayok}, \textit{\textbackslash kastenarraycustomok}); da \textit{\textbackslash kastenarray} derzeit nicht empfohlen wird (s.\,o.), sollten diese nur nach Rücksprache verwendet werden.
+    %Hinweis für die Template-Pflege: In den Definitionen von \kastenarrayok und \kastenarraycustomok in der Klassendatei steht \opt{1,2}{...} vermutlich versehentlich innerhalb des Arguments von \opt{0}{...} (Klammerung prüfen). 
 \end{itemize}
 
 \subsection{Multiple-Choice Aufgaben}
 \begin{itemize}
-    \item \textbf{MC im Querformat}: \textit{\textbackslash\hypertarget{MC}MC} Befehl mit 6 Argumenten, wobei die Argumente 1 bis 5 die Antwortm\"oglichkeiten sind und 6 die Korrektheit, z.B.: ooxoo (wenn nur 3. Antwortm\"oglichkeit richtig). Wenn jeweils richtig oder falsch angekreuzt werden soll gibt es analog den Befehl \hypertarget{MCrf}{\textit{\textbackslash MCrf}}
+    \item \textbf{MC im Querformat}: Bevorzugt ist der \hypertarget{MCrf}{\textit{\textbackslash MCrf}} Befehl mit 6 Argumenten, wobei die Argumente 1 bis 5 die Antwortm\"oglichkeiten sind und 6 die Korrektheit, z.B.: ooxoo (wenn nur die 3. Antwortm\"oglichkeit richtig ist). Angekreuzt wird, ob die Aussage richtig oder falsch ist. Wenn nur für richtig angekreuzt werden soll gibt es analog den Befehl \textit{\textbackslash\hypertarget{MC}MC}. Für MC-Aufgaben mit nur 3 Aussagen gibt es auch \hypertarget{MCrfdrei}{\textit{\textbackslash MCrfdrei}} sowie \hypertarget{MCdrei}{\textit{\textbackslash MCdrei}}.
     \item \textbf{MC im Hochformat}: \textit{\hypertarget{MCvAnfang}{\textbackslash MCvAnfang} \hypertarget{MCv}{\textbackslash MCv\{\}\{\}} ... \hypertarget{MCvEnde}{\textbackslash MCvEnde}} wobei f\"ur jede Zeile ein MCv-Befehl verwendet wird, dessen erstes Argument die Korrektheit (x) und das 2. Argument die Antwortoption ist. Mit \textit{\hypertarget{MCvrfAnfang}{\textbackslash MCvrfAnfang}} (anschlie\ss{}end weiter wie oben) wird die Auswahl richtig / falsch gefordert. Seitenumbr\"uche funktionieren mit \textit{\hypertarget{MCvUmbruch}{\textbackslash MCvUmbruch}} bzw. \textit{\hypertarget{MCvrfUmbruch}{\textbackslash MCvrfUmbruch}}. Die Punkteausgabe muss manuell gesetzt werden.
     \item f\"ur \textbf{selbst designte MC} stehen folgende Befehle zur Verf\"ugung: f\"ur Ankreuzfelder \textit{\hypertarget{quadrat}{\textbackslash quadrat}}, ein gekreuztes Antwortfeld \textit{\hypertarget{quadratkor}{\textbackslash quadratkor}} und f\"ur die L\"osung ein nur in den Varianten 1 und 2 gekreuztes Feld \textit{\hypertarget{quadratkorr}{\textbackslash quadratkorr}}. Die K\"asten k\"onnen mit \textit{tabular} ohne \textit{table}-Umgebung erstellt werden, hinter \textit{\textbackslash end\{tabular\}} sorgt \textit{\textbackslash punkteausgabe} f\"ur den notwendigen Abstand zum n\"achsten Text (auch in der 0-Version)
     \item für \textbf{Sortieraufgaben} kann der Befehl \textit{\hypertarget{MSort}\textbackslash{MSort}} verwendet werden. Dieser erstellt ähnlich zu \textit{\textbackslash{MC}} fünf Optionen, welche dann sortiert werden können, wobei die Positionen in der sechsten Option angegeben werden, z.B. 53421.
@@ -155,6 +157,20 @@ F\"ur \textbf{Spezialw\"unsche} wird empfohlen, den entsprechenden Abschnitt der
     \item Tabellen mit \textbf{Antwortk\"astchenfunktion} vollst\"andig mit allen Linien zeichnen; mit nur Daten \textit{\hypertarget{toprule}{\textbackslash toprule}}, \textit{\hypertarget{midrule}{\textbackslash midrule}} und \textit{\hypertarget{bottomrule}{\textbackslash bottomrule}} verwenden
 \end{itemize}
 
+\subsection{Weitere Hilfsbefehle}
+Die folgenden Befehle stellt die Dokumentenklasse zus\"atzlich bereit. Sie sind nicht f\"ur jede Aufgabe n\"otig, k\"onnen aber die Arbeit erleichtern.
+\begin{itemize}
+    \item \textbf{Punkteangaben im Text}: \textit{\hypertarget{marcs}{\textbackslash marcs\{X\}}} erzeugt die Angabe \marcs{X} mit gesch\"utztem Leerzeichen, sodass sie nie umgebrochen wird. \textit{\hypertarget{marcsinl}{\textbackslash marcsinl\{X\}}} erzeugt dieselbe Angabe kursiv und mit normalem Leerzeichen: \marcsinl{X}; sie ist f\"ur Punktangaben mitten im Flie\ss{}text gedacht. Bei \textit{X} wird die Punktzahl eingetragen.
+    \item \textbf{Quelle und Ideengeber}: \textit{\hypertarget{from}{\textbackslash from\{X\}}} gibt eine Quellenangabe in grauer, kursiver Schrift in Klammern aus (z.\,B. \textit{(IChO 2019, Aufgabe 2)}), die durch negativen Abstand dicht unter dem vorherigen Text steht. \textit{\hypertarget{auth}{\textbackslash auth\{X\}}} gibt den Urheber einer Aufgabenidee in der Form \textit{(Idee: X)} aus. Beide Befehle beenden den Absatz.
+    \item \textbf{Schwierigkeitseinsch\"atzung}: \textit{\hypertarget{diffic}{\textbackslash diffic\{X\}}} gibt die Schwierigkeit als Folge dreier Kreissymbole aus, z.\,B. \textit{\textbackslash diffic\{3\}} $\rightarrow$ \diffic{3}. G\"ultig sind die ganzen Zahlen \textit{1} bis \textit{7}, die in etwa 1--2 Punkten bis mehr als 7 Punkten entsprechen (bei \textit{7} wird hinter den drei vollen Kreisen zus\"atzlich ein Stern gesetzt); bei anderen Werten erfolgt keine Ausgabe.
+    \item \textbf{Bild neben Text}: \textit{\hypertarget{picright}{\textbackslash picright\{B\}\{Text\}\{Bild\}}} setzt den Text links und das Bild rechts daneben, wobei \textit{B} die Breite der rechten Spalte ist (z.\,B. \textit{5cm}); die Textspalte nimmt die restliche Breite ein. \textit{\hypertarget{picleft}{\textbackslash picleft\{B\}\{Text\}\{Bild\}}} funktioniert analog mit dem Bild links, die Reihenfolge der Argumente bleibt gleich (Breite, Text, Bild). In Listen (\textit{enumerate}, \textit{itemize}) muss \textit{\hypertarget{listpicright}{\textbackslash listpicright\{B\}\{Text\}\{Bild\}}} verwendet werden, das zus\"atzlich den Listeneinzug ber\"ucksichtigt. Das Bild wird dabei mit \textit{\textbackslash includegraphics[width=\textbackslash linewidth]\{...\}} eingebunden, damit es die Spaltenbreite ausf\"ullt.
+    \item \textbf{L\"uckentext}: \textit{\hypertarget{gaptext}{\textbackslash gaptext\{Wort\}\{Breite\}}} erzeugt eine L\"ucke im Text. In den L\"osungsversionen (1 und 2) wird das Wort rot und unterstrichen ausgegeben, in der Sch\"ulerversion (0) nur eine unterstrichene L\"ucke. Bleibt das 2. Argument leer, wird die L\"ucke automatisch auf das Dreifache der Wortbreite gesetzt; andernfalls gibt es die L\"ange der L\"ucke an (z.\,B. \textit{3cm}). Beispiel: \textit{\textbackslash gaptext\{Newton\}\{\}}.
+    \item \textbf{Datum}: \textit{\hypertarget{todayshort}{\textbackslash todayshort}} gibt das heutige Datum im Format TT.MM.JJJJ aus (z.\,B. f\"ur Versionsangaben). Es nutzt \textit{\hypertarget{leadingzero}{\textbackslash leadingzero\{X\}}}, das eine Zahl zweistellig mit f\"uhrender Null ausgibt; \textit{X} muss ein Z\"ahler bzw. Register wie \textit{\textbackslash day} oder \textit{\textbackslash month} sein, keine direkt getippte Zahl.
+    \item \textbf{Schriftart wechseln}: \textit{\hypertarget{changefont}{\textbackslash changefont\{Familie\}\{Serie\}\{Form\}}} wechselt die Schrift \"uber die drei NFSS-Angaben, z.\,B. \textit{\{\textbackslash changefont\{cmss\}\{bx\}\{n\} Text\}}. Die \"Anderung gilt bis zum Ende der aktuellen Gruppe, der Befehl sollte daher in geschweifte Klammern oder eine Umgebung gesetzt werden.
+    \item \textbf{Inhalt ausblenden}: \textit{\hypertarget{hide}{\textbackslash hide\{X\}}} verwirft sein Argument vollst\"andig, \textit{X} erscheint also nicht im Dokument. Das ist n\"utzlich, um gr\"o\ss{}ere Blöcke vor\"ubergehend auszublenden; die Klammern in \textit{X} m\"ussen ausgewogen sein.
+    \item \textbf{Farbige Kommentare im Quelltext}: \textit{\hypertarget{authorcom}{\textbackslash authorcom\{\}}} (gr\"un, Autor), \textit{\hypertarget{corone}{\textbackslash corone\{\}}} (blau, Erstkorrektur), \textit{\hypertarget{cortwo}{\textbackslash cortwo\{\}}} (orange, Zweitkorrektur) und \textit{\hypertarget{corend}{\textbackslash corend\{\}}} (magenta, Endkorrektur) erzeugen Inline-Kommentare mit \textit{todonotes}. Aktuell erfolgt die Korrektur \"uber die Overleaf-Kommentarfunktion (s.\,o.), die Befehle stehen aber weiterhin zur Verf\"ugung.
+\end{itemize}
+
 
 \pagebreak
 \subsection{Command-Register}
@@ -165,23 +181,34 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{textbackslash}{\textbackslash{}\textbackslash{}}&Zeilenumbruch\\\hline
     \hyperlink{aufgabenanfang}{\textbackslash{}aufgabenanfang}&Definiert den Beginn einer Aufgabe\\\hline
     \hyperlink{aufgabenende}{\textbackslash{}aufgabenende}&Definiert das Ende einer Aufgabe\\\hline
+    \hyperlink{auth}{\textbackslash{}auth}&Gibt den Ideengeber einer Aufgabe aus\\\hline
     %\hyperlink{authorcom}{\textbackslash{}authorcom}&Kommentare des Aufgabenautors w\"ahrend des Erstellungsprozesses\\\hline
     \hyperlink{beginenumerate}{\textbackslash{}begin\{enumerate\}}&Beginnt eine Aufz\"ahlung\\\hline
     \hyperlink{bottomrule}{\textbackslash{}bottomrule}&Erzeugt letzte Linie der Tabelle\\\hline
     \hyperlink{ch}{\textbackslash{}ch}&Umgebung f\"ur Summenformeln und Reaktionsgleichungen\\\hline
+    \hyperlink{changefont}{\textbackslash{}changefont}&Wechselt Schriftfamilie, -serie und -form\\\hline
     \hyperlink{code}{\textbackslash{}code}&Wert \glqq 0\grqq{} f\"ur Linie zum Eintragen des Sch\"ulercodes; Wert \glqq 1\grqq{} zum Einlesen von Sch\"ulercodes\\\hline
     %\hyperlink{corend}{\textbackslash{}corend}&Kommentare f\"ur die Endkorrektur\\\hline
     %\hyperlink{corone}{\textbackslash{}corone}&Kommentare des Erstkorrektors\\\hline
     %\hyperlink{cortwo}{\textbackslash{}cortwo}&Kommentare des Zweitkorrektors\\\hline
     \hyperlink{dd}{\textbackslash{}dd}&Erzeugen einer Ableitungsfunktion\\\hline
+    \hyperlink{diffic}{\textbackslash{}diffic}&Gibt eine Schwierigkeitseinsch\"atzung (1 bis 7) als Kreissymbole aus\\\hline
+    \hyperlink{from}{\textbackslash{}from}&Gibt eine Quellenangabe in grauer, kursiver Schrift aus\\\hline
+    \hyperlink{gaptext}{\textbackslash{}gaptext}&Erzeugt eine L\"ucke im L\"uckentext (L\"osung rot, Sch\"ulerversion leer)\\\hline
+    \hyperlink{hide}{\textbackslash{}hide}&Blendet den Inhalt des Arguments aus\\\hline
     \hyperlink{includegraphics}{\textbackslash{}includegraphics}&Einbinden von Grafiken\\\hline
     \hyperlink{intertext}{\textbackslash{}intertext}&Einf\"ugen von Text zwischen Formelzeichen in \textit{align}-Umgebung\\\hline
     \hyperlink{kasten}{\textbackslash{}kasten}&Erzeugen eines Antwortkastens\\\hline
+    \hyperlink{kastenok}{\textbackslash{}kastenok}&Wie \textit{\textbackslash kasten}, in der Sch\"ulerversion aber abh\"angig von \textit{\textbackslash kastenanzeigen}\\\hline
     %\hyperlink{kastenarray}{\textbackslash{}kastenarray}&Erzeugung eines OC-Kastens\\\hline
     \hyperlink{kommentar}{\textbackslash{}kommentar}&Erzeugen eines Kommentars f\"ur die interne Musterl\"osung\\\hline
+    \hyperlink{leadingzero}{\textbackslash{}leadingzero}&Gibt einen Z\"ahler zweistellig mit f\"uhrender Null aus\\\hline
     \hyperlink{linebreak}{\textbackslash{}linebreak}&Erzeugen eines Zeilenumbruchs, unter Beibehaltung des Blocksatzes\\\hline
     \hyperlink{linewidth}{\textbackslash{}linewidth}&Gibt die Textbreite zur\"uck\\\hline
+    \hyperlink{listpicright}{\textbackslash{}listpicright}&Text mit Bild rechts daneben, f\"ur Verwendung in Listen\\\hline
     \hyperlink{lstandardstate}{\textbackslash{}lstandardstate}&Standardzustand in Mathe-Umgebung\\\hline
+    \hyperlink{marcs}{\textbackslash{}marcs}&Gibt eine Punkteangabe \textit{(X~Pkt.)} ohne Umbruch aus\\\hline
+    \hyperlink{marcsinl}{\textbackslash{}marcsinl}&Gibt eine kursive Punkteangabe f\"ur den Flie\ss{}text aus\\\hline
     \hyperlink{mathrm}{\textbackslash{}mathrm}&Schreibt Text in Mathe-Umgebung (aufrecht, in Mathe-Schriftart)\\\hline
     \hyperlink{MC}{\textbackslash{}MC}&Erzeugt eine Multiple-Choice-Frage im Querformat\\\hline
     \hyperlink{MCrf}{\textbackslash{}MCrf}&Erzeugt eine Multiple-Choice-Frage im Querformat mit M\"oglichkeit richtig/falsch\\\hline
@@ -202,6 +229,7 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{ocanfang}{\textbackslash{}ocanfang}&Beginnt einen OC-Kasten\\\hline
     \hyperlink{ocende}{\textbackslash{}ocende}&Endet einen OC-Kasten\\\hline
     \hyperlink{ockasten}{\textbackslash{}ockasten}&Erzeugt einen OC-Kasten\\\hline
+    \hyperlink{ockastenok}{\textbackslash{}ockastenok}&Wie \textit{\textbackslash ockasten}, in der Sch\"ulerversion aber abh\"angig von \textit{\textbackslash kastenanzeigen}\\\hline
     \hyperlink{ocscale}{\textbackslash{}ocscale}&Skaliert alle OC-Verbindungen\\\hline
 \end{tabularx}
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -215,12 +243,15 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{pKw}{\textbackslash{}pKw}&Erzeugt \ensuremath{\mathrm{p}K_{\mathrm{W}}} \ in korrekter Formatierung\\\hline
     \hyperlink{pOH}{\textbackslash{}pOH}&Erzeugt \ensuremath{\mathrm{pOH}} \ in korrekter Formatierung\\\hline
     \hyperlink{par}{\textbackslash{}par}&Erzeugung eines Absatz\\\hline
+    \hyperlink{picleft}{\textbackslash{}picleft}&Text mit Bild links daneben\\\hline
+    \hyperlink{picright}{\textbackslash{}picright}&Text mit Bild rechts daneben\\\hline
     \hyperlink{punkte}{\textbackslash{}punkte}&Ausgabe von Punkten f\"ur die Musterl\"osung\\\hline
     \hyperlink{punkteausgabe}{\textbackslash{}punkteausgabe}&Ausgabe von Punkten f\"ur Teilaufgaben ohne Kasten\\\hline
     \hyperlink{quadrat}{\textbackslash{}quadrat}&Erzeugt ein leeres K\"astchen\\\hline
     \hyperlink{quadratkor}{\textbackslash{}quadratkor}&Erzeugt ein angekreuztes K\"astchen\\\hline
     \hyperlink{quadratkorr}{\textbackslash{}quadratkorr}&Erzeugt ein K\"astchen, das f\"ur Sch\"uler leer ist und f\"ur Korrektoren angekreuzt ist\\\hline
     \hyperlink{selfkasten}{\textbackslash{}selfkasten}&Erzeugung Antwortkasten mit Selbsteingabe der Varianten\\\hline
+    \hyperlink{selfkastenok}{\textbackslash{}selfkastenok}&Wie \textit{\textbackslash selfkasten}, in der Sch\"ulerversion aber abh\"angig von \textit{\textbackslash kastenanzeigen}\\\hline
     \hyperlink{SI}{\textbackslash{}SI}&Setzen von Einheiten\\\hline
     \hyperlink{sol}{\textbackslash{}sol}&Erzeugt L\"osung in selbstgeschriebenen Antwortk\"astchen\\\hline
     \hyperlink{solution}{\textbackslash{}solution}&Einstellen der Version, welche kompiliert werden soll\\\hline
@@ -228,8 +259,10 @@ Command&kurze Erkl\"arung\hfill\\\hline
     \hyperlink{strich}{\textbackslash{}strich}&Erzeugt einen Strich in einer Strukturformel\\\hline
     \hyperlink{textnormal}{\textbackslash{}textnormal}&Schreibt den Text normal, d.\,h. nicht kursiv (auch in Mathe-Modus in Flie\ss{}text-Schriftart)\\\hline
     \hyperlink{textsc}{\textbackslash{}textsc}&Schreibt den Text in Kapit\"alchen\\\hline
+    \hyperlink{todayshort}{\textbackslash{}todayshort}&Gibt das heutige Datum als TT.MM.JJJJ aus\\\hline
     \hyperlink{toprule}{\textbackslash{}toprule}&Zeichnet die oberste Linie einer Tabelle\\\hline
     \hyperlink{umbruchkasten}{\textbackslash{}umbruchkasten}&Erzeugt einen Kasten mit Umbruch\\\hline
+    \hyperlink{umbruchkastenok}{\textbackslash{}umbruchkastenok}&Wie \textit{\textbackslash umbruchkasten}, in der Sch\"ulerversion aber abh\"angig von \textit{\textbackslash kastenanzeigen}\\\hline
     \hyperlink{vspace}{\textbackslash vspace$^*$}&Erzeugt oder verringert vertikalen Abstand\\\hline
     \hyperlink{a}{\textbackslash{}\grqq{}a}&Erzeugt ein \"a in korrekter Formatierung\\\hline
     \hyperlink{o}{\textbackslash{}\grqq{}o}&Erzeugt ein \"o in korrekter Formatierung\\\hline
