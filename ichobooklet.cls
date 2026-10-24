@@ -230,6 +230,7 @@
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
   \punkteausgabe
+  \filbreak
 } %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 
 %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
@@ -442,7 +443,12 @@
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
 \makeatother
-\newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\newcommand{\teilaufgabe}[2]{
+  \filbreak
+  \begin{enumerate}[label={\alphalphfmt*)}, resume]
+    \item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}
+  \end{enumerate}
+} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
@@ -484,7 +490,7 @@
   \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}}\punkteausgabe}
+  \end{tabular}}\punkteausgabe\filbreak}
 \newcommand{\MCrf}[6]{{
   \setlength{\tabcolsep}{0.004\textwidth}
   \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
@@ -493,6 +499,7 @@
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
   \end{tabular}}
   \punkteausgabe
+  \filbreak
 }
 
 %MC in der vertikalen Form
@@ -514,7 +521,7 @@
 }
 
 \newcommand{\MCvEnde}{
-  \end{tabular}\punkteausgabe
+  \end{tabular}\punkteausgabe\filbreak
 }
 
 \newcommand{\MCvrfEnde}{
@@ -535,6 +542,7 @@
     \end{tabular}
   }
   \punkteausgabe
+  \filbreak
 }
 
 
