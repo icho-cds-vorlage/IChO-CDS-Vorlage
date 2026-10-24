@@ -48,6 +48,7 @@
 \usepackage{epstopdf}
 \usepackage{xcolor}
 \usepackage{wallpaper}
+\usepackage{needspace}
 
 % \usepackage{framed}
 \usepackage{mdframed}
@@ -230,7 +231,6 @@
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
   \punkteausgabe
-  \filbreak
 } %letzte geschweifte Klammer weglassen funktioniert meist, aber manchmal erzeugt es unverst\"andliche Fehlermeldungen
 
 %Kasten ohne opt-Integration, darf in keiner Variante vollstaendig leer sein
@@ -442,18 +442,24 @@
 \newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
-\makeatother
+\makeatletter
 \newcommand{\teilaufgabe}[2]{
-  \filbreak
   \begin{enumerate}[label={\alphalphfmt*)}, resume]
-    \item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}
+    % \item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}
+     \item {\interlinepenalty=10000 \clubpenalty=10000 \widowpenalty=10000 #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\par\nobreak}
+    \par\nobreak
+    \@endparpenalty=10000
   \end{enumerate}
+  \@endparpenalty=-\@lowpenalty
+  \nobreak
 } %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
+\makeatother
 \newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{
+  \Needspace{3\baselineskip}
   \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
@@ -490,7 +496,7 @@
   \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}}\punkteausgabe\filbreak}
+  \end{tabular}}\punkteausgabe}
 \newcommand{\MCrf}[6]{{
   \setlength{\tabcolsep}{0.004\textwidth}
   \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
@@ -499,7 +505,6 @@
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
   \end{tabular}}
   \punkteausgabe
-  \filbreak
 }
 
 %MC in der vertikalen Form
@@ -521,7 +526,7 @@
 }
 
 \newcommand{\MCvEnde}{
-  \end{tabular}\punkteausgabe\filbreak
+  \end{tabular}\punkteausgabe
 }
 
 \newcommand{\MCvrfEnde}{
@@ -542,7 +547,6 @@
     \end{tabular}
   }
   \punkteausgabe
-  \filbreak
 }
 
 
