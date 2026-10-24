@@ -460,6 +460,30 @@
   \par
 }
 
+%Substrukturierte Aufgaben: Teilaufgabe mit aneinander anschliessenden Kaesten i., ii., ... mit eigener Aufgabenstellung
+\newcounter{unteraufgabe}
+\newlength{\unterlabelbreite}
+\setlength{\unterlabelbreite}{0.8cm}
+\newlength{\untertextbreite}
+
+% [optional: Text fuer "Weiter mit:" am Kastenende], 1: Hoehe, 2: Aufgabenstellung, 3: Punkte, 4: Musterloesung (nur Versionen 1 und 2)
+\NewDocumentCommand{\unteraufgabe}{o m m m m}{%
+  \stepcounter{unteraufgabe}%
+  \xintifInt{\xintFloatMul{#4}{20}}{\addtocounter{mulaufgabenpunkte}{\xintNum{\xintFloatMul{#4}{20}}}}{\todo{Zu kleiner Punktbruch-teil}}%
+  \setlength{\untertextbreite}{\dimexpr\linewidth-6pt-2\fboxrule\relax}%
+  \par\nointerlineskip\noindent
+  \setlength{\fboxsep}{3pt}%
+  \fbox{\vbox to #2{\hsize=\untertextbreite\linewidth=\untertextbreite\parindent=0pt\relax
+    \noindent\hangindent=\unterlabelbreite\hangafter=1\hbox to \unterlabelbreite{\textit{\roman{unteraufgabe}.}\hfil}\ignorespaces #3\par
+    \opt{1,2}{\medskip #5\par}%
+    \vfill
+    \IfNoValueF{#1}{\noindent\hangindent=\unterlabelbreite\hangafter=1\hbox to \unterlabelbreite{\hfil}\textbf{Weiter mit:} #1\par}%
+    \nointerlineskip\hrule height 0pt}}%
+  \par\nointerlineskip\vspace{-\fboxrule}%
+}
+
+\newenvironment{unteraufgaben}{\setcounter{unteraufgabe}{0}\par\nopagebreak}{\par\bigskip}
+
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
