@@ -28,14 +28,9 @@
 \usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
-\opt{cds}{
-%\usepackage{mathpazo}
-\usepackage{tgtermes}
-\usepackage{newtxmath} 
-}
+\opt{cds}{\usepackage{mathpazo}}
 %\usepackage[sfdefault,book]{FiraSans}  %näher an IPN-Schrift, aber SI passt sich nicht an Mathe oder Text an
 \opt{icho}{\usepackage[sfdefault]{noto}} %auch ähnlich IPN-Schrift
-
 
 \usepackage{textcomp}
 \usepackage[shortcuts]{extdash}
@@ -71,7 +66,7 @@
 \usepackage{tabularray}              % more options with other table type; supports directly the functions of array, longtable, multirow, makecell, tabularx and colortbl
 \usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
-\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
+%\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
 \usepackage{ifthen}                  % ifthenelse used for markings
 \usepackage{xspace}                  % for blank space at end of macros
 \usepackage{icomma,siunitx}
@@ -516,137 +511,62 @@
   \end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 
-\newcommand{\checklinestart}{%test to check if new line, if not: \par new line
-  \ifhmode
-    \ifdim\lastskip=0pt
-    \else
-      \par
-    \fi
-  \else
-  \fi
-}
-
-
-\newcommand{\MC}[6]{{
-\checklinestart
-\setlength{\tabcolsep}{0.004\textwidth}
-\begin{spacing}{1.2}
+\newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
   \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}
-  \end{spacing}
-  }\punkteausgabe}
+  \end{tabular}}\punkteausgabe}
 \newcommand{\MCrf}[6]{{
-\checklinestart
   \setlength{\tabcolsep}{0.004\textwidth}
-  \begin{spacing}{1.2}
   \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
     & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
-  \end{tabular}
-  \end{spacing}
-  }
+  \end{tabular}}
   \punkteausgabe
 }
 
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
-
 \newcommand{\MCvAnfang}{
-  \renewcommand{\mctype}{0}
-  \begin{spacing}{1.2}
-  \begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
 
 \newcommand{\MCvrfAnfang}{
-  \renewcommand{\mctype}{1}
-  \begin{spacing}{1.2}
-  \begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvUmbruch}{
-  \end{tabular}
-  \end{spacing}
-  \newpage
-  \begin{spacing}{1.2}
-  \begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
 
 \newcommand{\MCvrfUmbruch}{
-  \end{tabular}
-  \end{spacing}
-  \newpage
-  \begin{spacing}{1.2}
-  \begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvEnde}{
-  \end{tabular}
-  \end{spacing}
-  \punkteausgabe
+  \end{tabular}\punkteausgabe
 }
 
 \newcommand{\MCvrfEnde}{
-  \end{tabular}
-  \end{spacing}
-  \punkteausgabe
+  \end{tabular}\punkteausgabe
 }
 
 \newcommand{\MCv}[2]{
-  \ifthenelse{\equal{\mctype}{0}}{
-    \ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}
-  }{}
-  \ifthenelse{\equal{\mctype}{1}}{
-    \ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}
-  }{}
+  \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
+  \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
   & #2 \\\hline
 }
 %Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
 \newcommand{\MSort}[6]{{
-
     \setlength{\tabcolsep}{0.004\textwidth}
-    \begin{spacing}{1.2}
     \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
     #1                              & #2                              & #3                              & #4                              & #5                              \\\hline
     \opt{1,2}{\substring{#6}{1}{1}} & \opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}} & \opt{1,2}{\substring{#6}{4}{4}} & \opt{1,2}{\substring{#6}{5}{5}} \\\hline
-    \end{tabular} 
-    \end{spacing}
+    \end{tabular}
   }
   \punkteausgabe
 }
-
-%MCdrei; Horizontal mit drei Ankreuzmöglichkeiten statt 5 
-\newcommand{\MCdrei}[4]{
-\checklinestart
-
-{\setlength{\tabcolsep}{0.004\textwidth}
-  \begin{spacing}{1.2}
-  \begin{tabular}{|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|}\hline
-    #1                                                                                & #2                                                                                & #3                                                                                 \\\hline
-    \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}
-  \end{spacing}}\punkteausgabe}
-
-\newcommand{\MCrfdrei}[4]{{
-\checklinestart
-  \setlength{\tabcolsep}{0.004\textwidth}
-  \begin{spacing}{1.2}\begin{tabular}{|C{0.06\textwidth+3pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|}
-  \hline
-    & #1                                                                                & #2                                                                                & #3                                           \\\hline
-    richtig & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}  \\\hline
-    falsch  & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr}  \\\hline
-  \end{tabular}
-\end{spacing}}
-  \punkteausgabe
-}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
