@@ -23,25 +23,31 @@
 
 %  used packages
 % ===============
+   
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
+
+
 \opt{cds}{
-%\usepackage{mathpazo}
-\usepackage{tgtermes}
-\usepackage{newtxmath} 
+  \usepackage{newtxtext,newtxmath}  % new font for CDS for same font in math an text
 }
+
 %\usepackage[sfdefault,book]{FiraSans}  %näher an IPN-Schrift, aber SI passt sich nicht an Mathe oder Text an
 \opt{icho}{\usepackage[sfdefault]{noto}} %auch ähnlich IPN-Schrift
-
-
 \usepackage{textcomp}
 \usepackage[shortcuts]{extdash}
 \usepackage{scrlayer-scrpage} % control of headers and footers
 \usepackage{totpages}         % allows to find total number of pages (package lastpage led to issues with tikzexternalize)
-\usepackage{amssymb,amsmath,amsthm,amscd,bbm,autobreak} % AMS packages
+
+\usepackage{savesym}
+\savesymbol{Bbbk}
+\savesymbol{openbox}
+\usepackage{amssymb,amsmath,amsthm,amscd,autobreak}
+\restoresymbol{AMS}{Bbbk}
+\restoresymbol{AMS}{openbox}
 \usepackage{esvect,bigints}
 \usepackage{mathtools}        % provides \Aboxed{} environment for boxed aligned formulas
 \usepackage{apacite}          % Bibtex citing in APA style
@@ -123,8 +129,11 @@
 % Chemistry
 \usepackage{chemformula}
 \usepackage{chemmacros}
-\usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}
+\opt{icho}{\usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}} % gives error with new font -> \si{\mu}
+
+
 \usepackage{chemfig}
+
 \newcommand{\actualscale}{1.0} % give here your wished scale
 \catcode`\_=11
 \pgfmathsetmacro{\currentscale}{\actualscale}
@@ -778,7 +787,7 @@
     \setlength{\footheight}{40pt}%
     \addtokomafont{headsepline}{\color{cdscolor}}
     \KOMAoptions{headsepline=1pt:\textwidth}
-    \renewcommand*{\familydefault}{\sfdefault}
+    %\renewcommand*{\familydefault}{\sfdefault}
     \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=18mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
     \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{
         \centering
@@ -1422,3 +1431,4 @@
 %% ***************************
 %% **** ENDE Klassendatei ****
 %% ***************************
+
