@@ -28,9 +28,14 @@
 \usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
-\opt{cds}{\usepackage{mathpazo}}
+\opt{cds}{
+%\usepackage{mathpazo}
+\usepackage{tgtermes}
+\usepackage{newtxmath} 
+}
 %\usepackage[sfdefault,book]{FiraSans}  %näher an IPN-Schrift, aber SI passt sich nicht an Mathe oder Text an
 \opt{icho}{\usepackage[sfdefault]{noto}} %auch ähnlich IPN-Schrift
+
 
 \usepackage{textcomp}
 \usepackage[shortcuts]{extdash}
@@ -47,6 +52,8 @@
 \usepackage{picinpar,wrapfig}
 \usepackage{epstopdf}
 \usepackage{xcolor}
+\usepackage{wallpaper}
+\usepackage{needspace}
 
 % \usepackage{framed}
 \usepackage{mdframed}
@@ -64,7 +71,6 @@
 \usepackage{tabularray}              % more options with other table type; supports directly the functions of array, longtable, multirow, makecell, tabularx and colortbl
 \usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
-\usepackage{wallpaper}
 \usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
 \usepackage{ifthen}                  % ifthenelse used for markings
 \usepackage{xspace}                  % for blank space at end of macros
@@ -224,8 +230,6 @@
 \vfuzz=0.2cm
 %\hbadness=10000
 
-<<<<<<< Updated upstream
-=======
 % #1 height, #2 text (solution), #3 text (exam version)
 \newcommand{\kasten}[3]{%
   \par
@@ -245,10 +249,8 @@
 }
 
 
-
->>>>>>> Stashed changes
 % Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
-\newcommand{\kasten}[3]{
+\newcommand{\festkasten}[3]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
     \opt{1,2}{#2}\opt{0}{#3\textcolor{white}{.}}
   }}
@@ -268,12 +270,16 @@
 \newlength{\remainingheighti}
 \newlength{\arrowheighti}
 \newlength{\someheightii}
+\newlength{\zeropti}
+\newlength{\linebreaki}
+\newlength{\vspacei}
 \setlength{\arrowheighti}{34pt}%
 \usepackage{framed}
 \usepackage{lipsum}
 \newlength{\remainingpage}
 \newsavebox{\measureboxi}
 \newsavebox{\measureboxii}
+\newsavebox{\measureboxiii}
 
 
 \newcommand{\solutioni}[3]{%
@@ -282,6 +288,8 @@
     \setlength{\someheighti}{\ht\measureboxi+\dp\measureboxi}%
     \sbox{\measureboxii}{\parbox{\linewidth}{#3}}%
     \setlength{\someheightii}{\ht\measureboxii+\dp\measureboxii}%
+    \sbox{\measureboxiii}{\parbox{\linewidth}{\ \\}}%
+    \setlength{\linebreaki}{\ht\measureboxiii+\dp\measureboxiii}%
     \setlength{\boxheighti}{#1}%
     % Verbleibender Platz auf der aktuellen Seite
     \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}
@@ -302,8 +310,15 @@
             % Füllhöhe, falls Box größer als Inhalt
             \ifdim\boxheighti>\someheighti
                 \setlength{\remainingheighti}{\boxheighti-\someheighti}%
-                \\\vspace*{\remainingpage-\someheighti-\arrowheighti-18pt}%
-                \\\vspace*{\boxheighti-\remainingpage}%
+                \setlength{\vspacei}{\remainingpage-\someheighti-\arrowheighti-18pt}%
+                \setlength{\zeropti}{0pt}
+                \the\vspacei\\
+                \ifdim\vspacei>\zeropti
+                    \\\vspace*{\vspacei}%
+                \else
+                    \\\vspace*{0pt}% 
+                \fi
+                \\\vspace*{\boxheighti-\remainingpage+\arrowheighti+18pt-\linebreaki}
             \else
                 % Warnung am Ende innerhalb der Box
                 {\color{red} \\!!!DU KEK!!! - dein Kasten ist zu kurz}%
@@ -329,6 +344,9 @@
     \the\someheighti\\
     \the\boxheighti\\
     \the\someheightii\\
+    \the\linebreaki\\
+    \the\vspacei\\
+    \the\arrowheighti\\
 }
 
 % Kasten mit Umrandung und Kästchen anhand der Punktzahl
@@ -424,7 +442,7 @@
 }
 \newcommand{\umbruchkasten}[6]{%
   \marginpar{\vspace*{1mm}\ch{n>}}\vspace*{-1mm}\begin{tcolorbox}[colback=white, colframe=black, sharp corners, boxrule=0.4pt, breakable, top=0.5pt, left=0.5pt, right=0.5pt, bottom=0.5pt, use color stack] %ohne color stack ist erster Absatz nach Umbruch schwarz, unabhaengig von textcolor
-    \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \kasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
+    \opt{1,2}{#2}\opt{0}{#3}\calculateLinesToFill{#1}{\opt{1,2}{#2}\opt{0}{#3}}\foreach \n in {1,...,\FPprint{\completelines}}{\textcolor{white}{\\\parbox[b][\baselineskip][]{\linewidth}{.}}}\vspace*{\FPprint\brokenlinesspace pt}\vspace*{\opt{0}{#4}\opt{1}{#5}\opt{2}{#6}} %erste drei Argumente wie \festkasten, Argumente vier bis sechs als manuelle Korrektur (zusaetzliche Laenge fuer die Kaesten der Versionen 0 bis 2); fuer Umbrechbarkeit keine vbox sondern mit weißem Punkt gefuellte Zeilen
   \end{tcolorbox}
   \setcounter{multeilaufpunkt}{\xintPFloat{\themulteilaufpunkt/2}}
   \punkteausgabe
@@ -448,13 +466,24 @@
 \newcommand{\alphalphfmt}[1]{\@alphalphfmt{#1}}  % Define the \alphalph wrapper for enumitem 
 \newcommand{\@alphalphfmt}[1]{\alphalph{\value{#1}}}   % Internal representation 
 \AddEnumerateCounter{\alphalphfmt}{\@alphalphfmt}{aa} % Register this new format
+\makeatletter
+\newcommand{\teilaufgabe}[2]{
+  \begin{enumerate}[label={\alphalphfmt*)}, resume]
+    % \item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}
+     \item {\interlinepenalty=10000 \clubpenalty=10000 \widowpenalty=10000 #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\par\nobreak}
+    \par\nobreak
+    \@endparpenalty=10000
+  \end{enumerate}
+  \@endparpenalty=-\@lowpenalty
+  \nobreak
+} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \makeatother
-\newcommand{\teilaufgabe}[2]{\begin{enumerate}[label={\alphalphfmt*)}, resume]\item #1\renewcommand{\vergleichshilfe}{#2}\ifdefstring{\vergleichshilfe}{}{}{\newline\textit{\underline{Hinweis:} #2}}\end{enumerate}} %1: Aufgabentext, 2:Hinweis (leer lassen, wenn keiner)
 \newcommand{\kommentar}[1]{\opt{2}{\textnormal{\textcolor{red}{#1}}}}
 \newcommand{\sol}[1]{\opt{1,2}{#1}} %solution
 
 %Punkte einer Teilaufgabe ausgeben, wenn kein Antwortkasten (in Querformat \MC integriert)
 \newcommand{\punkteausgabe}{
+  \Needspace{3\baselineskip}
   \opt{2}{\marginpar{\textnormal{\textcolor{red}{\SI{\xintPFloat{\themulteilaufpunkt/20}}{}~P.}}}} %Zaehler nur integer, aber dafuer vor doppelt zaehlen geschuetzt --> 0.05 Schritte werden durch Faktor 20 unterstuetzt
   \addtocounter{mulaufgabenpunkte}{\themulteilaufpunkt}
   \setcounter{multeilaufpunkt}{0}
@@ -470,7 +499,7 @@
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
-\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\newpage}
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\clearpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{
@@ -487,62 +516,137 @@
   \end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 
-\newcommand{\MC}[6]{{\setlength{\tabcolsep}{0.004\textwidth}
+\newcommand{\checklinestart}{%test to check if new line, if not: \par new line
+  \ifhmode
+    \ifdim\lastskip=0pt
+    \else
+      \par
+    \fi
+  \else
+  \fi
+}
+
+
+\newcommand{\MC}[6]{{
+\checklinestart
+\setlength{\tabcolsep}{0.004\textwidth}
+\begin{spacing}{1.2}
   \begin{tabular}{|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|C{0.192\textwidth-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}}\punkteausgabe}
+  \end{tabular}
+  \end{spacing}
+  }\punkteausgabe}
 \newcommand{\MCrf}[6]{{
+\checklinestart
   \setlength{\tabcolsep}{0.004\textwidth}
+  \begin{spacing}{1.2}
   \begin{tabular}{|C{0.06\textwidth+3pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|C{0.192\textwidth-7.6585pt}|}\hline
     & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
-  \end{tabular}}
+  \end{tabular}
+  \end{spacing}
+  }
   \punkteausgabe
 }
 
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
+
 \newcommand{\MCvAnfang}{
-  \renewcommand{\mctype}{0}\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \renewcommand{\mctype}{0}
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
 
 \newcommand{\MCvrfAnfang}{
-  \renewcommand{\mctype}{1}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \renewcommand{\mctype}{1}
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvUmbruch}{
-  \end{tabular}\newpage\begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
+  \end{tabular}
+  \end{spacing}
+  \newpage
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{0.6cm}|L{16.4cm-30.89052pt}|}\hline
 }
 
 \newcommand{\MCvrfUmbruch}{
-  \end{tabular}\newpage\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
+  \end{tabular}
+  \end{spacing}
+  \newpage
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{1.1cm}|C{1.1cm}|L{15cm-48.981425pt}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvEnde}{
-  \end{tabular}\punkteausgabe
+  \end{tabular}
+  \end{spacing}
+  \punkteausgabe
 }
 
 \newcommand{\MCvrfEnde}{
-  \end{tabular}\punkteausgabe
+  \end{tabular}
+  \end{spacing}
+  \punkteausgabe
 }
 
 \newcommand{\MCv}[2]{
-  \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
-  \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
+  \ifthenelse{\equal{\mctype}{0}}{
+    \ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}
+  }{}
+  \ifthenelse{\equal{\mctype}{1}}{
+    \ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}
+  }{}
   & #2 \\\hline
 }
 %Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
 \newcommand{\MSort}[6]{{
+
     \setlength{\tabcolsep}{0.004\textwidth}
+    \begin{spacing}{1.2}
     \begin{tabular}{|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|C{0.191\textwidth}|}\hline
     #1                              & #2                              & #3                              & #4                              & #5                              \\\hline
     \opt{1,2}{\substring{#6}{1}{1}} & \opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}} & \opt{1,2}{\substring{#6}{4}{4}} & \opt{1,2}{\substring{#6}{5}{5}} \\\hline
-    \end{tabular}
+    \end{tabular} 
+    \end{spacing}
   }
   \punkteausgabe
 }
+
+%MCdrei; Horizontal mit drei Ankreuzmöglichkeiten statt 5 
+\newcommand{\MCdrei}[4]{
+\checklinestart
+
+{\setlength{\tabcolsep}{0.004\textwidth}
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|}\hline
+    #1                                                                                & #2                                                                                & #3                                                                                 \\\hline
+    \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
+  \end{tabular}
+  \end{spacing}}\punkteausgabe}
+
+\newcommand{\MCrfdrei}[4]{{
+\checklinestart
+  \setlength{\tabcolsep}{0.004\textwidth}
+  \begin{spacing}{1.2}\begin{tabular}{|C{0.06\textwidth+3pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|}
+  \hline
+    & #1                                                                                & #2                                                                                & #3                                           \\\hline
+    richtig & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}  \\\hline
+    falsch  & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr}  \\\hline
+  \end{tabular}
+\end{spacing}}
+  \punkteausgabe
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -586,6 +690,9 @@
   \def\susfirstname{#4}
 }
 \newif\ifmore \moretrue
+
+%Datei lesen fuer PSE; darf nicht in Loop sein
+\newread\linereader
 
 %  Laengenformatierungen / Header / Footer
 % =========================================
@@ -632,8 +739,7 @@
         \opt{rd4}{IChO 4. Runde \cyear}
         }}}}%
   \chead[]{\hspace*{-2cm}\normalfont{\textbf{\textcolor{white}{
-        \opt{rd2}{Klausur\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
-        \opt{rd3}{Klausur \opt{ex1}{1}\opt{ex2}{2}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
+        \opt{rd2,rd3}{Klausur\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
         \opt{rd4}{\opt{ex1}{Theorie-Klausur}\opt{ex2}{Praxis-Klausur}\opt{1}{ -- L\"osung}\opt{2}{ -- Bewertung}}
         }}}}%
   \ohead[]{\parbox{0.33\textwidth}{\normalfont{\textbf{\textcolor{white}{\vspace*{2pt}Sch\"ulercode: \opt{c0}{\hrulefill}\opt{c1}{\suscode}}}}}}
@@ -707,6 +813,7 @@
 \definecolor{ScOdarkblue}{RGB}{0,38,85}
 \definecolor{ScObrightblue}{RGB}{25,75,245}
 \definecolor{cdscolor}{RGB}{157, 45, 114}
+\definecolor{fchocolor}{RGB}{157, 66, 117}
 
 %  Labelling in lists
 % ====================
@@ -1265,8 +1372,6 @@
 
 \newcommand{\leadingzero}[1]{\ifnum #1<10 0\the#1\else\the#1\fi}
 \newcommand{\todayshort}{\leadingzero{\day}.\leadingzero{\month}.\the\year}
-\newcommand{\comm}[1]{\textcolor{red}{#1}}
-\newcommand{\corr}[1]{\textcolor{red}{#1}}
 \newcommand{\hide}[1]{}
 
 \newcommand{\authorcom}[1]{\todo[color=green!40,author=Autor, inline]{#1}}
@@ -1298,7 +1403,7 @@
 
 
 %Befehle um Kastenausgabe in Schuelerversion zu unterlassen
-\newcommand{\kastenok}[3]{\opt{1,2}{\kasten{#1}{#2}{#3}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\kasten{#1}{#2}{#3}}{}}}}
+\newcommand{\kastenok}[3]{\opt{1,2}{\festkasten{#1}{#2}{#3}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\festkasten{#1}{#2}{#3}}{}}}}
 \newcommand{\selfkastenok}[2]{\opt{1,2}{\selfkasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\selfkasten{#1}{#2}}{}}}}
 \newcommand{\umbruchkastenok}[6]{\opt{1,2}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\umbruchkasten{#1}{#2}{#3}{#4}{#5}{#6}}{}}}}
 \newcommand{\ockastenok}[2]{\opt{1,2}{\ockasten{#1}{#2}}\opt{0}{\ifthenelse{\equal{\kastenanzeigen}{0}}{}{\ifthenelse{\equal{\kastenanzeigen}{1}}{\ockasten{#1}{#2}}{}}}}
