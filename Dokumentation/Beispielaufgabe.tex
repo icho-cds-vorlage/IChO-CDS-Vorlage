@@ -2,7 +2,7 @@
 \graphicspath{{\subfix{../Abbildungen/}}}
 
 \begin{document}
-\renewcommand{\tasktitle}{Titel\texorpdfstring{$^1$}{}} % texorpdfstring wird in Titeln und Captions verwendet, wenn Zeichen verwendet werden, die so im Inhaltsverzeichnis nicht darstellbar sind; normalerweise weisen Aufgabentitel keine Fussnote auf
+\renewcommand{\tasktitle}{Titel\texorpdfstring{$^1$}{} \textsc{ohne Sinn}} % texorpdfstring wird in Titeln und Captions verwendet, wenn Zeichen verwendet werden, die so im Inhaltsverzeichnis nicht darstellbar sind; normalerweise weisen Aufgabentitel keine Fussnote auf
 \renewcommand{\taskpoints}{30} %Gesamtpunktzahl der Aufgabe
 \renewcommand{\taskweight}{17}
 \aufgabenanfang% Beginn der Aufgabe
@@ -12,7 +12,7 @@ Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausur
 Dies ist ein Beispiel f\"ur einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde \"ublich ist.\\
 \textit{F\"ur kursive Hervorhebung kann dies genutzt werden}. \textbf{F\"ur fette Hervorhebung dies}. \textsc{Für Namen kann Kapitälchen genutzt werden.}
 
-\begin{teilaufgabekasten}{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugef\"ugt werden}
+\begin{teilaufgabekasten}{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugef\"ugt werden.}
 \kasten{2.5cm}{
     Hiermit l\"asst sich ein Kasten erstellen zur Bearbeitung der Aufgabe.
     Die L\"ange des Kastens wird im Ersten Argument angegeben.
@@ -23,13 +23,13 @@ Dies ist ein Beispiel f\"ur einen Einleitungstext zu einer Aufgabe. Es gibt zude
 \end{teilaufgabekasten}
 
 Die folgenden Abschnitte enthalten einige Beispiel-Teilaufgaben. Die Aufgabenteile b) und c) dienen als Beispiele f\"ur Multiple-Choice-Aufgaben. 
-\teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichkeiten hier richtig sind.}{Die Reihenfolge der richtigen Antworten wir in dem \textbackslash MC Command im 6.ten Argument mit einer Zeichenkette bspw.: oxoox, ausgedr\"uckt die f\"ur die richtigen Antworten je ein x notiert}
+\teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichkeiten hier richtig sind.}{Die Reihenfolge der richtigen Antworten wir in dem \textbackslash MC Command im 6.ten Argument mit einer Zeichenkette bspw.: oxoox, ausgedr\"uckt die f\"ur die richtigen Antworten je ein x notiert.}
 Vor dem MC command folgt mit \textbackslash punkte wieder die Punktzahl\punkte{2}\par
 \MC{A}{B}{C}{D}{E}{oxoox}
 Bevorzugt wird eine richtig/falsch Auswahl, da hier ein falsch Ankreuzen auch bepunktet werden kann.\par % falls vor einem MC-Kasten noch Text stehen soll, muss an diesen ein \par angef\"ugt werden!
 \MCrf{A}{B}{C}{D}{E}{oxoox}
 Folgend sind weitere analoge Art der MC-Aufgaben mit 3 Antwortmöglichkeiten gegeben. Es ist möglich bei allen MC-Aufgaben auch Strukturen einzufügen.\punkte{3}
-\MCdrei{\includegraphics[scale=\ocscale]{Dokumentation/beta_lacton.eps}}{\includegraphics[scale=\ocscale]{Abbildungen/Dokumentation/H2CO3.eps}}{\ch{H2O}}{oxo}
+\MCdrei{\includegraphics[scale=\ocscale]{Dokumentation/beta_lacton.eps}}{\includegraphics[scale=\ocscale]{../Abbildungen/Dokumentation/H2CO3.eps}}{\ch{H2O}}{oxo}
 \MCrfdrei{A}{B}{C}{oxo}
 
 \teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichekeiten hier richtig sind.\punkte{1}}{}
