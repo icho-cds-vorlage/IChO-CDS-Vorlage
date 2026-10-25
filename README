@@ -3,7 +3,7 @@ TO-DO-LISTE
   - CDS-Deckblatt
   - evtl. Formelschrift (kleinere Zahlen) von IChO anpassen
   - Abbildungen in der IChO-Formelsammlung zu Licht und NMR; evtl. NMR für Rd2 rausnehmen; CDS PSE-Kärtchen statt Formelsammlung
-- Layout für IChO Rd2 (Max will noch Word, daher nur perspektivisch)
+- Layout für IChO Rd2
 - Mehrseitige Antwortkästen verbessern (es müsste der Abstand von Kastenende bis Ende des Schreibbereichs auf der Seite von remainingheight subtrahiert werden; oder ganz neu implementieren)
 - die neuen Befehle unter "% other commands" dokumentieren
 - an die, die es geschrieben haben: die mit WOFUER? kommentierten Abschnitte im Code besser dokumentieren (falls sie noch Relevanz besitzen)
