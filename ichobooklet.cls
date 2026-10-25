@@ -224,6 +224,29 @@
 \vfuzz=0.2cm
 %\hbadness=10000
 
+<<<<<<< Updated upstream
+=======
+% #1 height, #2 text (solution), #3 text (exam version)
+\newcommand{\kasten}[3]{%
+  \par
+  \setlength{\boxheighti}{#1}%
+  % fbox/parbox overhead (frame + sep) plus a small safety margin
+  \addtolength{\boxheighti}{12pt}%
+  \ifdim\pagegoal=\maxdimen
+    \setlength{\remainingpage}{\textheight}% empty page: \pagegoal is not set yet
+  \else
+    \setlength{\remainingpage}{\dimexpr\pagegoal-\pagetotal\relax}%
+  \fi
+  \ifdim\remainingpage<\boxheighti
+    \umbruchkasten{#1}{#2}{#3}{0pt}{0pt}{0pt}
+  \else
+    \festkasten{#1}{#2}{#3}%
+  \fi
+}
+
+
+
+>>>>>>> Stashed changes
 % Standard-Antwortkasten: 1:H\"ohe, 2: Text/Bilder, 3 Text/Bilderf in Version 0 (addierte Punktzahl wird in Rand ausgegeben und zur\"uckgesetzt)
 \newcommand{\kasten}[3]{
   \fbox{\parbox[b][#1][t]{\linewidth-6.8pt}{
