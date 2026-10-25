@@ -10,7 +10,7 @@
 
 Dies ist ein Template zur Erstellung und Formatierung von IChO-Aufgaben (Klausurrunden 2–4) und Cds-Aufgaben in \LaTeX. 
 Dies ist ein Beispiel f\"ur einen Einleitungstext zu einer Aufgabe. Es gibt zudem die Option diesen Text in einen Kasten zu setzen wie es ja bei der internationalen Runde \"ublich ist.\\
-\textit{F\"ur kursive Hervorhebung kann dies genutzt werden}. \textbf{F\"ur fette Hervorhebung dies}.
+\textit{F\"ur kursive Hervorhebung kann dies genutzt werden}. \textbf{F\"ur fette Hervorhebung dies}. \textsc{Für Namen kann Kapitälchen genutzt werden.}
 
 \begin{teilaufgabekasten}{In diesem Bereich steht eine Teilaufgabe}{Hier kann ein Hinweis hinzugef\"ugt werden}
 \kasten{2.5cm}{
@@ -28,6 +28,9 @@ Vor dem MC command folgt mit \textbackslash punkte wieder die Punktzahl\punkte{2
 \MC{A}{B}{C}{D}{E}{oxoox}
 Bevorzugt wird eine richtig/falsch Auswahl, da hier ein falsch Ankreuzen auch bepunktet werden kann.\par % falls vor einem MC-Kasten noch Text stehen soll, muss an diesen ein \par angef\"ugt werden!
 \MCrf{A}{B}{C}{D}{E}{oxoox}
+Folgend sind weitere analoge Art der MC-Aufgaben mit 3 Antwortmöglichkeiten gegeben. Es ist möglich bei allen MC-Aufgaben auch Strukturen einzufügen.\punkte{3}
+\MCdrei{\includegraphics[scale=\ocscale]{Dokumentation/beta_lacton.eps}}{\includegraphics[scale=\ocscale]{Abbildungen/Dokumentation/H2CO3.eps}}{\ch{H2O}}{oxo}
+\MCrfdrei{A}{B}{C}{oxo}
 
 \teilaufgabe{\operator{Kreuze an} welche Antwortm\"oglichekeiten hier richtig sind.\punkte{1}}{}
 \MCvAnfang
@@ -39,7 +42,7 @@ Bevorzugt wird eine richtig/falsch Auswahl, da hier ein falsch Ankreuzen auch be
 \MCv{o}{Eine falsche L\"osung}
 \MCvEnde
 
-Auch hier mit richtig/falsch m\"oglich:\par
+Auch hier die bevorzugte Version mit richtig/falsch m\"oglich:\par
 \MCvrfAnfang
 \MCv{x}{Eine richtige L\"osung}
 \MCv{o}{Eine falsche L\"osung}

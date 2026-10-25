@@ -23,20 +23,31 @@
 
 %  used packages
 % ===============
+   
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 %\usepackage{cmbright}         % use Computer Modern (SF) Font generally
 % (also for math mode)
-\opt{cds}{\usepackage{mathpazo}}
+
+
+\opt{cds}{
+  \usepackage{newtxtext,newtxmath}  % new font for CDS for same font in math an text
+}
+
 %\usepackage[sfdefault,book]{FiraSans}  %näher an IPN-Schrift, aber SI passt sich nicht an Mathe oder Text an
 \opt{icho}{\usepackage[sfdefault]{noto}} %auch ähnlich IPN-Schrift
-
 \usepackage{textcomp}
 \usepackage[shortcuts]{extdash}
 \usepackage{scrlayer-scrpage} % control of headers and footers
 \usepackage{totpages}         % allows to find total number of pages (package lastpage led to issues with tikzexternalize)
-\usepackage{amssymb,amsmath,amsthm,amscd,bbm,autobreak} % AMS packages
+
+\usepackage{savesym}
+\savesymbol{Bbbk}
+\savesymbol{openbox}
+\usepackage{amssymb,amsmath,amsthm,amscd,autobreak}
+\restoresymbol{AMS}{Bbbk}
+\restoresymbol{AMS}{openbox}
 \usepackage{esvect,bigints}
 \usepackage{mathtools}        % provides \Aboxed{} environment for boxed aligned formulas
 \usepackage{apacite}          % Bibtex citing in APA style
@@ -67,7 +78,7 @@
 \usepackage{tabularray}              % more options with other table type; supports directly the functions of array, longtable, multirow, makecell, tabularx and colortbl
 \usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
-%\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
+\usepackage{wasysym}                 % WASY2 fonts (glyphs, ...)
 \usepackage{ifthen}                  % ifthenelse used for markings
 \usepackage{xspace}                  % for blank space at end of macros
 \usepackage{icomma,siunitx}
@@ -119,8 +130,11 @@
 % Chemistry
 \usepackage{chemformula}
 \usepackage{chemmacros}
-\usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}
+\opt{icho}{\usepackage{chemgreek,upgreek}\selectchemgreekmapping{upgreek}} % gives error with new font -> \si{\mu}
+
+
 \usepackage{chemfig}
+
 \newcommand{\actualscale}{1.0} % give here your wished scale
 \catcode`\_=11
 \pgfmathsetmacro{\currentscale}{\actualscale}
@@ -176,6 +190,7 @@
 \usepackage[final]{pdfpages}
 \usepackage{etoolbox}
 \usepackage{subfiles}
+\usepackage{todonotes}
 
 %  global variables
 % =========================================
@@ -634,7 +649,7 @@
 %Beginn und Ende
 \newcommand{\aufgabenanfang}{\begingroup\section{\tasktitle \texorpdfstring{\hfill \opt{rd1,rd2}{\SI{\taskpoints}{Punkte}}\opt{rd3,rd4}{\SI{\taskweight}{\percent}}}{}}\opt{2}{\opt{rd3,rd4}{\marginpar{\textcolor{red}{\taskpoints\,P.}}}}}
 
-\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo{Gesamt-punktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\setcounter{teilaufgabennr}{0}\restartlist{enumerate}\clearpage}
+\newcommand{\aufgabenende}{\opt{2}{\ifthenelse{\equal{\xintPFloat{\themulaufgabenpunkte/20}}{\taskpoints}}{}{\todo[inline]{Gesamtpunktzahl passt nicht zur Summe der Teilaufgaben~\xintPFloat{\themulaufgabenpunkte/20}}}}\endgroup\setcounter{mulaufgabenpunkte}{0}\setcounter{multeilaufpunkt}{0}\restartlist{enumerate}\clearpage}
 
 %Multiple-Choice-Design
 \newcommand{\quadrat}{
@@ -651,64 +666,133 @@
   \end{tikzpicture}}
 \newcommand{\quadratkorr}{\opt{0}{\quadrat}\opt{1,2}{\quadratkor}}
 
+\newcommand{\checklinestart}{%test to check if new line, if not: \par new line
+  \ifhmode
+    \ifdim\lastskip=0pt
+    \else
+      \par
+    \fi
+  \else
+  \fi
+}
+
+
 \newlength{\mcw} % Breite der MC-/Sortiertabellen: Textbreite, in teilaufgabekasten wie die Antwortkaesten (inkl. Ueberstand)
 \newcommand{\mcsetup}{\setlength{\mcw}{\dimexpr\linewidth+2\kastenueberstand\relax}\ifdim\kastenueberstand>0pt\hspace*{-\kastenueberstand}\fi}
-\newcommand{\MC}[6]{{\mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+\newcommand{\MC}[6]{{
+\checklinestart
+\mcsetup
+\setlength{\tabcolsep}{0.004\textwidth}
+\begin{spacing}{1.2}
   \begin{tabular}{|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|C{0.192\mcw-0.478588pt}|}\hline
     #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
-  \end{tabular}}\punkteausgabe}
+  \end{tabular}
+  \end{spacing}
+  }\punkteausgabe}
 \newcommand{\MCrf}[6]{{
+  \checklinestart
   \mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+  \begin{spacing}{1.2}
   \begin{tabular}{|C{0.06\mcw+3pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|C{0.192\mcw-7.6585pt}|}\hline
     & #1                                                                                & #2                                                                                & #3                                                                                & #4                                                                                & #5                                                                                \\\hline
     richtig & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
     falsch  & \substring[q]{#6}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{4}{4}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#6}{5}{5}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} \\\hline
-  \end{tabular}}
+  \end{tabular}
+  \end{spacing}
+  }
   \punkteausgabe
 }
 
 %MC in der vertikalen Form
 \newcommand{\mctype}{0}
+
 \newcommand{\MCvAnfang}{
-  \renewcommand{\mctype}{0}\mcsetup\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
+  \renewcommand{\mctype}{0}\mcsetup
+  \begin{spacing}{1.2}\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
 }
 
 \newcommand{\MCvrfAnfang}{
-  \renewcommand{\mctype}{1}\mcsetup\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
+  \renewcommand{\mctype}{1}\mcsetup
+  \begin{spacing}{1.2}\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvUmbruch}{
-  \end{tabular}\newpage\mcsetup\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
+  \end{tabular}
+  \end{spacing}\newpage
+  \begin{spacing}{1.2}\mcsetup\begin{tabular}{|C{0.6cm}|L{\dimexpr\mcw-0.4cm-30.89052pt\relax}|}\hline
 }
 
 \newcommand{\MCvrfUmbruch}{
-  \end{tabular}\newpage\mcsetup\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
+  \end{tabular}
+  \end{spacing}\newpage
+  \begin{spacing}{1.2}\mcsetup\begin{tabular}{|C{1.1cm}|C{1.1cm}|L{\dimexpr\mcw-1.8cm-48.981425pt\relax}|}\hline richtig & falsch & \\\hline
 }
 
 \newcommand{\MCvEnde}{
-  \end{tabular}\punkteausgabe
+  \end{tabular}
+  \end{spacing}
+  \punkteausgabe
 }
 
 \newcommand{\MCvrfEnde}{
-  \end{tabular}\punkteausgabe
+  \end{tabular}
+  \end{spacing}
+  \punkteausgabe
 }
 
 \newcommand{\MCv}[2]{
-  \ifthenelse{\equal{\mctype}{0}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}}{}
-  \ifthenelse{\equal{\mctype}{1}}{\ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}}{}
+  \ifthenelse{\equal{\mctype}{0}}{
+    \ifthenelse{\equal{#1}{x}}{\quadratkorr}{\quadrat}
+  }{}
+  \ifthenelse{\equal{\mctype}{1}}{
+    \ifthenelse{\equal{#1}{x}}{\quadratkorr & \quadrat}{\quadrat & \quadratkorr}
+  }{}
   & #2 \\\hline
 }
 %Multiple Sort mit Kästen ähnlich zu MC, aber keine Kreuze sondern Reihenfolge
 \newcommand{\MSort}[6]{{
     \mcsetup\setlength{\tabcolsep}{0.004\mcw}%
+    \begin{spacing}{1.2}
     \begin{tabular}{|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|C{0.191\mcw}|}\hline
     #1                              & #2                              & #3                              & #4                              & #5                              \\\hline
     \opt{1,2}{\substring{#6}{1}{1}} & \opt{1,2}{\substring{#6}{2}{2}} & \opt{1,2}{\substring{#6}{3}{3}} & \opt{1,2}{\substring{#6}{4}{4}} & \opt{1,2}{\substring{#6}{5}{5}} \\\hline
-    \end{tabular}
+    \end{tabular} 
+    \end{spacing}
   }
   \punkteausgabe
 }
+
+%MCdrei; Horizontal mit drei Ankreuzmöglichkeiten statt 5 
+\newcommand{\MCdrei}[4]{
+\checklinestart
+
+{\setlength{\tabcolsep}{0.004\textwidth}
+  \begin{spacing}{1.2}
+  \begin{tabular}{|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|C{0.320\textwidth+2.017pt}|}\hline
+    #1                                                                                & #2                                                                                & #3                                                                                 \\\hline
+    \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} \\\hline
+  \end{tabular}
+  \end{spacing}}\punkteausgabe}
+
+\newcommand{\MCrfdrei}[4]{{
+\checklinestart
+  \setlength{\tabcolsep}{0.004\textwidth}
+  \begin{spacing}{1.2}\begin{tabular}{|C{0.06\textwidth+3pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|C{0.320\textwidth-9.95267pt}|}
+  \hline
+    & #1                                                                                & #2                                                                                & #3                                           \\\hline
+    richtig & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadratkorr}{\quadrat}  \\\hline
+    falsch  & \substring[q]{#4}{1}{1}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{2}{2}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr} & \substring[q]{#4}{3}{3}\ifthenelse{\equal{\thestring}{x}}{\quadrat}{\quadratkorr}  \\\hline
+  \end{tabular}
+\end{spacing}}
+  \punkteausgabe
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -839,7 +923,7 @@
     \setlength{\footheight}{40pt}%
     \addtokomafont{headsepline}{\color{cdscolor}}
     \KOMAoptions{headsepline=1pt:\textwidth}
-    \renewcommand*{\familydefault}{\sfdefault}
+    %\renewcommand*{\familydefault}{\sfdefault}
     \ihead[]{\parbox{0.2\textwidth}{\includegraphics[height=18mm]{CDS_Logo_Map_verbessert.eps}}\vspace*{3mm}}%\opt{rd2}{\vspace*{1.5mm}}} -> war bei kleinerem Logo anscheinend notwendig
     \chead[]{\Large \vspace*{0mm} \parbox{0.6\textwidth}{
         \centering
@@ -1483,3 +1567,4 @@
 %% ***************************
 %% **** ENDE Klassendatei ****
 %% ***************************
+
