@@ -1,9 +1,9 @@
 TO-DO-LISTE
 - Layout Feinschliff geben, wo nötig
-  - CDS-Deckblatt
-  - evtl. Formelschrift (kleinere Zahlen) von IChO anpassen
-  - Abbildungen in der IChO-Formelsammlung zu Licht und NMR; evtl. NMR für Rd2 rausnehmen; CDS PSE-Kärtchen statt Formelsammlung
-- Layout für IChO Rd2
+  - CDS-Deckblatt (von CDS 4. Runde 2026 übernehmen und anpassen)
+  - Abbildungen in der IChO-Formelsammlung zu Licht; evtl. NMR für Rd2 rausnehmen; CDS PSE-Kärtchen statt Formelsammlung?
+  - Vorgabe der Schriftart (CDS Times New Roman) & Größe Chemdraw mit \ocscale angehen (Schriftgröße mit Text übereinstimmen)
+- Layout für IChO Rd2 zu ende bringen (teilaufgabekasten hat mich Breite von MC in sich noch Probleme; außerdem Testen mit Xincheng von Nöten)
 - Mehrseitige Antwortkästen verbessern (es müsste der Abstand von Kastenende bis Ende des Schreibbereichs auf der Seite von remainingheight subtrahiert werden; oder ganz neu implementieren)
 - die neuen Befehle unter "% other commands" dokumentieren
 - an die, die es geschrieben haben: die mit WOFUER? kommentierten Abschnitte im Code besser dokumentieren (falls sie noch Relevanz besitzen)
