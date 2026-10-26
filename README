@@ -4,7 +4,6 @@ TO-DO-LISTE
   - Abbildungen in der IChO-Formelsammlung zu Licht; evtl. NMR für Rd2 rausnehmen; CDS PSE-Kärtchen statt Formelsammlung?
   - Vorgabe der Schriftart (CDS Times New Roman) & Größe Chemdraw mit \ocscale angehen (Schriftgröße mit Text übereinstimmen)
 - Layout für IChO Rd2 zu ende bringen (teilaufgabekasten hat mich Breite von MC in sich noch Probleme; außerdem Testen mit Xincheng von Nöten)
-- Mehrseitige Antwortkästen verbessern (es müsste der Abstand von Kastenende bis Ende des Schreibbereichs auf der Seite von remainingheight subtrahiert werden; oder ganz neu implementieren)
 - die neuen Befehle unter "% other commands" dokumentieren
 - an die, die es geschrieben haben: die mit WOFUER? kommentierten Abschnitte im Code besser dokumentieren (falls sie noch Relevanz besitzen)
 - arraykasten: funktioniert zur Zeit nicht!!! zudem: von Xincheng weitere Version seines Kastens, die Inhalt nicht automatisch an Version anpasst
